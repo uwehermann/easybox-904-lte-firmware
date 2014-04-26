@@ -52,6 +52,13 @@ or some other software implementing (parts of) "Neighbor Discovery for IP
 Version 6 (IPv6)" (RFC 4861).
 endef
 
+define Build/Prepare
+	$(call Build/Prepare/Default,)
+	if [ -e ./src ] ; then \
+		$(CP)  ./src/*  $(PKG_BUILD_DIR)/. ; \
+	fi
+endef
+
 CONFIGURE_ARGS += \
 	--with-configfile=/etc/radvd.conf \
 	--with-logfile=/var/log/radvd.log \

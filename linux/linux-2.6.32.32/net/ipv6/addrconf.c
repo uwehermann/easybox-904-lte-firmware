@@ -1751,7 +1751,7 @@ static struct inet6_dev *addrconf_add_dev(struct net_device *dev)
 	return idev;
 }
 
-void addrconf_prefix_rcv(struct net_device *dev, u8 *opt, int len)
+int addrconf_prefix_rcv(struct net_device *dev, u8 *opt, int len)
 {
 	struct prefix_info *pinfo;
 	__u32 valid_lft;
@@ -1764,7 +1764,12 @@ void addrconf_prefix_rcv(struct net_device *dev, u8 *opt, int len)
 
 	if (len < sizeof(struct prefix_info)) {
 		ADBG(("addrconf: prefix option too short\n"));
-		return;
+		return -EINVAL;
+	}
+
+	/* fpan add for DT724 */
+	if (pinfo->autoconf == 0) {
+		return -EINVAL;
 	}
 
 	/*
@@ -1774,7 +1779,7 @@ void addrconf_prefix_rcv(struct net_device *dev, u8 *opt, int len)
 	addr_type = ipv6_addr_type(&pinfo->prefix);
 
 	if (addr_type & (IPV6_ADDR_MULTICAST|IPV6_ADDR_LINKLOCAL))
-		return;
+		return -EINVAL;
 
 	valid_lft = ntohl(pinfo->valid);
 	prefered_lft = ntohl(pinfo->prefered);
@@ -1782,7 +1787,7 @@ void addrconf_prefix_rcv(struct net_device *dev, u8 *opt, int len)
 	if (prefered_lft > valid_lft) {
 		if (net_ratelimit())
 			printk(KERN_WARNING "addrconf: prefix option has invalid lifetime\n");
-		return;
+		return -EINVAL;
 	}
 
 	in6_dev = in6_dev_get(dev);
@@ -1790,7 +1795,7 @@ void addrconf_prefix_rcv(struct net_device *dev, u8 *opt, int len)
 	if (in6_dev == NULL) {
 		if (net_ratelimit())
 			printk(KERN_DEBUG "addrconf: device %s not configured\n", dev->name);
-		return;
+		return -EINVAL;
 	}
 
 	/*
@@ -1859,7 +1864,7 @@ void addrconf_prefix_rcv(struct net_device *dev, u8 *opt, int len)
 			if (ipv6_generate_eui64(addr.s6_addr + 8, dev) &&
 			    ipv6_inherit_eui64(addr.s6_addr + 8, in6_dev)) {
 				in6_dev_put(in6_dev);
-				return;
+				return -EINVAL;
 			}
 			goto ok;
 		}
@@ -1867,7 +1872,7 @@ void addrconf_prefix_rcv(struct net_device *dev, u8 *opt, int len)
 			printk(KERN_DEBUG "IPv6 addrconf: prefix with wrong length %d\n",
 			       pinfo->prefix_len);
 		in6_dev_put(in6_dev);
-		return;
+		return -EINVAL;
 
 ok:
 
@@ -1894,7 +1899,7 @@ ok:
 
 			if (!ifp || IS_ERR(ifp)) {
 				in6_dev_put(in6_dev);
-				return;
+				return -EINVAL;
 			}
 
 			update_lft = create = 1;
@@ -2014,6 +2019,7 @@ ok:
 	}
 	inet6_prefix_notify(RTM_NEWPREFIX, in6_dev, pinfo);
 	in6_dev_put(in6_dev);
+	return 0;
 }
 
 /*
@@ -2749,7 +2755,11 @@ static void addrconf_rs_timer(unsigned long data)
 		addrconf_mod_timer(ifp, AC_RS,
 				   (ifp->probes == ifp->idev->cnf.rtr_solicits) ?
 				   ifp->idev->cnf.rtr_solicit_delay :
+#if 1 /*initial attempt followed alg_01 of TOCPE0051 for DT*/
+				   (1<<(ifp->probes-2))*HZ);
+#else
 				   ifp->idev->cnf.rtr_solicit_interval);
+#endif
 		spin_unlock(&ifp->lock);
 
 		ndisc_send_rs(ifp->idev->dev, &ifp->addr, &in6addr_linklocal_allrouters);

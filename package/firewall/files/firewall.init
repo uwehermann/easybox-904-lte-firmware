@@ -16,7 +16,10 @@ start()
 	. /lib/firewall/uci_firewall.sh
 	fw_init
 	[ -f /lib/firewall/firewall.user ] && . /lib/firewall/firewall.user
+	[ -f /lib/firewall/firewallv6.user ] && . /lib/firewall/firewallv6.user
 
+	#port mapping to avoid those service from lan using 5060
+	ipt_shift_port
 	rm ${TRUST_HOST_FILE}
 	gen_trust_file 0
 	[ -f ${TRUST_HOST_FILE} ] && (. ${TRUST_HOST_FILE} >/dev/null 2>&1)
@@ -175,7 +178,8 @@ list_trust()
 
 
 case "$1" in
-	"boot")			start &			;;
+#	"boot")			start &			;;
+	"boot")			start 			;;
 	"start")		start &			;;
 	"stop")			stop			;;
 	"restart")		restart &		;;

@@ -46,8 +46,8 @@ start_ntpclient() {
 	config_foreach check_server ntpserver
 
 	FAIL_NUM=`grep fail_num /tmp/ntp_status |cut -d '=' -f 2`
-	
-	echo $FAIL_NUM> /dev/console
+
+	#echo $FAIL_NUM> /dev/console
 
 	if [ -z "$SERVER" ] ; then
 		let FAIL_NUM=$FAIL_NUM+1
@@ -58,6 +58,12 @@ start_ntpclient() {
 	umng_syslog_cli add "18" "Info" "System" "NTP get time from server:${SERVER}"
 
 	sed -i "s/get_time_state=.*/get_time_state=1/g" /tmp/ntp_status
+	
+	sip_config SIP_CORE_update_ntp
+	
+	echo "SIP_CORE_update_ntp=1" >> /tmp/afu
+	
+	
 
 	return 0
 }
@@ -124,15 +130,16 @@ start () {
 
 	while [ 1 ] ; do 	
 
-		COUNT=0
-		while [ $COUNT -le $INTERVAL ] ; do
+		#COUNT=0
+		#while [ $COUNT -le $INTERVAL ] ; do
 			#echo sleep...
-			sleep 1	
+		sleep $INTERVAL	
+		
 			if [ "$(umngcli get enable@ntp)" != "1" ] ; then
 				return 0
 			fi
-			let COUNT=$COUNT+1
-		done
+			#let COUNT=$COUNT+1
+		#done
 
 		#echo wake...
 		start_ntpclient

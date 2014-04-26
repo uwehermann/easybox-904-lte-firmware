@@ -1045,6 +1045,17 @@ config DMA_API_DEBUG
 	  This option causes a performance degredation.  Use only if you want
 	  to debug device drivers. If unsure, say N.
 
+config SIGNAL_DEBUG
+    bool "Enable signal debugging of linux kernel"
+    default N
+
+config SIGNAL_DEBUG_PROCESS_NAME
+	depends on SIGNAL_DEBUG
+	string "Monitor process name when the linux signal debugging enabled"
+	default ""
+	help
+	  Process name that we want to monitor.
+
 source "samples/Kconfig"
 
 source "lib/Kconfig.kgdb"

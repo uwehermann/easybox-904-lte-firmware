@@ -48,7 +48,7 @@ while [ $CNT -lt 3 ] ; do
 done
 
 if [ "$IGMPPROXY_UPSTREAM" != "" ] ; then
-        echo "[arc-ipv4-linkup.sh] run igmpproxy"
+        echo "[arc-ipv4-linkup.sh] run arc_igmpproxy"
 #        killall igmpproxy
 #        IGMPPROXY_QUICKLEAVE=`ccfg_cli get quickleave@igmpproxy`
 #        IGMPPROXY_DOWNSTREAM=`ccfg_cli get downstream@igmpproxy`
@@ -57,10 +57,15 @@ if [ "$IGMPPROXY_UPSTREAM" != "" ] ; then
 #
 #		( sleep 2 ; exec >& /dev/console ; /usr/sbin/igmpproxy /etc/igmpproxy.conf ) &
 
-		/etc/init.d/igmpproxy stop
-		/etc/init.d/igmpproxy start $IPV4_UP_INTERFACE_SECTION
+		/etc/init.d/arc_igproxy.sh stop
+		/etc/init.d/arc_igproxy.sh start
 fi
 # IGMP Proxy end
+
+
+# OpenVPN daemon start
+/usr/sbin/arc-openvpn-ctrl start &
+# OpenVPN daemon end
 
 #RIP daemon start
 NET_SECT=`ccfg_cli get network@ripd`
@@ -96,6 +101,12 @@ restart_lansvc.sh ${IPV4_UP_INTERFACE_SECTION} 1
 ##$3: ipv4 address
 #    /usr/sbin/arc-ip6o4-tunneling.sh 1 $IPV4_UP_INTERFACE_SECTION $IPV4_ADDR
 #fi
+ip6_enable=`umngcli get ip6_enable@${IPV4_UP_INTERFACE_SECTION}`
+ip6_proto=`umngcli get ip6_proto@${IPV4_UP_INTERFACE_SECTION}`
+if [ "$ip6_enable" == "1" ] && [ "$ip6_proto" == "tunnel" ] ; then
+	echo "[arc-ipv4-linkup.sh] section=$IPV4_UP_INTERFACE_SECTION" >> /tmp/ipv6.log
+	/usr/sbin/ipv6rd_restart &
+fi
 
 if [ "${DEFAULTROUTE_ENABLE}" == "1" ] ; then
 	echo "[arc-ipv4-linkup.sh] call create-application-cert.sh, IPV4_UP_INTERFACE_SECTION=${IPV4_UP_INTERFACE_SECTION}, IPV4_UP_INTERFACE_NAME=${IPV4_UP_INTERFACE_NAME}, PROTO=${PROTO}, DEFAULTROUTE_ENABLE=${DEFAULTROUTE_ENABLE}"

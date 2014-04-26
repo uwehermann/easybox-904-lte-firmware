@@ -20,14 +20,20 @@ endef
 
 define Build/Prepare
 	mkdir -p $(PKG_BUILD_DIR)
-	$(CP) *.so $(PKG_BUILD_DIR)/
+	$(CP) ./src/* $(PKG_BUILD_DIR)/
 endef
 
 define Build/Configure
 endef
 
 define Build/Compile
-
+	$(MAKE) -C $(PKG_BUILD_DIR) \
+		CC="$(TARGET_CC)" \
+		CFLAGS="$(TARGET_CFLAGS) -fPIC -Wall -I$(STAGING_DIR)/usr/include -I." \
+		LDFLAGS="$(TARGET_LDFLAGS)" \
+		PKG_BLD_DIR=$(PKG_BUILD_DIR) \
+		STG_DIR=$(STAGING_DIR) \
+		STG_LIB_DIR=$(STAGING_DIR)/usr/lib
 endef
 
 define Package/$(PKG_NAME)/install
@@ -36,8 +42,8 @@ define Package/$(PKG_NAME)/install
 endef
 
 define Build/InstallDev
-#	$(INSTALL_DIR) $(1)/usr/include
-#	$(CP) $(PKG_BUILD_DIR)/*.h $(1)/usr/include
+	$(INSTALL_DIR) $(1)/usr/include
+	$(CP) $(PKG_BUILD_DIR)/*.h $(1)/usr/include
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(CP) $(PKG_BUILD_DIR)/*.so* $(1)/usr/lib
 endef

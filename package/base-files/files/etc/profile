@@ -30,3 +30,7 @@ fi
 
 [ -x /sbin/arp ] || arp() { cat /proc/net/arp; }
 [ -z /bin/ldd ] || ldd() { LD_TRACE_LOADED_OBJECTS=1 $*; }
+
+# For Dumpping core file
+ulimit -c unlimited
+

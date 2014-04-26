@@ -274,8 +274,15 @@ ssShowBitmap(HWND hwnd, HDC hdc)
 	PMWIMAGEHDR himg;
 	LPCTSTR resName = hwnd->szTitle;
 
-	if (resName[0] == '\xff')
-		resName = MAKEINTRESOURCE((UCHAR) resName[1]);
+	if (resName[0] == '\xff') {
+		//resName = MAKEINTRESOURCE((UCHAR) resName[1]);
+
+		//Enlarge the number of bitmap use from 1-byte(0~255) to 2-byte(0~65535) which is defined in resource.h
+		unsigned short resName_2bytes = 0;
+
+		resName_2bytes = (resName[1] & 0x00ff) | ((resName[2] << 8) & 0xff00);
+		resName = MAKEINTRESOURCE((USHORT) resName_2bytes);
+	}
 	himg = resLoadBitmap(hwnd->hInstance, resName);
 	if (himg != NULL) {
 		DrawDIB(hdc, 0, 0, himg);
@@ -309,7 +316,11 @@ StaticControlProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 			int pOldValue = (int)pCtrl->userdata;
 //Simon@2011/12/02, Support STATIC control image change.
 #ifdef SUPPORT_STATIC_PIC_CHANGE			
-			pCtrl->szTitle[1] = (WORD)lParam;
+			//pCtrl->szTitle[1] = (WORD)lParam;
+
+			//Enlarge the number of bitmap use from 1-byte(0~255) to 2-byte(0~65535) which is defined in resource.h
+			pCtrl->szTitle[1] = (WORD) (lParam & 0x00ff);
+			pCtrl->szTitle[2] = (WORD) ((lParam >> 8) & 0x00ff);
 #else
 			pCtrl->userdata = (DWORD)lParam;
 #endif

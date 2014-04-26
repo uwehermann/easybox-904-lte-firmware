@@ -1805,6 +1805,7 @@ if enabled gprof; then
 fi
 
 VHOOKCFLAGS="-fPIC"
+add_cflags "-fPIC"
 
 # Find out if the .align argument is a power of two or not.
 if test $asmalign_pot = "unknown"; then

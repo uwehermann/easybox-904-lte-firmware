@@ -25,5 +25,8 @@ install:
 	$(INSTALL_DATA) ./20-firewall $(INSTALL_DIR)/etc/hotplug.d/iface
 	$(INSTALL_DIR) $(INSTALL_DIR)/etc
 	$(INSTALL_DATA) ./firewall.user $(INSTALL_DIR)/etc
+	#create a folder for external module scripts
+	$(INSTALL_DIR) $(INSTALL_DIR)/etc/config/firewallExt
+	$(INSTALL_DATA) ./firewallv6.user $(INSTALL_DIR)/etc
 
 

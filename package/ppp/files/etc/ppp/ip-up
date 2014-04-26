@@ -29,6 +29,7 @@ export PPP_IFACE PPP_TTY PPP_SPEED PPP_LOCAL PPP_REMOTE PPP_IPPARAM
 ### ctc added 20110516 ###
 
 /usr/sbin/arc-ipv4-linkup.sh $PPP_IPPARAM $PPP_LOCAL "255.255.255.255" $PPP_REMOTE
+touch /tmp/ppp_conn_up
 
 SIP_SVR=`/usr/sbin/umngcli get registrar@sip_acc_1`
 if [ -z ${SIP_SVR} ] ; then

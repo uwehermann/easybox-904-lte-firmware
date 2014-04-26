@@ -3038,7 +3038,7 @@ ether_to_eui64(eui64_t *p_eui64)
         return 0;
     }
 
-    strcpy(ifr.ifr_name, "eth0");
+    strcpy(ifr.ifr_name, "eth1");
     if(ioctl(skfd, SIOCGIFHWADDR, &ifr) < 0)
     {
         close(skfd);

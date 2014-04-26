@@ -1796,6 +1796,23 @@ init_system()
 	echo 3000 > /proc/sys/vm/min_free_kbytes     # -- OOM issue
 	echo 10   > /proc/sys/net/core/netdev_budget # -- bad voice quality
 
+	### bitonic(20121130)
+	### When I check the DSL auto-sensing function of UGW 5.1.1, I find that Lantiq does the following setting.
+	### copy from Lantiq load_ppa_modules.sh
+	# changed min_free_kbytes to have more free memory a given point of execution
+	#### echo 1024 > /proc/sys/vm/min_free_kbytes => We use 3000 to fix OOM issue now
+	echo 4096 > /proc/sys/net/ipv4/route/max_size
+
+	# memory tunning for all platform lowmem_reserve_ratio is a MUST
+	echo 250 >  /proc/sys/vm/lowmem_reserve_ratio
+	echo 2 > /proc/sys/vm/dirty_background_ratio
+	echo 250 > /proc/sys/vm/dirty_writeback_centisecs
+	echo 10 > /proc/sys/vm/dirty_ratio
+	echo 16384 > /proc/sys/vm/max_map_count
+	echo 2 > /proc/sys/vm/page-cluster
+	echo 70 > /proc/sys/vm/swappiness
+	### end of copy from Lantiq load_ppa_modules.sh
+
 	if [ "$xDSL_MODE_VRX" == "vdsl" ] ; then
 
 		echo "Setting in flash is VDSL mode"

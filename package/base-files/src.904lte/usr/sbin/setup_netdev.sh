@@ -18,6 +18,10 @@ DFT_BR_PVC_VID_LIST="4080 4081 4082 4083 4084 4085 4086 4087 4088 4089 4090 4091
 DFT_BR_COMMON_VID="60"
 DFT_VOIP_VID="63"
 DFT_IPTV_VID="64"
+DFT_CPU_FID="1"
+DFT_LAN_FID="1"
+DFT_WAN_FID="2"
+AUTO_SENSING_WORKAROUNG="0"
 umngProg=""
 
 set_eth1_mac()
@@ -34,7 +38,7 @@ set_eth1_mac()
 # $1~$* - wan interfaces
 add_ppa_netdev()
 {
-#	ifconfig eth0 down
+	ifconfig eth0 down
 	ifconfig eth0 hw ether `getmacaddr.sh lan 0`
 	ifconfig eth0 up
 	ifconfig br-lan up
@@ -64,7 +68,7 @@ add_ppa_netdev()
 
 	ethaddr=`getmacaddr.sh wan 0`
 	while [ -n "$1" ] ; do
-#		ifconfig $1 down
+		ifconfig $1 down
 		ifconfig $1 hw ether $ethaddr
 		ifconfig $1 up
 		ppacmd addwan -i $1  >& $OUT_FILE
@@ -307,7 +311,10 @@ ETH_WAN_LOGICAL_PORT=""
 LOGICAL_CPU_PORT=""
 PORT_PHYCONF=""
 LAN_PORT=""
+ETH_WAN_PORT_SEQ=""
 ETH_WAN_PORT=""
+# For auto-sensing case with ADSL/VDSL/Ether-Uplink mode, we must control WAN Port PHY when no cable line connecting or Ether-Uplink line connecting.
+CONFIG_ETH_WAN_PORT=""
 # ETH_LAN1_PORT(LTE)="0 1 2 3 4 5"  # "1 2 3 4 5"
 # ETH_LAN1_PORT(non-LTE)="0 1 2 3 4 5 7 8"  # "1 2 3 4 5"
 ETH_LAN1_PORT="0 1 2 3 4 5 7 8"  # "1 2 3 4 5"
@@ -318,6 +325,7 @@ ETH_PORT="$ETH_WAN_PORT $ETH_LAN1_PORT"
 PPP_VPORT="10" # PPPoA or IPoA
 DSL_VPORT="11" # PPPoE or IPoE
 DSL_PORT="$DSL_VPORT $PPP_VPORT"
+CPU_PORT_SEQ=""
 CPU_PORT="6"
 NA_PORT="9" # unknown ports
 CPU_VID=$DFT_CPU_VID
@@ -432,7 +440,9 @@ start_ethsw_set_variable_to_default_value()
 
 start_ethsw_ethernet()
 {
+	local IFNAME=""
 	local tmp_lan_port=""
+	echo "[setup_netdev.sh start_ethsw_ethernet]" >> $OUT_FILE
 
 	if [ "$ROUTING" == "1" ] ; then # routing/NAT
 		# find physical wan port, set CPU_PORT value, set ETH_WAN_PORT value
@@ -475,36 +485,36 @@ start_ethsw_ethernet()
 		switch_utility RegisterSet 0x455 0x07f
 
 		# Create switch internal LAN VLAN ID
-		switch_utility VLAN_IdCreate $LAN1_VID 1
+		switch_utility VLAN_IdCreate $LAN1_VID $DFT_LAN_FID
 
 		if [ "$LAN2_VID" != "" ] ; then
-			switch_utility VLAN_IdCreate $LAN2_VID 2
+			switch_utility VLAN_IdCreate $LAN2_VID $DFT_LAN_FID
 		fi
 
 		if [ "$LAN3_VID" != "" ] ; then
-			switch_utility VLAN_IdCreate $LAN3_VID 3
+			switch_utility VLAN_IdCreate $LAN3_VID $DFT_LAN_FID
 		fi
 
 		if [ "$LAN4_VID" != "" ] ; then
-			switch_utility VLAN_IdCreate $LAN4_VID 4
+			switch_utility VLAN_IdCreate $LAN4_VID $DFT_LAN_FID
 		fi
 
 		# Create switch internal CPU VLAN ID
-		switch_utility VLAN_IdCreate $CPU_VID 5
+		switch_utility VLAN_IdCreate $CPU_VID $DFT_CPU_FID
 		# Create switch internal WAN VLAN IDs
 		if [ "$WAN_INTERFACE_ENABLE" == "1" ] ; then
 			echo "[start_ethsw_ethernet] call VLAN_IdCreate for WAN"
-			switch_utility VLAN_IdCreate $WAN_VID 6
+			switch_utility VLAN_IdCreate $WAN_VID $DFT_WAN_FID
 		fi
 
-		if [ "$VOIP_INTERFACE_ENABLE" == "1" -a "$VOIP_TAGGED_VLAN" == "1" ] ; then
+		if [ "$VOIP_INTERFACE_ENABLE" == "1" ] ; then
 			echo "[start_ethsw_ethernet] call VLAN_IdCreate for VOIP"
-			switch_utility VLAN_IdCreate $VOIP_VID 7
+			switch_utility VLAN_IdCreate $VOIP_VID $DFT_WAN_FID
 		fi
 
-		if [ "$IPTV_INTERFACE_ENABLE" == "1" -a "$IPTV_TAGGED_VLAN" == "1" ] ; then
+		if [ "$IPTV_INTERFACE_ENABLE" == "1" ] ; then
 			echo "[start_ethsw_ethernet] call VLAN_IdCreate for IPTV"
-			switch_utility VLAN_IdCreate $IPTV_VID 8
+			switch_utility VLAN_IdCreate $IPTV_VID $DFT_WAN_FID
 		fi
 
 		# Set ETH LAN Port VLAN configuration
@@ -541,14 +551,50 @@ start_ethsw_ethernet()
 
 			if [ "$WAN_INTERFACE_ENABLE" == "1" ] ; then
 				switch_utility VLAN_PortCfgSet $ETH_WAN_PORT $WAN_VID 0 0 3 0 0
+				IFNAME=`ccfg_cli get ifname@$WAN_SECTION_NAME`
+				ifconfig $IFNAME down
+				ifconfig $IFNAME hw ether `getmacaddr.sh wan 0`
+				ifconfig $IFNAME up
+
+				switch_utility MAC_TableEntryRemove 0 `getmacaddr.sh wan 0`
+				switch_utility MAC_TableEntryAdd 2 $ETH_WAN_PORT 0 1 `getmacaddr.sh wan 0`
+				switch_utility MAC_TableEntryAdd 2 $CPU_PORT 0 1 `getmacaddr.sh wan 0`
 			fi
 
-			if [ "$VOIP_INTERFACE_ENABLE" == "1" -a "$VOIP_TAGGED_VLAN" == "1" ] ; then
+			if [ "$VOIP_INTERFACE_ENABLE" == "1" ] ; then
 				switch_utility VLAN_PortCfgSet $ETH_WAN_PORT $VOIP_VID 0 0 3 0 0
+				#VLAN_TAGGED=`ccfg_cli get vlan_tagged@$VOIP_SECTION_NAME`
+				if [ "$VOIP_TAGGED_VLAN" != "1" ]; then
+					IF_MAC=`getmacaddr.sh wan 1`
+				else
+					IF_MAC=`getmacaddr.sh wan 0`
+				fi
+				IFNAME=`ccfg_cli get ifname@$VOIP_SECTION_NAME`
+				ifconfig $IFNAME down
+				ifconfig $IFNAME hw ether $IF_MAC
+				ifconfig $IFNAME up
+
+				switch_utility MAC_TableEntryRemove 0 $IF_MAC
+				switch_utility MAC_TableEntryAdd 2 $ETH_WAN_PORT 0 1 $IF_MAC
+				switch_utility MAC_TableEntryAdd 2 $CPU_PORT 0 1 $IF_MAC
 			fi
 
-			if [ "$IPTV_INTERFACE_ENABLE" == "1" -a "$IPTV_TAGGED_VLAN" == "1" ] ; then
+			if [ "$IPTV_INTERFACE_ENABLE" == "1" ] ; then
 				switch_utility VLAN_PortCfgSet $ETH_WAN_PORT $IPTV_VID 0 0 3 0 0
+				#VLAN_TAGGED=`ccfg_cli get vlan_tagged@$IPTV_SECTION_NAME`
+				if [ "$IPTV_TAGGED_VLAN" != "1" ]; then
+					IF_MAC=`getmacaddr.sh wan 2`
+				else
+					IF_MAC=`getmacaddr.sh wan 0`
+				fi 
+				IFNAME=`ccfg_cli get ifname@$IPTV_SECTION_NAME`
+				ifconfig $IFNAME down
+				ifconfig $IFNAME hw ether $IF_MAC
+				ifconfig $IFNAME up
+
+				switch_utility MAC_TableEntryRemove 0 $IF_MAC
+				switch_utility MAC_TableEntryAdd 2 $ETH_WAN_PORT 0 1 $IF_MAC
+				switch_utility MAC_TableEntryAdd 2 $CPU_PORT 0 1 $IF_MAC
 			fi
 		fi
 
@@ -614,7 +660,7 @@ start_ethsw_ethernet()
 				done
 			fi
 
-			if [ "$VOIP_INTERFACE_ENABLE" == "1" -a "$VOIP_TAGGED_VLAN" == "1" ] ; then
+			if [ "$VOIP_INTERFACE_ENABLE" == "1" ] ; then
 				echo "VOIP_TAGGED_VLAN=${VOIP_TAGGED_VLAN}, call VLAN_PortMemberAdd for VOIP"
 				for argument in $ETH_WAN_PORT ; do
 					switch_utility VLAN_PortMemberAdd $VOIP_VID $argument $VOIP_TAGGED_VLAN
@@ -624,7 +670,7 @@ start_ethsw_ethernet()
 				done
 			fi
 
-			if [ "$IPTV_INTERFACE_ENABLE" == "1" -a "$IPTV_TAGGED_VLAN" == "1" ] ; then
+			if [ "$IPTV_INTERFACE_ENABLE" == "1" ] ; then
 				echo "IPTV_TAGGED_VLAN=${IPTV_TAGGED_VLAN}, call VLAN_PortMemberAdd for IPTV"
 				for argument in $ETH_WAN_PORT ; do
 					switch_utility VLAN_PortMemberAdd $IPTV_VID $argument $IPTV_TAGGED_VLAN
@@ -686,6 +732,8 @@ start_ethsw_lte()
 {
 	local tmp_lan_port=""
 
+	echo "[setup_netdev.sh start_ethsw_lte]" >> $OUT_FILE
+
 	if [ "$ROUTING" == "1" ] ; then # routing/NAT
 		# find physical wan port, set CPU_PORT value, set ETH_WAN_PORT value
 		ETH_WAN_PORT=""
@@ -726,33 +774,33 @@ start_ethsw_lte()
 		switch_utility VLAN_IdCreate $LAN1_VID 1
 
 		if [ "$LAN2_VID" != "" ] ; then
-			switch_utility VLAN_IdCreate $LAN2_VID 2
+			switch_utility VLAN_IdCreate $LAN2_VID 1
 		fi
 
 		if [ "$LAN3_VID" != "" ] ; then
-			switch_utility VLAN_IdCreate $LAN3_VID 3
+			switch_utility VLAN_IdCreate $LAN3_VID 1
 		fi
 
 		if [ "$LAN4_VID" != "" ] ; then
-			switch_utility VLAN_IdCreate $LAN4_VID 4
+			switch_utility VLAN_IdCreate $LAN4_VID 1
 		fi
 
 		# Create switch internal CPU VLAN ID
-		switch_utility VLAN_IdCreate $CPU_VID 5
+		switch_utility VLAN_IdCreate $CPU_VID 1
 		# Create switch internal WAN VLAN IDs
 		if [ "$WAN_INTERFACE_ENABLE" == "1" ] ; then
 			echo "[start_ethsw_lte] call VLAN_IdCreate for WAN"
-			switch_utility VLAN_IdCreate $WAN_VID 6
+			switch_utility VLAN_IdCreate $WAN_VID 2
 		fi
 
 		if [ "$VOIP_INTERFACE_ENABLE" == "1" ] ; then
 				echo "[start_ethsw_lte] call VLAN_IdCreate for VOIP"
-				switch_utility VLAN_IdCreate $VOIP_VID 7
+				switch_utility VLAN_IdCreate $VOIP_VID 2
 			fi
 
 		if [ "$IPTV_INTERFACE_ENABLE" == "1" ] ; then
 				echo "[start_ethsw_lte] call VLAN_IdCreate for IPTV"
-				switch_utility VLAN_IdCreate $IPTV_VID 8
+				switch_utility VLAN_IdCreate $IPTV_VID 2
 			fi
 
 		# Set ETH LAN Port VLAN configuration
@@ -952,6 +1000,8 @@ start_ethsw_adsl()
 {
 	local argument
 
+	echo "[setup_netdev.sh start_ethsw_adsl]" >> $OUT_FILE
+
 	# Set global switch parameter
 	## echo "Set global switch parameter"
 	switch_utility CfgSet 3 1 1536 0 00:00:00:00:00:00
@@ -986,25 +1036,14 @@ start_ethsw_adsl()
 		# Create switch internal WAN VLAN IDs
 		if [ "$WAN_INTERFACE_ENABLE" == "1" ] ; then
 			echo "call VLAN_IdCreate for WAN"
+			if [ "${WAN_TAGGED_VLAN}" == "1" ] ; then
+				WAN_VID=${DFT_WAN_VID}
+			fi
 			switch_utility VLAN_IdCreate $WAN_VID 2
 		fi
 
 		# Create 2nd WAN VLAN IDs for PPPoA/IPoA
 		switch_utility VLAN_IdCreate $WAN_PPP_VID 2
-
-		if [ "$VOIP_INTERFACE_ENABLE" == "1" ] ; then
-			if [ "$WAN_TAGGED_VLAN" == "1" ] ; then
-				echo "call VLAN_IdCreate for VOIP"
-				switch_utility VLAN_IdCreate $VOIP_VID 2
-			fi
-		fi
-
-		if [ "$IPTV_INTERFACE_ENABLE" == "1" ] ; then
-			if [ "$WAN_TAGGED_VLAN" == "1" ] ; then
-				echo "call VLAN_IdCreate for IPTV"
-				switch_utility VLAN_IdCreate $IPTV_VID 2
-			fi
-		fi
 
 		# Set ETH LAN Port VLAN configuration
 		## echo "Set ETH LAN Port VLAN configuration"
@@ -1040,29 +1079,7 @@ start_ethsw_adsl()
 
 		#
 		if [ "$WAN_INTERFACE_ENABLE" == "1" ] ; then
-			if [ "$ADSL_WAN_ENABLE" == "1" ] ; then
-				switch_utility VLAN_PortCfgSet $DSL_VPORT $WAN_VID 0 0 3 0 1
-			else
-				switch_utility VLAN_PortCfgSet $DSL_VPORT $WAN_VID 0 0 3 0 0
-			fi
-		fi
-
-		if [ "$WAN_TAGGED_VLAN" == "1" ] ; then
-			if [ "$VOIP_INTERFACE_ENABLE" == "1" ] ; then
-				if [ "$ADSL_WAN_ENABLE" == "1" ] ; then
-					switch_utility VLAN_PortCfgSet $DSL_VPORT $VOIP_VID 0 0 3 0 1
-				else
-					switch_utility VLAN_PortCfgSet $DSL_VPORT $VOIP_VID 0 0 3 0 0
-				fi
-			fi
-
-			if [ "$IPTV_INTERFACE_ENABLE" == "1" ] ; then
-				if [ "$ADSL_WAN_ENABLE" == "1" ] ; then
-					switch_utility VLAN_PortCfgSet $DSL_VPORT $IPTV_VID 0 0 3 0 1
-				else
-					switch_utility VLAN_PortCfgSet $DSL_VPORT $IPTV_VID 0 0 3 0 0
-				fi
-			fi
+			switch_utility VLAN_PortCfgSet $DSL_VPORT $WAN_VID 0 0 3 0 1
 		fi
 
 		# 2nd DSL WAN Port VLAN configuration
@@ -1127,32 +1144,8 @@ start_ethsw_adsl()
 			done
 
 			for argument in $CPU_PORT ; do
-				switch_utility VLAN_PortMemberAdd $WAN_VID $argument $WAN_TAGGED_VLAN
+				switch_utility VLAN_PortMemberAdd $WAN_VID $argument 0
 			done
-		fi
-
-		if [ "$WAN_TAGGED_VLAN" == "1" ] ; then
-			if [ "$VOIP_INTERFACE_ENABLE" == "1" ] ; then
-				echo "VOIP_TAGGED_VLAN=${VOIP_TAGGED_VLAN}, call VLAN_PortMemberAdd for VOIP"
-				for argument in $DSL_VPORT ; do
-					switch_utility VLAN_PortMemberAdd $VOIP_VID $argument $VOIP_TAGGED_VLAN
-				done
-
-				for argument in $CPU_PORT ; do
-					switch_utility VLAN_PortMemberAdd $VOIP_VID $argument $VOIP_TAGGED_VLAN
-				done
-			fi
-
-			if [ "$IPTV_INTERFACE_ENABLE" == "1" ] ; then
-				echo "IPTV_TAGGED_VLAN=${IPTV_TAGGED_VLAN}, call VLAN_PortMemberAdd for IPTV"
-				for argument in $DSL_VPORT ; do
-					switch_utility VLAN_PortMemberAdd $IPTV_VID $argument $IPTV_TAGGED_VLAN
-				done
-
-				for argument in $CPU_PORT ; do
-					switch_utility VLAN_PortMemberAdd $IPTV_VID $argument $IPTV_TAGGED_VLAN
-				done
-			fi
 		fi
 
 		# 2nd DSL WAN VLAN membership
@@ -1221,6 +1214,8 @@ start_ethsw_adsl()
 
 start_ethsw_vdsl()
 {
+	echo "[setup_netdev.sh start_ethsw_vdsl]" >> $OUT_FILE
+
 	# Set global switch parameter
 	## echo "Set global switch parameter"
 	switch_utility CfgSet 3 1 1536 0 00:00:00:00:00:00
@@ -1236,40 +1231,36 @@ start_ethsw_vdsl()
 
 	if [ "$ROUTING" == "1" ] ; then # routing/NAT
 		# Create switch internal LAN VLAN ID
-		switch_utility VLAN_IdCreate $LAN1_VID 1
+		switch_utility VLAN_IdCreate $LAN1_VID $DFT_LAN_FID
 
 		if [ "$LAN2_VID" != "" ] ; then
-			switch_utility VLAN_IdCreate $LAN2_VID 1
+			switch_utility VLAN_IdCreate $LAN2_VID $DFT_LAN_FID
 		fi
 
 		if [ "$LAN3_VID" != "" ] ; then
-			switch_utility VLAN_IdCreate $LAN3_VID 1
+			switch_utility VLAN_IdCreate $LAN3_VID $DFT_LAN_FID
 		fi
 
 		if [ "$LAN4_VID" != "" ] ; then
-			switch_utility VLAN_IdCreate $LAN4_VID 1
+			switch_utility VLAN_IdCreate $LAN4_VID $DFT_LAN_FID
 		fi
 
 		# Create switch internal CPU VLAN ID
-		switch_utility VLAN_IdCreate $CPU_VID 1
+		switch_utility VLAN_IdCreate $CPU_VID $DFT_CPU_FID
 		# Create switch internal WAN VLAN IDs
 		if [ "$WAN_INTERFACE_ENABLE" == "1" ] ; then
 			echo "call VLAN_IdCreate for WAN"
-			switch_utility VLAN_IdCreate $WAN_VID 2
+			switch_utility VLAN_IdCreate $WAN_VID $DFT_WAN_FID
 		fi
 
 		if [ "$VOIP_INTERFACE_ENABLE" == "1" ] ; then
-			if [ "$ADSL_WAN_ENABLE" == "0" ] || [ "$ADSL_WAN_ENABLE" == "1" -a "$WAN_TAGGED_VLAN" == "1" ] ; then
-				echo "call VLAN_IdCreate for VOIP"
-				switch_utility VLAN_IdCreate $VOIP_VID 2
-			fi
+			echo "call VLAN_IdCreate for VOIP"
+			switch_utility VLAN_IdCreate $VOIP_VID $DFT_WAN_FID
 		fi
 
 		if [ "$IPTV_INTERFACE_ENABLE" == "1" ] ; then
-			if [ "$ADSL_WAN_ENABLE" == "0" ] || [ "$ADSL_WAN_ENABLE" == "1" -a "$WAN_TAGGED_VLAN" == "1" ] ; then
-				echo "call VLAN_IdCreate for IPTV"
-				switch_utility VLAN_IdCreate $IPTV_VID 2
-			fi
+			echo "call VLAN_IdCreate for IPTV"
+			switch_utility VLAN_IdCreate $IPTV_VID $DFT_WAN_FID
 		fi
 
 		# Set ETH LAN Port VLAN configuration
@@ -1306,28 +1297,16 @@ start_ethsw_vdsl()
 
 		#
 		if [ "$WAN_INTERFACE_ENABLE" == "1" ] ; then
-			if [ "$ADSL_WAN_ENABLE" == "1" ] ; then
-				switch_utility VLAN_PortCfgSet $DSL_VPORT $WAN_VID 0 0 3 0 1
-			else
-				switch_utility VLAN_PortCfgSet $DSL_VPORT $WAN_VID 0 0 3 0 0
-			fi
+			switch_utility VLAN_PortCfgSet $DSL_VPORT $WAN_VID 0 0 3 0 0
 		fi
 
 		if [ "$VDSL_WAN_ENABLE" == "1" ] || [ "$ADSL_WAN_ENABLE" == "1" -a "$WAN_TAGGED_VLAN" == "1" ] ; then
 			if [ "$VOIP_INTERFACE_ENABLE" == "1" ] ; then
-				if [ "$ADSL_WAN_ENABLE" == "1" ] ; then
-					switch_utility VLAN_PortCfgSet $DSL_VPORT $VOIP_VID 0 0 3 0 1
-				else
-					switch_utility VLAN_PortCfgSet $DSL_VPORT $VOIP_VID 0 0 3 0 0
-				fi
+				switch_utility VLAN_PortCfgSet $DSL_VPORT $VOIP_VID 0 0 3 0 0
 			fi
 
 			if [ "$IPTV_INTERFACE_ENABLE" == "1" ] ; then
-				if [ "$ADSL_WAN_ENABLE" == "1" ] ; then
-					switch_utility VLAN_PortCfgSet $DSL_VPORT $IPTV_VID 0 0 3 0 1
-				else
-					switch_utility VLAN_PortCfgSet $DSL_VPORT $IPTV_VID 0 0 3 0 0
-				fi
+				switch_utility VLAN_PortCfgSet $DSL_VPORT $IPTV_VID 0 0 3 0 0
 			fi
 		fi
 
@@ -1454,6 +1433,8 @@ start_ethsw()
 	local vlan_idx=""
 	local max_vlan=""
 	local tmp_lan_port=""
+
+	echo "[setup_netdev.sh start_ethsw]" >> $OUT_FILE
 
 	# set default value to global variables
 	start_ethsw_set_variable_to_default_value
@@ -1762,11 +1743,16 @@ start_ethsw()
 
 init_system()
 {
+	echo "[setup_netdev.sh init_system]" >> $OUT_FILE
+
 	grep "xDSL_MODE_VRX" $RC_CONF
+	echo "[setup_netdev.sh init_system] \$?=$?" >> $OUT_FILE
 
 	if [ $? != "0" ] ; then
 		MODEL=`sed -n "/CONFIG_IFX_MODEL_NAME/p" $SYS_CONF`
 		echo $MODEL | grep GRX288_GW_VRX_BSP
+		echo "[setup_netdev.sh init_system] MODEL=$MODEL" >> $OUT_FILE
+
 		if [ $? = "0" ] ; then
 			echo "#<< xDSL_MODE_VRX"     >> $RC_CONF
 			echo "xDSL_MODE_VRX=eth_wan" >> $RC_CONF
@@ -1799,9 +1785,27 @@ init_system()
 	echo 3000 > /proc/sys/vm/min_free_kbytes     # -- OOM issue
 	echo 10   > /proc/sys/net/core/netdev_budget # -- bad voice quality
 
+	### bitonic(20121130)
+	### When I check the DSL auto-sensing function of UGW 5.1.1, I find that Lantiq does the following setting.
+	### copy from Lantiq load_ppa_modules.sh
+	# changed min_free_kbytes to have more free memory a given point of execution
+	#### echo 1024 > /proc/sys/vm/min_free_kbytes => We use 3000 to fix OOM issue now
+	echo 4096 > /proc/sys/net/ipv4/route/max_size
+
+	# memory tunning for all platform lowmem_reserve_ratio is a MUST
+	echo 250 >  /proc/sys/vm/lowmem_reserve_ratio
+	echo 2 > /proc/sys/vm/dirty_background_ratio
+	echo 250 > /proc/sys/vm/dirty_writeback_centisecs
+	echo 10 > /proc/sys/vm/dirty_ratio
+	echo 16384 > /proc/sys/vm/max_map_count
+	echo 2 > /proc/sys/vm/page-cluster
+	echo 70 > /proc/sys/vm/swappiness
+	### end of copy from Lantiq load_ppa_modules.sh
+
+	echo "[setup_netdev.sh init_system] xDSL_MODE_VRX=$xDSL_MODE_VRX" >> $OUT_FILE
 	if [ "$xDSL_MODE_VRX" == "vdsl" ] ; then
 
-		echo "Setting in flash is VDSL mode"
+		echo "[setup_netdev.sh init_system] Setting in flash is VDSL mode" >> $OUT_FILE
 
 		if [ "$ACCELERATION" != "acc_yes" ] ; then
 			if [ -e /lib/modules/${KERNEL_VER}/ifxmips_ptm.ko ] ; then
@@ -1813,11 +1817,22 @@ init_system()
 			fi
 		fi
 		if [ "$ACCELERATION" == "acc_yes" ] ; then
-			echo "Enter PPA mode"
+			echo "[setup_netdev.sh init_system] Enter PPA mode" >> $OUT_FILE
+			#disable_vrx_switch_ports
 			insmod /lib/modules/${KERNEL_VER}/ifxmips_ppa_datapath_vr9_e5.ko
+
+			# We use remove module, insert moudle to workaround IAD can not receive packets during auto-sensing.
+			if [ "$AUTO_SENSING_WORKAROUNG" == "1" ] ; then
+				sleep 1
+				rmmod ifxmips_ppa_datapath_vr9_e5
+				sleep 1
+				insmod /lib/modules/${KERNEL_VER}/ifxmips_ppa_datapath_vr9_e5.ko
+			fi
+
 			insmod /lib/modules/${KERNEL_VER}/ifxmips_ppa_hal_vr9_e5.ko
 			insmod /lib/modules/${KERNEL_VER}/ifx_ppa_api.ko
 			insmod /lib/modules/${KERNEL_VER}/ifx_ppa_api_proc.ko
+			#enable_vrx_switch_ports
 			usleep 100000
 		fi
 
@@ -1832,7 +1847,7 @@ init_system()
 
 	elif [ "$xDSL_MODE_VRX" == "adsl_a" ] ; then
 
-		echo "Setting in flash is ADSL Annex A mode"
+		echo "[setup_netdev.sh init_system] Setting in flash is ADSL Annex A mode" >> $OUT_FILE
 
 		if [ "$ACCELERATION" != "acc_yes" ] ; then
 			if [ -e /lib/modules/${KERNEL_VER}/ifxmips_atm.ko ] ; then
@@ -1844,12 +1859,22 @@ init_system()
 			fi
 		fi
 		if [ "$ACCELERATION" == "acc_yes" ] ; then
-			echo "Enter PPA mode"
+			echo "[setup_netdev.sh init_system] Enter PPA mode" >> $OUT_FILE
+			#disable_vrx_switch_ports
 			insmod /lib/modules/${KERNEL_VER}/ifxmips_ppa_datapath_vr9_a5.ko
-			admin_sw_ports 0
+
+			# We use remove module, insert moudle to workaround IAD can not receive packets during auto-sensing.
+			if [ "$AUTO_SENSING_WORKAROUNG" == "1" ] ; then
+				sleep 1
+				rmmod ifxmips_ppa_datapath_vr9_a5
+				sleep 1
+				insmod /lib/modules/${KERNEL_VER}/ifxmips_ppa_datapath_vr9_a5.ko
+			fi
+
 			insmod /lib/modules/${KERNEL_VER}/ifxmips_ppa_hal_vr9_a5.ko
 			insmod /lib/modules/${KERNEL_VER}/ifx_ppa_api.ko
 			insmod /lib/modules/${KERNEL_VER}/ifx_ppa_api_proc.ko
+			#enable_vrx_switch_ports
 			usleep 100000
 		fi
 
@@ -1866,7 +1891,7 @@ init_system()
 
 	elif [ "$xDSL_MODE_VRX" == "adsl_b" ] ; then
 
-		echo "Setting in flash is ADSL Annex B mode"
+		echo "[setup_netdev.sh init_system] Setting in flash is ADSL Annex B mode" > /dev/console
 
 		if [ "$ACCELERATION" != "acc_yes" ] ; then
 			if [ -e /lib/modules/${KERNEL_VER}/ifxmips_atm.ko ] ; then
@@ -1878,12 +1903,22 @@ init_system()
 			fi
 		fi
 		if [ "$ACCELERATION" == "acc_yes" ] ; then
-			echo "Enter PPA mode"
+			echo "[setup_netdev.sh init_system] Enter PPA mode" >> $OUT_FILE
+			#disable_vrx_switch_ports
 			insmod /lib/modules/${KERNEL_VER}/ifxmips_ppa_datapath_vr9_a5.ko
-			admin_sw_ports 0
+
+			# We use remove module, insert moudle to workaround IAD can not receive packets during auto-sensing.
+			if [ "$AUTO_SENSING_WORKAROUNG" == "1" ] ; then
+				sleep 1
+				rmmod ifxmips_ppa_datapath_vr9_a5
+				sleep 1
+				insmod /lib/modules/${KERNEL_VER}/ifxmips_ppa_datapath_vr9_a5.ko
+			fi
+
 			insmod /lib/modules/${KERNEL_VER}/ifxmips_ppa_hal_vr9_a5.ko
 			insmod /lib/modules/${KERNEL_VER}/ifx_ppa_api.ko
 			insmod /lib/modules/${KERNEL_VER}/ifx_ppa_api_proc.ko
+			#enable_vrx_switch_ports
 			usleep 100000
 		fi
 
@@ -1900,14 +1935,31 @@ init_system()
 
 	elif [ "$xDSL_MODE_VRX" == "eth_wan" ] ; then
 
-		echo "Setting in flash is Ethernet WAN mode"
+		echo "[setup_netdev.sh init_system] Setting in flash is Ethernet WAN mode" >> $OUT_FILE
 
+		#disable_vrx_switch_ports
 		if [ -f /lib/modules/${KERNEL_VER}/ifxmips_ppa_datapath_vr9_d5.ko ] ; then
 			insmod /lib/modules/${KERNEL_VER}/ifxmips_ppa_datapath_vr9_d5.ko
+
+			# We use remove module, insert moudle to workaround IAD can not receive packets during auto-sensing.
+			if [ "$AUTO_SENSING_WORKAROUNG" == "1" ] ; then
+				sleep 1
+				rmmod ifxmips_ppa_datapath_vr9_d5
+				sleep 1
+				insmod /lib/modules/${KERNEL_VER}/ifxmips_ppa_datapath_vr9_d5.ko
+			fi
 		else
 			insmod /lib/modules/${KERNEL_VER}/ifxmips_ppa_datapath_vr9_e5.ko ethwan=2
+
+			# We use remove module, insert moudle to workaround IAD can not receive packets during auto-sensing.
+			if [ "$AUTO_SENSING_WORKAROUNG" == "1" ] ; then
+				sleep 1
+				rmmod ifxmips_ppa_datapath_vr9_e5
+				sleep 1
+				insmod /lib/modules/${KERNEL_VER}/ifxmips_ppa_datapath_vr9_e5.ko ethwan=2
+			fi
 		fi
-		admin_sw_ports 0
+
 		if [ -f /lib/modules/${KERNEL_VER}/ifxmips_ppa_hal_vr9_d5.ko ] ; then
 			insmod /lib/modules/${KERNEL_VER}/ifxmips_ppa_hal_vr9_d5.ko
 		else
@@ -1915,6 +1967,7 @@ init_system()
 		fi
 		insmod /lib/modules/${KERNEL_VER}/ifx_ppa_api.ko
 		insmod /lib/modules/${KERNEL_VER}/ifx_ppa_api_proc.ko
+		#enable_vrx_switch_ports
 
 		usleep 100000
 
@@ -1922,16 +1975,33 @@ init_system()
 
 	elif [ "$xDSL_MODE_VRX" == "lte" ] ; then
 
-		echo "Setting in flash is LTE mode"
+		echo "[setup_netdev.sh init_system] Setting in flash is LTE mode" >> $OUT_FILE
 
+		#disable_vrx_switch_ports
 		if [ -f /lib/modules/${KERNEL_VER}/ifxmips_ppa_datapath_vr9_d5.ko ] ; then
 			#insmod /lib/modules/${KERNEL_VER}/ifxmips_ppa_datapath_vr9_d5.ko
 			echo "3:ADLEY:PPA:: datapath_vr9_d5.ko ethwan=2 wanitf=8" > /dev/console
 			insmod /lib/modules/${KERNEL_VER}/ifxmips_ppa_datapath_vr9_d5.ko ethwan=2 wanitf=8
+
+			# We use remove module, insert moudle to workaround IAD can not receive packets during auto-sensing.
+			if [ "$AUTO_SENSING_WORKAROUNG" == "1" ] ; then
+				sleep 1
+				rmmod ifxmips_ppa_datapath_vr9_d5
+				sleep 1
+				insmod /lib/modules/${KERNEL_VER}/ifxmips_ppa_datapath_vr9_d5.ko ethwan=2 wanitf=8
+			fi
 		else
 			insmod /lib/modules/${KERNEL_VER}/ifxmips_ppa_datapath_vr9_e5.ko ethwan=2
+
+			# We use remove module, insert moudle to workaround IAD can not receive packets during auto-sensing.
+			if [ "$AUTO_SENSING_WORKAROUNG" == "1" ] ; then
+				sleep 1
+				rmmod ifxmips_ppa_datapath_vr9_e5
+				sleep 1
+				insmod /lib/modules/${KERNEL_VER}/ifxmips_ppa_datapath_vr9_e5.ko ethwan=2
+			fi
 		fi
-		admin_sw_ports 0
+
 		if [ -f /lib/modules/${KERNEL_VER}/ifxmips_ppa_hal_vr9_d5.ko ] ; then
 			insmod /lib/modules/${KERNEL_VER}/ifxmips_ppa_hal_vr9_d5.ko
 		else
@@ -1939,6 +2009,7 @@ init_system()
 		fi
 		insmod /lib/modules/${KERNEL_VER}/ifx_ppa_api.ko
 		insmod /lib/modules/${KERNEL_VER}/ifx_ppa_api_proc.ko
+		#enable_vrx_switch_ports
 
 		usleep 100000
 
@@ -1946,7 +2017,7 @@ init_system()
 
 	else
 
-		echo "No mode was found"
+		echo "[setup_netdev.sh init_system] No mode was found" > /dev/console
 		exit 1
 
 	fi
@@ -1955,6 +2026,8 @@ init_system()
 
 init_ppadev()
 {
+	echo "[setup_netdev.sh init_ppadev] xDSL_MODE_VRX=$xDSL_MODE_VRX" >> $OUT_FILE
+
 	if [ "$xDSL_MODE_VRX" == "vdsl" ] ; then
 		init_netdev ptm0
 	elif [ "$xDSL_MODE_VRX" == "adsl_a" ] || [ "$xDSL_MODE_VRX" == "adsl_b" ] ; then
@@ -1969,20 +2042,22 @@ init_ppadev()
 	fi
 }
 
-
+# enable/disable switch ports and phys, not include WAN Port
 # $1: 0-disable, 1-enable
 admin_sw_ports()
 {
 	local	CPU_PORT="6"
-	local	PORTS="0 1 2 3 4 5 ${CPU_PORT} 7 8 10 11"
+	local	PORTS="0 1 2 3 4 5 ${CPU_PORT} 7 8 9 10 11"
 	# LAN_PORTS(LTE)="0 1 2 3 4 5"
-	# LAN_PORTS(non-LTE)="0 1 2 3 4 5 7 8"
-	local	LAN_PORTS="0 1 2 3 4 5 7 8"
+	# LAN_PORTS(non-LTE)="0 1 2 3 4 5 7 8 9"
+	local	LAN_PORTS="0 1 2 3 4 5 7 8 9"
 	local	PORT=""
 	local	ETH_WAN_PORT_SEQ=""
 	local	ETH_WAN_PORT=""
-	local	wan_type
-	local	active_wan_type
+	local	wan_type=""
+	local	active_wan_type=""
+
+	echo "[setup_netdev.sh admin_sw_ports] \$1=$1" >> $OUT_FILE
 
 	wan_type=`ccfg_cli get wan_type@system`
 	if [ "$wan_type" == "0" ] ; then
@@ -2005,9 +2080,13 @@ admin_sw_ports()
 
 	if [ "$1" == "0" ] ; then
 		# power down
-		if [ -f /usr/sbin/rtl_switch_utility ] ; then
-			rtl_switch_utility PortPowerOff 0xf
+		if [ -f /usr/bin/rtl8367_switch_utility ] ; then
+			rtl8367_switch_utility PortPowerOnOff 0 0
+			rtl8367_switch_utility PortPowerOnOff 1 0
+			rtl8367_switch_utility PortPowerOnOff 2 0
+			rtl8367_switch_utility PortPowerOnOff 3 0
 		fi
+
 		for PORT in $LAN_PORTS ; do
 			if [ "$PORT" -gt "6" ] ; then
 				continue
@@ -2020,14 +2099,17 @@ admin_sw_ports()
 				let VAL=$VAL+2048
 				VAL=`printf 0x%04x $VAL`
 				switch_utility MDIO_DataWrite $MDIO_PHY 0 $VAL
+				echo "[setup_netdev.sh admin_sw_ports] switch_utility MDIO_DataWrite $MDIO_PHY 0 $VAL" >> $OUT_FILE
 			fi
 		done
 		# disable
 		for PORT in $PORTS ; do
 			if [ "$PORT" == "$CPU_PORT" ] ; then
 				switch_utility PortCfgSet $PORT 0 0 0 0 0 1 0 255 0 4
+				echo "[setup_netdev.sh admin_sw_ports] switch_utility PortCfgSet $PORT 0 0 0 0 0 1 0 255 0 4" >> $OUT_FILE
 			else
 				switch_utility PortCfgSet $PORT 0 0 0 0 0 1 0 255 0 0
+				echo "[setup_netdev.sh admin_sw_ports] switch_utility PortCfgSet $PORT 0 0 0 0 0 1 0 255 0 0" >> $OUT_FILE
 			fi
 		done
 	else
@@ -2047,11 +2129,14 @@ admin_sw_ports()
 		for PORT in $PORTS ; do
 			if [ "$PORT" == "$CPU_PORT" ] ; then
 				switch_utility PortCfgSet $PORT 1 0 0 0 0 1 0 255 0 4
+				echo "switch_utility PortCfgSet $PORT 1 0 0 0 0 1 0 255 0 4" >> $OUT_FILE
 			elif [ "$PORT" != "$ETH_WAN_PORT" ] ; then
 				switch_utility PortCfgSet $PORT 1 0 0 0 0 1 0 255 0 0
+				echo "[setup_netdev.sh admin_sw_ports] switch_utility PortCfgSet $PORT 1 0 0 0 0 1 0 255 0 0" >> $OUT_FILE
 			fi
 
 		done
+
 		# power up
 		for PORT in $LAN_PORTS ; do
 			if [ "$PORT" -gt "6" ] ; then
@@ -2065,15 +2150,306 @@ admin_sw_ports()
 				let VAL=$VAL-2048
 				VAL=`printf 0x%04x $VAL`
 				switch_utility MDIO_DataWrite $MDIO_PHY 0 $VAL
+				echo "[setup_netdev.sh admin_sw_ports] switch_utility MDIO_DataWrite $MDIO_PHY 0 $VAL" >> $OUT_FILE
 			fi
 		done
-		if [ -f /usr/sbin/rtl_switch_utility ] ; then
-			rtl_switch_utility PortPowerOn 0xf
+
+		if [ -f /usr/bin/rtl8367_switch_utility ] ; then
+			rtl8367_switch_utility PortPowerOnOff 0 1
+			rtl8367_switch_utility PortPowerOnOff 1 1
+			rtl8367_switch_utility PortPowerOnOff 2 1
+			rtl8367_switch_utility PortPowerOnOff 3 1
 		fi
 	fi
 }
 
+# only enable/disable switch lan phys
+# $1: 0-disable, 1-enable
+admin_sw_lan_phys()
+{
+	local	CPU_PORT="6"
+	local	PORTS="0 1 2 3 4 5 ${CPU_PORT} 7 8 9 10 11"
+	# LAN_PORTS(LTE)="0 1 2 3 4 5"
+	# LAN_PORTS(non-LTE)="0 1 2 3 4 5 7 8 9"
+	local	LAN_PORTS="0 1 2 3 4 5 7 8 9"
+	local	PORT=""
+	local	ETH_WAN_PORT_SEQ=""
+	local	ETH_WAN_PORT=""
+	local	wan_type=""
+	local	active_wan_type=""
 
+	echo "[setup_netdev.sh admin_sw_lan_phys] \$1=$1" >> $OUT_FILE
+
+	if [ -n "`pgrep midcore`" ] ; then
+		umngProg=umngcli
+	else
+		umngProg=umngcli2
+	fi
+
+	wan_type=`ccfg_cli get wan_type@system`
+	if [ "$wan_type" == "0" ] ; then
+		# auto-detection
+		active_wan_type=`ccfg_cli get active_wan_type@system`
+		if [ "$active_wan_type" != "1" ] && [ "$active_wan_type" != "3" ] ; then
+			active_wan_type=`ccfg_cli get pre_dsl_wan_type@system`
+			if [ "$active_wan_type" != "1" ] && [ "$active_wan_type" != "3" ] ; then
+				active_wan_type="1"
+			fi
+		fi
+	else
+		active_wan_type=$wan_type
+	fi
+
+	if [ "$active_wan_type" == "5" ] ; then
+		# LTE mode
+		LAN_PORTS="0 1 2 3 4 5"
+	fi
+
+	if [ "$1" == "0" ] ; then
+		# power down
+		echo "[setup_netdev.sh admin_sw_lan_phys] power down" >> $OUT_FILE
+		if [ -f /usr/bin/rtl8367_switch_utility ] ; then
+			rtl8367_switch_utility PortPowerOnOff 0 0
+			rtl8367_switch_utility PortPowerOnOff 1 0
+			rtl8367_switch_utility PortPowerOnOff 2 0
+			rtl8367_switch_utility PortPowerOnOff 3 0
+		fi
+
+		for PORT in $LAN_PORTS ; do
+			if [ "$PORT" -gt "6" -o "$PORT" == "$CONFIG_ETH_WAN_PORT" ] ; then
+				continue
+			fi
+
+			MDIO_PHY=`switch_utility PHY_AddrGet $PORT | cut -d '=' -f 2`
+			VAL=`switch_utility MDIO_DataRead $MDIO_PHY 0 | grep "Data = " | cut -d '=' -f 2`
+			VAL=`printf %d $VAL`
+			let PD=$VAL/2048%2
+			if [ "$PD" != "1" ] ; then
+				let VAL=$VAL+2048
+				VAL=`printf 0x%04x $VAL`
+				switch_utility MDIO_DataWrite $MDIO_PHY 0 $VAL
+				echo "[setup_netdev.sh admin_sw_lan_phys] switch_utility MDIO_DataWrite $MDIO_PHY 0 $VAL" >> $OUT_FILE
+			fi
+		done
+	else
+		# power up
+		echo "[setup_netdev.sh admin_sw_lan_phys] power up" >> $OUT_FILE
+		for PORT in $LAN_PORTS ; do
+			if [ "$PORT" -gt "6" -o "$PORT" == "$CONFIG_ETH_WAN_PORT" ] ; then
+				continue
+			fi
+			MDIO_PHY=`switch_utility PHY_AddrGet $PORT | cut -d '=' -f 2`
+			VAL=`switch_utility MDIO_DataRead $MDIO_PHY 0 | grep "Data = " | cut -d '=' -f 2`
+			VAL=`printf %d $VAL`
+			let PD=$VAL/2048%2
+			if [ "$PD" == "1" ] ; then
+				let VAL=$VAL-2048
+				VAL=`printf 0x%04x $VAL`
+				switch_utility MDIO_DataWrite $MDIO_PHY 0 $VAL
+				echo "[setup_netdev.sh admin_sw_lan_phys] switch_utility MDIO_DataWrite $MDIO_PHY 0 $VAL" >> $OUT_FILE
+			fi
+		done
+
+		if [ -f /usr/bin/rtl8367_switch_utility ] ; then
+			rtl8367_switch_utility PortPowerOnOff 0 1
+			rtl8367_switch_utility PortPowerOnOff 1 1
+			rtl8367_switch_utility PortPowerOnOff 2 1
+			rtl8367_switch_utility PortPowerOnOff 3 1
+		fi
+	fi
+}
+
+admin_sw_wan_phy()
+{
+	if [ "$CONFIG_ETH_WAN_PORT" == "" ] ; then
+		return
+	fi
+
+	echo "[setup_netdev.sh admin_sw_wan_phy] \$1=$1" >> $OUT_FILE
+
+	if [ "$1" == "0" ] ; then
+		# power down
+		echo "[setup_netdev.sh admin_sw_wan_phy] power down" >> $OUT_FILE
+
+		MDIO_PHY=`switch_utility PHY_AddrGet $CONFIG_ETH_WAN_PORT | cut -d '=' -f 2`
+		VAL=`switch_utility MDIO_DataRead $MDIO_PHY 0 | grep "Data = " | cut -d '=' -f 2`
+		VAL=`printf %d $VAL`
+		let PD=$VAL/2048%2
+		if [ "$PD" != "1" ] ; then
+			let VAL=$VAL+2048
+			VAL=`printf 0x%04x $VAL`
+			switch_utility MDIO_DataWrite $MDIO_PHY 0 $VAL
+			echo "[setup_netdev.sh admin_sw_wan_phy] switch_utility MDIO_DataWrite $MDIO_PHY 0 $VAL" >> $OUT_FILE
+		fi
+	else
+		# power up
+		echo "[setup_netdev.sh admin_sw_wan_phy] power up" >> $OUT_FILE
+
+		MDIO_PHY=`switch_utility PHY_AddrGet $CONFIG_ETH_WAN_PORT | cut -d '=' -f 2`
+		VAL=`switch_utility MDIO_DataRead $MDIO_PHY 0 | grep "Data = " | cut -d '=' -f 2`
+		VAL=`printf %d $VAL`
+		let PD=$VAL/2048%2
+		if [ "$PD" == "1" ] ; then
+			let VAL=$VAL-2048
+			VAL=`printf 0x%04x $VAL`
+			switch_utility MDIO_DataWrite $MDIO_PHY 0 $VAL
+			echo "[setup_netdev.sh admin_sw_wan_phy] switch_utility MDIO_DataWrite $MDIO_PHY 0 $VAL" >> $OUT_FILE
+		fi
+	fi
+}
+
+admin_sw_phys()
+{
+	local	CPU_PORT="6"
+	local	PORTS="0 1 2 3 4 5 ${CPU_PORT} 7 8 9 10 11"
+	# LAN_PORTS(LTE)="0 1 2 3 4 5"
+	# LAN_PORTS(non-LTE)="0 1 2 3 4 5 7 8 9"
+	local	LAN_PORTS="0 1 2 3 4 5 7 8 9"
+	local	PORT=""
+	local	ETH_WAN_PORT_SEQ=""
+	local	ETH_WAN_PORT=""
+	local	wan_type=""
+	local	active_wan_type=""
+
+	echo "[setup_netdev.sh admin_sw_phys] \$1=$1" >> $OUT_FILE
+
+	if [ -n "`pgrep midcore`" ] ; then
+		umngProg=umngcli
+	else
+		umngProg=umngcli2
+	fi
+
+	wan_type=`ccfg_cli get wan_type@system`
+	if [ "$wan_type" == "0" ] ; then
+		# auto-detection
+		active_wan_type=`ccfg_cli get active_wan_type@system`
+		if [ "$active_wan_type" != "1" ] && [ "$active_wan_type" != "3" ] ; then
+			active_wan_type=`ccfg_cli get pre_dsl_wan_type@system`
+			if [ "$active_wan_type" != "1" ] && [ "$active_wan_type" != "3" ] ; then
+				active_wan_type="1"
+			fi
+		fi
+	else
+		active_wan_type=$wan_type
+	fi
+
+	if [ "$active_wan_type" == "5" ] ; then
+		# LTE mode
+		LAN_PORTS="0 1 2 3 4 5"
+	fi
+
+	if [ "$1" == "0" ] ; then
+		# power down
+		echo "[setup_netdev.sh admin_sw_phys] power down" >> $OUT_FILE
+		if [ -f /usr/bin/rtl8367_switch_utility ] ; then
+			rtl8367_switch_utility PortPowerOnOff 0 0
+			rtl8367_switch_utility PortPowerOnOff 1 0
+			rtl8367_switch_utility PortPowerOnOff 2 0
+			rtl8367_switch_utility PortPowerOnOff 3 0
+		fi
+
+		for PORT in $LAN_PORTS ; do
+			if [ "$PORT" -gt "6" ] ; then
+				continue
+			fi
+
+			MDIO_PHY=`switch_utility PHY_AddrGet $PORT | cut -d '=' -f 2`
+			VAL=`switch_utility MDIO_DataRead $MDIO_PHY 0 | grep "Data = " | cut -d '=' -f 2`
+			VAL=`printf %d $VAL`
+			let PD=$VAL/2048%2
+			if [ "$PD" != "1" ] ; then
+				let VAL=$VAL+2048
+				VAL=`printf 0x%04x $VAL`
+				switch_utility MDIO_DataWrite $MDIO_PHY 0 $VAL
+				echo "[setup_netdev.sh admin_sw_lan_phys] switch_utility MDIO_DataWrite $MDIO_PHY 0 $VAL" >> $OUT_FILE
+			fi
+		done
+	else
+		# power up
+		echo "[setup_netdev.sh admin_sw_lan_phys] power up" >> $OUT_FILE
+		for PORT in $LAN_PORTS ; do
+			if [ "$PORT" -gt "6" ] ; then
+				continue
+			fi
+			MDIO_PHY=`switch_utility PHY_AddrGet $PORT | cut -d '=' -f 2`
+			VAL=`switch_utility MDIO_DataRead $MDIO_PHY 0 | grep "Data = " | cut -d '=' -f 2`
+			VAL=`printf %d $VAL`
+			let PD=$VAL/2048%2
+			if [ "$PD" == "1" ] ; then
+				let VAL=$VAL-2048
+				VAL=`printf 0x%04x $VAL`
+				switch_utility MDIO_DataWrite $MDIO_PHY 0 $VAL
+				echo "[setup_netdev.sh admin_sw_lan_phys] switch_utility MDIO_DataWrite $MDIO_PHY 0 $VAL" >> $OUT_FILE
+			fi
+		done
+
+		if [ -f /usr/bin/rtl8367_switch_utility ] ; then
+			rtl8367_switch_utility PortPowerOnOff 0 1
+			rtl8367_switch_utility PortPowerOnOff 1 1
+			rtl8367_switch_utility PortPowerOnOff 2 1
+			rtl8367_switch_utility PortPowerOnOff 3 1
+		fi
+	fi
+}
+
+admin_sw_wan_mac()
+{
+	if [ "$CONFIG_ETH_WAN_PORT" == "" ] ; then
+		return
+	fi
+
+	echo "[setup_netdev.sh admin_sw_wan_mac] \$1=$1" >> $OUT_FILE
+
+	if [ "$1" == "0" ] ; then
+		# power down
+		echo "[setup_netdev.sh admin_sw_wan_mac] power down" >> $OUT_FILE
+
+		switch_utility PortCfgSet $CONFIG_ETH_WAN_PORT 0 0 0 0 0 1 0 255 0 0
+		echo "[setup_netdev.sh admin_sw_wan_mac] switch_utility PortCfgSet $CONFIG_ETH_WAN_PORT 1 0 0 0 0 1 0 255 0 0" >> $OUT_FILE
+	else
+		# power up
+		echo "[setup_netdev.sh admin_sw_wan_mac] power up" >> $OUT_FILE
+
+		switch_utility PortCfgSet $CONFIG_ETH_WAN_PORT 1 0 0 0 0 1 0 255 0 0
+		echo "[setup_netdev.sh admin_sw_wan_mac] switch_utility PortCfgSet $CONFIG_ETH_WAN_PORT 1 0 0 0 0 1 0 255 0 0" >> $OUT_FILE
+	fi
+}
+
+# only disable switch port, not to disable PHY
+disable_vrx_switch_ports() {
+	echo "[setup_netdev.sh disable_vrx_switch_ports]" > /dev/console
+	SWITCH_PORT="0 1 2 3 4 5 7 8 9 10 11"
+	for argument in $SWITCH_PORT ;do
+		#switch_utility PortCfgSet $argument 0 0 0 0 0 0 1 255 0 0
+		switch_utility PortCfgSet $argument 0 0 0 0 0 1 0 255 0 0
+		echo "[disable_vrx_switch_ports] switch_utility PortCfgSet $argument 0 0 0 0 0 1 0 255 0 0" > $OUT_FILE
+	done
+
+	SWITCH_PORT="6"
+	for argument in $SWITCH_PORT ;do
+		#switch_utility PortCfgSet $argument 0 0 0 0 0 0 0 255 0 0
+		switch_utility PortCfgSet $argument 0 0 0 0 0 1 0 255 0 4
+		echo "[disable_vrx_switch_ports] switch_utility PortCfgSet $argument 0 0 0 0 0 1 0 255 0 4" > $OUT_FILE
+	done
+}
+
+# only enable switch port, not to enable PHY
+enable_vrx_switch_ports() {
+	echo "[setup_netdev.sh enable_vrx_switch_ports]" > /dev/console
+	SWITCH_PORT="6"
+	for argument in $SWITCH_PORT ;do
+		#switch_utility PortCfgSet $argument 1 0 0 0 0 0 0 255 0 0
+		switch_utility PortCfgSet $argument 1 0 0 0 0 1 0 255 0 4
+		echo "[enable_vrx_switch_ports] switch_utility PortCfgSet $argument 1 0 0 0 0 1 0 255 0 4" > $OUT_FILE
+	done
+
+	SWITCH_PORT="0 1 2 3 4 5 7 8 9 10 11"
+	for argument in $SWITCH_PORT ;do
+		#switch_utility PortCfgSet $argument 1 0 0 0 0 0 0 255 0 0
+		switch_utility PortCfgSet $argument 1 0 0 0 0 1 0 255 0 0
+		echo "[enable_vrx_switch_ports] switch_utility PortCfgSet $argument 1 0 0 0 0 1 0 255 0 0" > $OUT_FILE
+	done
+}
 
 # . $RC_CONF
 
@@ -2129,41 +2505,101 @@ case "`ccfg_cli get wan_type@system`" in
 		;;
 esac
 
+# get Ether-Uplink WAN Port and CPU Port
+CPU_PORT_SEQ=""
+ETH_WAN_PORT_SEQ=""
+ETH_WAN_PORT=""
+CONFIG_ETH_WAN_PORT=""
+if [ -n "`pgrep midcore`" ] ; then
+	umngProg=umngcli
+else
+	umngProg=umngcli2
+fi
+if [ "`/bin/grep -ci bridge /proc/cmdline`" -le 0 ] &&
+   [ "`$umngProg get wan_lan_share@vlan`" != "1" ] ; then
+	ETH_WAN_PORT_SEQ=`$umngProg get wan_port@vlan`
+	let ETH_WAN_PORT_SEQ=$ETH_WAN_PORT_SEQ+1
+	CONFIG_ETH_WAN_PORT=`$umngProg get port_phyconf@vlan | cut -d ' ' -f $ETH_WAN_PORT_SEQ`
+	ETH_WAN_PORT=$CONFIG_ETH_WAN_PORT
+fi
+
+CPU_PORT_SEQ=`$umngProg get logical_cpu_port@vlan`
+let CPU_PORT_SEQ=$CPU_PORT_SEQ+1
+CPU_PORT=`$umngProg get port_phyconf@vlan | cut -d ' ' -f $CPU_PORT_SEQ`
+
+echo "[setup_netdev.sh] ETH_WAN_PORT=$ETH_WAN_PORT, CONFIG_ETH_WAN_PORT=$CONFIG_ETH_WAN_PORT, CPU_PORT=$CPU_PORT" > /dev/console
+
 case "$1" in
 	""|"init")
-		echo "[setup_netdev] init_system and start_ethsw"
+		echo "[setup_netdev.sh] init_system and start_ethsw" > /dev/console
 		admin_sw_ports 0
 		init_system
 		start_ethsw
 		admin_sw_ports 1
 		;;
 	"system")
-		echo "[setup_netdev] init_system"
+		echo "[setup_netdev.sh] init_system" > /dev/console
 		init_system
 		;;
 	"ppadev")
-		echo "[setup_netdev] init_ppadev"
+		echo "[setup_netdev.sh] init_ppadev" > /dev/console
 		init_ppadev
 		;;
 	"switch")
-		echo "[setup_netdev] start_ethsw"
+		echo "[setup_netdev.sh] start_ethsw" > /dev/console
 		start_ethsw
 		;;
 	"port-enable")
-		echo "[setup_netdev] port-enable"
+		echo "[setup_netdev.sh] port-enable" > /dev/console
 		admin_sw_ports 1
 		;;
 	"port-disable")
-		echo "[setup_netdev] port-disable"
+		echo "[setup_netdev.sh] port-disable" > /dev/console
 		admin_sw_ports 0
 		;;
 	"mc-snoop-enable")
-		echo "[setup_netdev] mc-snoop-enable"
+		echo "[setup_netdev.sh] mc-snoop-enable" > /dev/console
 		mc_snoop_enable
 		;;
 	"mc-snoop-disable")
-		echo "[setup_netdev] mc-snoop-disable"
+		echo "[setup_netdev.sh] mc-snoop-disable" > /dev/console
 		mc_snoop_disable
+		;;
+	"wan-phy-enable")
+		echo "[setup_netdev.sh] wan-phy-enable" > /dev/console
+		admin_sw_wan_phy 1
+		;;
+	"wan-phy-disable")
+		echo "[setup_netdev.sh] wan-phy-disable" > /dev/console
+		admin_sw_wan_phy 0
+		;;
+	"switch-phy-disable")
+		echo "[setup_netdev.sh] switch-phy-disable" > /dev/console
+		admin_sw_phys 0
+		;;
+	"wan-mac-enable")
+		echo "[setup_netdev.sh] wan-mac-enable" > /dev/console
+		admin_sw_wan_mac 1
+		;;
+	"wan-mac-disable")
+		echo "[setup_netdev.sh] wan-mac-disable" > /dev/console
+		admin_sw_wan_mac 0
+		;;
+	"lan-phy-enable")
+		echo "[setup_netdev.sh] lan-phy-enable" > /dev/console
+		admin_sw_lan_phys 1
+		;;
+	"lan-phy-disable")
+		echo "[setup_netdev.sh] lan-phy-disable" > /dev/console
+		admin_sw_lan_phys 0
+		;;
+	"switch-mac-enable")
+		echo "[setup_netdev.sh] switch-mac-enable" > /dev/console
+		enable_vrx_switch_ports
+		;;
+	"switch-mac-disable")
+		echo "[setup_netdev.sh] switch-mac-disable" > /dev/console
+		disable_vrx_switch_ports
 		;;
 	*)
 		echo "$0 [init]           - init all Ethernet components"

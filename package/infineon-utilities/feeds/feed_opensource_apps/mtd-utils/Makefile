@@ -43,7 +43,7 @@ MTD_MAKEOPTS = \
 ### ctc ###
 #MTD_UTIL_BINS := flash_erase flash_eraseall flashcp \
 #	$(if $(CONFIG_UBOOT_CONFIG_BOOT_FROM_NAND), nanddump flash_lock flash_unlock flash_info nandwrite nandtest)
-MTD_UTIL_BINS := flash_erase flash_eraseall flashcp \
+MTD_UTIL_BINS := flash_erase flash_eraseall flashcp mtd_debug \
 	$(if $(CONFIG_UBOOT_CONFIG_NAND_FLASH), nanddump flash_lock flash_unlock flash_info nandwrite nandtest)
 ###########
 
@@ -64,6 +64,7 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(foreach mtdbin, $(MTD_UTIL_BINS) $(if $(CONFIG_PACKAGE_kmod-ubi_mtd),$(UBI_UTILS_BIN)), \
 	  $(INSTALL_BIN) $(PKG_BUILD_DIR)/$(mtdbin) $(1)/usr/sbin/;)
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/flash_erase $(1)/usr/sbin/flash_erase_nand
 
 endef
 

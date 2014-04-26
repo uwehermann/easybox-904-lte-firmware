@@ -1,8 +1,8 @@
-#!/bin/sh /etc/rc.common
+#!/bin/sh
 START=60
 
 lease_file=/tmp/dhcpd.leases
-config_file=/etc/dhcpd.conf
+config_file=/tmp/dhcpd.conf
 pid_file=/var/run/dhcpd.pid
 hosts_file=/tmp/dhcpd.hosts
 dhcp_ifs=""
@@ -99,3 +99,22 @@ stop() {
 		echo "  $pid_file not found"
 	fi
 }
+
+restart()
+{
+	stop
+	start
+}
+
+case "$1" in
+	"boot")		start	;;
+	"start")	start & ;;
+	"restart")	restart	& ;;
+	"stop")		stop	;;
+	*)
+				echo $0 'boot  - setup and start dhcpd'
+				echo $0 'start - start dhcpd'
+				echo $0 'restart - start dhcpd'
+				echo $0 'stop  - stop dhcpd'
+				;;
+esac

@@ -53,6 +53,10 @@ endif
 
 define Build/Prepare
 	mkdir -p $(PKG_BUILD_DIR)
+	$(CP) drv_lcd_904.ko $(PKG_BUILD_DIR)/
+	$(CP) lcd_cli $(PKG_BUILD_DIR)/
+	$(CP) lcd_demo $(PKG_BUILD_DIR)/
+	$(CP) lcd_image $(PKG_BUILD_DIR)/
 	$(CP) ./src/* $(PKG_BUILD_DIR)/
 	$(CP) $(LINUX_DIR)/drivers/video/fb*.h	$(PKG_BUILD_DIR)/
 	$(CP) $(LINUX_DIR)/drivers/video/sys*.c	$(PKG_BUILD_DIR)/

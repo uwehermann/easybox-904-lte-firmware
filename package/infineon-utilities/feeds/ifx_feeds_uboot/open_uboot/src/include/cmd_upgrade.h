@@ -33,8 +33,8 @@ struct conf_header {
 
 enum ExpandDir { FORWARD = 0, BACKWARD = 1 };
 #if 1 //ctc
- #define MAX_PARTITION	16
- #define MAX_DATABLOCK	16
+ #define MAX_PARTITION	20
+ #define MAX_DATABLOCK	20
 #else
  #define MAX_PARTITION	10
  #define MAX_DATABLOCK	16

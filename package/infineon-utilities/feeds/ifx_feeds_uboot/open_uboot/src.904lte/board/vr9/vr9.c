@@ -264,7 +264,7 @@ int check_pll1_lock(void)
 
 int checkboard (void)
 {
-
+	unsigned long temp;
     printf("CLOCK CPU %dM RAM %dM\n",CPU_CLOCK_RATE/1000000,RAM_CLOCK_RATE/1000000);
     config_afe();
 #ifdef CONFIG_VR9_CRYSTAL_25M	
@@ -286,11 +286,21 @@ int checkboard (void)
 	*BSP_GPIO_P1_ALTSEL1 = 0x00000000;
 	*BSP_GPIO_P1_OD      = 0x00008190;
 #else	// set default value for lcd panel back light
-	*BSP_GPIO_P1_OUT     = 0x00000010;
-	*BSP_GPIO_P1_DIR     = 0x00009190;
+	/*
+	GPIP 30 used as output for Wireless reset
+	PI_OUT.14
+	P1_ALTSEL0.14=0
+	P1_ALTSEL1.14=0
+	P1_DIR.14=1
+	*/
+	*BSP_GPIO_P1_DIR     = 0x0000d190;
 	*BSP_GPIO_P1_ALTSEL0 = 0x000085a0;
 	*BSP_GPIO_P1_ALTSEL1 = 0x00000000;
-	*BSP_GPIO_P1_OD      = 0x00009190;
+	*BSP_GPIO_P1_OD      = 0x0000d190;
+	// output to low
+	temp = *BSP_GPIO_P1_OUT;
+	temp = temp & 0xffffbfff;
+	*BSP_GPIO_P1_OUT      = temp;
 #endif
 	*BSP_GPIO_P1_PUDSEL  = 0x00008501;
 	*BSP_GPIO_P1_PUDEN   = 0x000085a1;

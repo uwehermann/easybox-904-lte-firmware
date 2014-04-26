@@ -21,9 +21,12 @@ export PPP_IFACE PPP_TTY PPP_SPEED PPP_LOCAL PPP_REMOTE PPP_IPPARAM
 	done
 }
 
+. /usr/sbin/arc-ipv4-linkdown.sh $PPP_IPPARAM
 
 ### ctc added 20110516 ###
 
 arc_led.sh wan off
 
 ##########################
+
+rm -f /tmp/ppp_conn_up

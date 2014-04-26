@@ -349,6 +349,10 @@ main(argc, argv)
     char numbuf[16];
     u_short trigger_protocol;
 
+	system("rm -f /tmp/ppp_conn_up\n");
+	system("rm -f /tmp/ppp_auth_fail\n");
+	system("touch /tmp/ppp_connecting\n");
+
     strlcpy(path_ipup, _PATH_IPUP, sizeof(path_ipup));
     strlcpy(path_ipdown, _PATH_IPDOWN, sizeof(path_ipdown));
 
@@ -1758,6 +1762,7 @@ run_program(prog, args, must_exist, done, arg)
     int must_exist;
     void (*done) __P((void *));
     void *arg;
+#if 0 //for w724 on-demand issue.
 {
     int pid;
     struct stat sbuf;
@@ -1820,7 +1825,87 @@ run_program(prog, args, must_exist, done, arg)
     }
     _exit(-1);
 }
+#else
+{
+    int pid;
+    struct stat sbuf;
 
+    /*
+     * First check if the file exists and is executable.
+     * We don't use access() because that would use the
+     * real user-id, which might not be root, and the script
+     * might be accessible only to root.
+     */
+    errno = EINVAL;
+    if (stat(prog, &sbuf) < 0 || !S_ISREG(sbuf.st_mode)
+	|| (sbuf.st_mode & (S_IXUSR|S_IXGRP|S_IXOTH)) == 0) {
+	if (must_exist || errno != ENOENT)
+	    warn("Can't execute %s: %m", prog);
+	return 0;
+    }
+
+    pid = fork();
+    if (pid == -1) {
+	error("Failed to create child process for %s: %m", prog);
+	return -1;
+    }
+    if (pid == 0) {
+	int new_fd;
+
+	/* Leave the current location */
+	(void) setsid();	/* No controlling tty. */
+	(void) umask (S_IRWXG|S_IRWXO);
+	(void) chdir ("/");	/* no current directory. */
+	setuid(0);		/* set real UID = root */
+	setgid(getegid());
+
+	/* Ensure that nothing of our device environment is inherited. */
+	sys_close();
+	closelog();
+	close (0);
+	close (1);
+	close (2);
+	if (the_channel->close)
+	    (*the_channel->close)();
+
+        /* Don't pass handles to the PPP device, even by accident. */
+	new_fd = open (_PATH_DEVNULL, O_RDWR);
+	if (new_fd >= 0) {
+	    if (new_fd != 0) {
+	        dup2  (new_fd, 0); /* stdin <- /dev/null */
+		close (new_fd);
+	    }
+	    dup2 (0, 1); /* stdout -> /dev/null */
+	    dup2 (0, 2); /* stderr -> /dev/null */
+	}
+
+#ifdef BSD
+	/* Force the priority back to zero if pppd is running higher. */
+	if (setpriority (PRIO_PROCESS, 0, 0) < 0)
+	    warn("can't reset priority to 0: %m");
+#endif
+
+	/* SysV recommends a second fork at this point. */
+
+	/* run the program */
+	execve(prog, args, script_env);
+	if (must_exist || errno != ENOENT) {
+	    /* have to reopen the log, there's nowhere else
+	       for the message to go. */
+	    reopen_log();
+	    syslog(LOG_ERR, "Can't execute %s: %m", prog);
+	    closelog();
+	}
+	_exit(-1);
+    }
+
+    if (debug)
+	dbglog("Script %s started (pid %d)", prog, pid);
+    record_child(pid, prog, done, arg);
+
+    return pid;
+}
+#endif
 
 /*
  * record_child - add a child process to the list for reap_kids

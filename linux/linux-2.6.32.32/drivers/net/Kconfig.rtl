@@ -1,9 +1,0 @@
-#
-# switch api configuration
-#
-config RTL8367_ETHSW_API
-    bool "RTL8367 Giga-Ethernet Switch API"
-    default n
-    help
-    Support for RTL8367 Giga-Ethernet Switch API.
-

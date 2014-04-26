@@ -54,7 +54,7 @@ define Build/Compile
 	    CC=$(TARGET_CC) \
 		$(TARGET_CONFIGURE_OPTS) \
 		INCFT2LIB=$(STAGING_DIR)/usr/include \
-	    LDFLAGS="-L$(PKG_BUILD_DIR)/src/lib -L$(STAGING_DIR)/usr/lib -lz -lfreetype -lumngsyslog -lmapitrnx -lmapi_ccfg -lmapi_ccfgsal -lArcCom -lmapi_wlan -lmapi_lanhs -lmapi_voip -lmapi_lte -lmapi_mon -lmapi_wan -lmapi_usb"
+	    LDFLAGS="-L$(PKG_BUILD_DIR)/src/lib -L$(STAGING_DIR)/usr/lib -lz -lfreetype -lumng -lmapitrnx -lmapi_ccfg -lmapi_ccfgsal -lArcCom -lmapi_wlan -lmapi_lanhs -lmapi_voip -lmapi_lte -lmapi_mon -lmapi_wan -lmapi_usb"
 endef
 
 define Build/Install

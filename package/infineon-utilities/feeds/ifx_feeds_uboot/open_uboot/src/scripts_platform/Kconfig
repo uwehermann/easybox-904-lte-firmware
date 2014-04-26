@@ -698,6 +698,10 @@ config U_BOOT
     string "u-boot"
     default "u-boot.lq"
 
+config SYSCONFIG
+	string "sysconfig"
+	default "sysconfig.jffs2-128k.nand"
+
 config ROOTFS
     string "rootfs"
     default "rootfs.img"
@@ -727,6 +731,10 @@ config UPDATE_ROOTFS
     string "update_rootfs"
     default "tftpboot $(loadaddr) $(tftppath)$(rootfs); upgrade $(loadaddr) $(filesize)"
 
+config UPDATE_ALL
+	string "update_all"
+	default "run update_kernel; run update_rootfs"
+
 config UPDATE_FIRMWARE
     string "update_firmware"
     default "tftpboot $(loadaddr) $(tftppath)$(firmware);upgrade $(loadaddr) $(filesize)"
@@ -754,7 +762,7 @@ config UPDATE_FLASH
 
 config UPDATE_SYSCONFIG
     string "update_sysconfig"
-	depends on JFFS2_PART && (NAND_FLASH_32M || NAND_FLASH_512M)
+	depends on NAND_FLASH_32M || NAND_FLASH_512M
     default "tftpboot $(loadaddr) $(tftppath)$(sysconfig); nand erase $(f_sysconfig_addr) $(f_sysconfig_size); nand write.partial $(loadaddr) $(f_sysconfig_addr) $(filesize)"
 
 config UPDATE_KERNEL2
@@ -769,6 +777,15 @@ config UPDATE_JFFS2IMAGE2
 	string "update_jffs2image2"
 	depends on DUAL_IMAGE
 
+config UPDATE_ALL2
+	string "upadte_all2"
+	depends on DUAL_IMAGE
+	default "run update_kernel2; run update_rootfs2"
+
+config UPDATE_DUAL
+	string "upadte_dual"
+	depends on DUAL_IMAGE
+	default "run update_kernel ; run update_rootfs ; run update_kernel2 ; run update_rootfs2"
 endif
 
 

@@ -3,6 +3,12 @@
 resolve_file=/var/resolv.conf
 named_conf=/var/etc/bind/named.conf
 
+WANIF=`wandataif.sh`
+
+if [ "${WANIF}" == "${IFNAME}" ]; then 
+	echo "$DNS1 $DNS2" > /tmp/dynamic_dns_ip
+fi
+
 resolv_update.sh $IFNAME $DNS1 $DNS2
 
 if [ -f ${resolve_file}.auto ]; then

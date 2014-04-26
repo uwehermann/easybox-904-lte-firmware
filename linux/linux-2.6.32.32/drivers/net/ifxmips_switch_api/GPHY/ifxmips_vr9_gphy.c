@@ -807,10 +807,11 @@ int ifx_phy_module_init (void)
 		case 0x1c8:
 		case 0x1c9:
 			dev_id = 0;
-			printk(KERN_ERR "GPHY FW load for A1x !!\n");
+			printk(KERN_ERR "GPHY FW load for A1x, chip id %x!!\n", chip_id);
 			break;
+		case 0x0b:
 		default:
-			printk(KERN_ERR "GPHY FW load for A2x !!\n");
+			printk(KERN_ERR "GPHY FW load for A2x, chip id %x!!\n", chip_id);
 			dev_id = 1;
 	}
 	

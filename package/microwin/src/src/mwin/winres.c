@@ -374,11 +374,13 @@ resAllocText(WORD ** pw)
 	LPSTR txt;
 	int i;
 	int count;
+	int start_with_FFFF = 0;
 
 	count = 0;
 	while (*ppw != 0) {
 		//  check special cases where string init with a FFFF
 		if ((count == 0) && (*ppw == 0xFFFF)) {
+			start_with_FFFF = 1;
 			count = 1;
 			ppw++;
 			break;
@@ -390,9 +392,19 @@ resAllocText(WORD ** pw)
 	*pw = ppw + 1;
 	ppw = orgpw;
 	count++;
-	txt = (LPTSTR) malloc(sizeof(TCHAR) * count);
-	if (txt == NULL)
-		return NULL;
+	if (start_with_FFFF == 1) {
+		//let resource load can read 2-bytes value after 0xffff
+		txt = (LPTSTR) malloc(sizeof(TCHAR) * (count+1));	//count still = 2
+		if (txt == NULL)
+			return NULL;
+		memset(txt, 0, sizeof(TCHAR) * (count+1));	//initialization
+	}
+	else {	//original
+		txt = (LPTSTR) malloc(sizeof(TCHAR) * count);
+		if (txt == NULL)
+			return NULL;
+		memset(txt, 0, sizeof(TCHAR) * count);	//initialization
+	}
 
 	for (i = 0; i < count; i++)
 	{
@@ -400,7 +412,15 @@ resAllocText(WORD ** pw)
 #ifdef HACK_RES_FILE_ENDIAN_DIFFERENT		
 		(*ppw) = swap16(*ppw);
 #endif
-		txt[i] = (TCHAR) * ppw++;
+		if ((i == 1) && (start_with_FFFF == 1)) {
+			//let resource load can read 2-bytes value after 0xffff
+			txt[1] = (TCHAR) (*ppw & 0x00ff);
+			txt[2] = (TCHAR) ((*ppw >> 8) & 0x00ff);
+			ppw++;
+		}
+		else {	//original
+			txt[i] = (TCHAR) * ppw++;
+		}
 	}
 	return txt;
 }

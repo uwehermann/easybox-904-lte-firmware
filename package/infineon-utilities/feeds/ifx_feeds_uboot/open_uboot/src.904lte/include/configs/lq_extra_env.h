@@ -44,9 +44,12 @@
   "update_uboot=" CONFIG_UPDATE_UBOOT "\0"
   "update_kernel=" CONFIG_UPDATE_KERNEL "\0"
   "update_rootfs=" CONFIG_UPDATE_ROOTFS "\0"
+  "update_all=" CONFIG_UPDATE_ALL "\0"
  #ifdef CONFIG_DUAL_IMAGE
   "update_kernel2=" CONFIG_UPDATE_KERNEL2 "\0"
   "update_rootfs2=" CONFIG_UPDATE_ROOTFS2 "\0"
+  "update_all2=" CONFIG_UPDATE_ALL2 "\0"
+  "update_dual=" CONFIG_UPDATE_DUAL "\0"
  #endif
 #ifndef CONFIG_FIRMWARE_IN_ROOTFS
   "update_firmware=" CONFIG_UPDATE_FIRMWARE "\0"
@@ -56,6 +59,7 @@
   "update_totalimage=" CONFIG_UPDATE_TOTALIMAGE "\0"
 #endif
 #ifdef CONFIG_UPDATE_SYSCONFIG
+  "sysconfig=" CONFIG_SYSCONFIG "\0"
   "update_sysconfig=" CONFIG_UPDATE_SYSCONFIG "\0"
 #endif
 #ifndef CONFIG_ENV_IS_NOWHERE

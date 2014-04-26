@@ -6,6 +6,8 @@ START=11 #10, ctc
 #STOP=98
 ###########
 
+DefPassword="defaultusername"
+DefPrefixUsername="defaultpassword"
 system_config() {
 	local cfg="$1"
 
@@ -127,7 +129,37 @@ start() {
 			umngcli set wan_type@system=1
 		fi
 	fi
-
+	AUTO_SENSE=`umngcli get detect_wan@system`
+	if [ -z "$AUTO_SENSE" ] || [ "$AUTO_SENSE" == "1" ] ; then
+	      PROD_CODE=`umngcli get product_class@system`
+	      SER_NO=`uboot_env --get --name serial`
+				TMP_PPP_USERNAME=$DefPrefixUsername"-"$PROD_CODE"-"$SER_NO
+				PPP_USERNAME=`umngcli get username@wan000`
+				PPP_PASSWORD=`umngcli get password@wan000`				
+				if [ -z "$PPP_USERNAME" ] ; then
+			       umngcli set username@wan000=$TMP_PPP_USERNAME				    
+				fi
+				if [ -z "$PPP_PASSWORD" ] ; then			
+			       umngcli set password@wan000=$DefPassword				    
+				fi
+				PPP_USERNAME=`umngcli get username@wan050`
+				PPP_PASSWORD=`umngcli get password@wan050`				
+				if [ -z "$PPP_USERNAME" ] ; then
+			       umngcli set username@wan050=$TMP_PPP_USERNAME				    
+				fi
+				if [ -z "$PPP_PASSWORD" ] ; then
+			       umngcli set password@wan050=$DefPassword				    
+				fi
+				PPP_USERNAME=`umngcli get username@wan100`
+				PPP_PASSWORD=`umngcli get password@wan100`				
+				if [ -z "$PPP_USERNAME" ] ; then
+			       umngcli set username@wan100=$TMP_PPP_USERNAME				    
+				fi
+				if [ -z "$PPP_PASSWORD" ] ; then
+			       umngcli set password@wan100=$DefPassword				    
+				fi
+				ccfg_cli commitcfg																										
+	fi	
 	mkdir -p /tmp/fs
 	echo "!" > /tmp/fs/connect_disk
 	echo "!" > /tmp/fs/diskinfo

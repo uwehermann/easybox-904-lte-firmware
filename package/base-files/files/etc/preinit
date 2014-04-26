@@ -37,6 +37,7 @@ pi_init_cmd="/sbin/init"
 
 . /etc/functions.sh
 . /lib/functions/boot.sh
+. /etc/config.sh
 
 boot_hook_init preinit_essential
 boot_hook_init preinit_main
@@ -76,8 +77,17 @@ pi_failsafe_net_message=false
 	###
 MTD_PARTS_BUILT="`/bin/grep CONFIG_UBOOT_CONFIG_MTDPARTS /etc/config.sh 2>&- | /usr/bin/cut -d '=' -f 2 | /usr/bin/cut -d '"' -f 2`"
 MTD_PARTS_UBOOT="`/usr/sbin/uboot_env --get --name mtdparts 2>&-`"
-if [ "$MTD_PARTS_UBOOT" != "$MTD_PARTS_BUILT" ] ; then
-	/usr/sbin/uboot_env --set --name mtdparts --value "$MTD_PARTS_BUILT"
+if [ -z $MTD_PARTS_BUILT ]; then
+	current_image=`/usr/sbin/uboot_env --get --name bootid`
+	[[ $current_image -eq 2 ]] && new_image= || new_image=2
+	/bin/echo "Firmware Image ${current_image:-1} might be corrupted. Switch to Image ${new_image:-1} and reboot." > /dev/console
+	/usr/sbin/uboot_env --set --name bootid --value "${new_image}"
+	/sbin/reboot -f
+elif [ "$MTD_PARTS_UBOOT" != "$MTD_PARTS_BUILT" ] ; then
+	/usr/sbin/uboot_env --set --name mtdparts --value "$MTD_PARTS_BUILT" > /dev/console
+	/bin/echo "mtdparts in config.sh --> $MTD_PARTS_BUILT" > /dev/console
+	/bin/echo "mtdparts in uboot     --> $MTD_PARTS_UBOOT" > /dev/console
+	cat /proc/mtd > /dev/console
 	/bin/echo "====================================" > /dev/console
 	/bin/echo "  reboot due to sync MTD partitions" > /dev/console
 	/bin/echo "====================================" > /dev/console
@@ -108,7 +118,7 @@ if [ -n "$MTD_MFGCFG" ] ; then
 	for ITEM in $REBOOTLESS_CFG ; do
 		CFG="`/usr/sbin/uboot_env --get --name $ITEM 2>&-`"
 		CFG2="`/usr/sbin/uboot_env --get --name $ITEM --mtd $MTD_MFGCFG --force 2>&-`"
-		if [ -z "$CFG2" ] && [ -n "$CFG" ] ; then
+		if [ $? -ne 0 ] || [ "$CFG2" == "" -a "$CFG" != "" ] ; then
 			/bin/echo "sync mfgconfig config parmeter $ITEM to $CFG" > /dev/console
 			/usr/sbin/uboot_env --set --name $ITEM --value "$CFG" --mtd $MTD_MFGCFG --force 2>&-
 		fi
@@ -116,7 +126,7 @@ if [ -n "$MTD_MFGCFG" ] ; then
 	for ITEM in $REBOOT_CFG ; do
 		CFG="`/usr/sbin/uboot_env --get --name $ITEM 2>&-`"
 		CFG2="`/usr/sbin/uboot_env --get --name $ITEM --mtd $MTD_MFGCFG --force 2>&-`"
-		if [ -z "$CFG2" ] && [ -n "$CFG" ] ; then
+		if [ $? -ne 0 ] || [ "$CFG2" == "" -a "$CFG" != "" ] ; then
 			/bin/echo "sync mfgconfig config parmeter $ITEM to $CFG" > /dev/console
 			/usr/sbin/uboot_env --set --name $ITEM --value "$CFG" --mtd $MTD_MFGCFG --force 2>&-
 		fi
@@ -156,6 +166,16 @@ if [ -n "$MTD_MFGCFG" ] ; then
 		/bin/echo "====================================" > /dev/console
 		/sbin/reboot -f
 	fi
+fi
+
+# Workaround for A05 Bootloader in 904DSL
+# f_rootfs2_end had a typo to 0x1F6FFFFF
+# We just modified it to the correct one. 0x1F9FFFFF
+# This Workaround should be removed after A0.6 is released
+BL_VERSION=`/usr/sbin/uboot_env --get --name bl_version | cut -d ' ' -f 2`
+F_END_ROOTFS2=`/usr/sbin/uboot_env --get --name f_rootfs2_end`
+if [ "$CONFIG_ARC_VODAFONE_904DSL" == 1 ] && [ "$BL_VERSION" == "2010.06-Lv2.0.40-A0.5" ] && [ "$F_END_ROOTFS2" == "0x1F6FFFFF" ]; then
+	/usr/sbin/uboot_env --set --name f_rootfs2_end --value '0x1F9FFFFF' 2>&-
 fi
 ###########
 

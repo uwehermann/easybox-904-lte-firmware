@@ -48,9 +48,13 @@ if [ "$IGMPPROXY_UPSTREAM" != "" ] ; then
 #
 #	sleep 2
 
-		/etc/init.d/igmpproxy stop
+	/etc/init.d/arc_igproxy.sh stop
 fi
 # IGMP Proxy end
+
+# OpenVPN daemon stop
+/usr/sbin/arc-openvpn-ctrl stop
+# OpenVPN daemon end
 
 #RIP daemon start
 RIPD_NET_SECTION=`ccfg_cli get network@ripd`

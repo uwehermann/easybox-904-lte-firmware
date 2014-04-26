@@ -58,6 +58,7 @@ define Package/pure-ftpd/install
 	$(INSTALL_CONF) ./files/$(PKG_NAME).pem $(1)/etc/pure-ftpd/$(PKG_NAME).pem.dft
 	$(INSTALL_BIN) ./files/$(PKG_NAME).init $(1)/etc/init.d/$(PKG_NAME)
 	$(INSTALL_BIN) ./files/$(PKG_NAME)2 $(1)/etc/init.d/$(PKG_NAME)2
+	$(INSTALL_BIN) ./files/ftp_folder_set.sh $(1)/usr/sbin/ftp_folder_set.sh
 #	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ptracetest $(1)/usr/sbin
 #	$(INSTALL_BIN) $(foreach i,ftpd pw ftpwho mrtginfo pwconvert quotacheck statsdecode uploadscript authd, \
 #		$(PKG_BUILD_DIR)/src/pure-$(i)) $(1)/usr/sbin

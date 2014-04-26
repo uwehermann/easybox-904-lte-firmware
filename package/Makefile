@@ -92,29 +92,6 @@ $(curdir)/rootfs-prepare: $(TMP_DIR)/.build
 	)
 	###########
 
-	### ctc ###
-	mv $(TARGET_DIR)/etc/passwd $(TARGET_DIR)/etc/config/passwd
-	mv $(TARGET_DIR)/etc/group $(TARGET_DIR)/etc/config/group
-	mv $(TARGET_DIR)/etc/hosts $(TARGET_DIR)/etc/config/hosts
-	tar -zcvf $(TARGET_DIR)/etc/dftconfig.tgz -C $(TARGET_DIR)/etc config
-	rm -r $(TARGET_DIR)/etc/config
-	ln -sf /tmp/etc/config $(TARGET_DIR)/etc/config
-	ln -sf /tmp/etc/config/hosts $(TARGET_DIR)/etc/hosts
-	ln -sf /tmp/etc/config/group $(TARGET_DIR)/etc/group
-	ln -sf /tmp/etc/config/passwd $(TARGET_DIR)/etc/passwd
-	## to overwrite the original iproute2 tables ##
-	[ -f $(TARGET_DIR)/etc/iproute2/rt_tables ] && { \
-		rm -f $(TARGET_DIR)/etc/iproute2/rt_tables; \
-		ln -sf /etc/config/iproute2/rt_tables $(TARGET_DIR)/etc/iproute2/rt_tables; \
-	}
-	###########
-	## to prepare twonkyserver-default.ini symbolic link ##
-	#[ -f $(TARGET_DIR)/opt/twonky_server/twonkyserver-default.ini ] && { \
-	#	mv -f $(TARGET_DIR)/opt/twonky_server/twonkyserver-default.ini $(TARGET_DIR)/opt/twonky_server/twonkyserver-default.ini.tmp; \
-	#	ln -sf /tmp/twonkyserver-default.ini $(TARGET_DIR)/opt/twonky_server/twonkyserver-default.ini; \
-	#}
-	###########
-
 	@-find $(TARGET_DIR) -name CVS   | $(XARGS) rm -rf
 	@-find $(TARGET_DIR) -name .svn  | $(XARGS) rm -rf
 	@-find $(TARGET_DIR) -name '.#*' | $(XARGS) rm -f

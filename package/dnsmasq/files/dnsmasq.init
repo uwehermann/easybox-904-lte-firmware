@@ -90,7 +90,7 @@ dnsmasq() {
 	append_parm "$cfg" ednspacket_max "-P"
 	append_parm "$cfg" dhcpleasemax "-X"
 	append_parm "$cfg" "queryport" "-Q"
-	append_parm "$cfg" "domain" "-s"
+#	append_parm "$cfg" "domain" "-s"
 	append_parm "$cfg" "local" "-S"
 	config_list_foreach "$cfg" "server" append_server
 	config_list_foreach "$cfg" "interface" append_interface
@@ -395,11 +395,14 @@ dhcp_srv_add() {
 }
 
 start() {
+	[ -f "$DNSMASQ_FILE" ] || /usr/sbin/dnsmasq_update.sh
+
 	include /lib/network
 	scan_interfaces
 	config_load dhcp
 
-	args="--user=root -C $DNSMASQ_FILE"    
+	args="--user=root -C $DNSMASQ_FILE -i br-lan"
+
 	config_foreach dnsmasq dnsmasq
 	config_foreach dhcp_host_add host
 	config_foreach dhcp_boot_add boot
@@ -432,6 +435,36 @@ start() {
 		done
 		#############################################
 	}
+	
+
+	CNT=0
+	MAX_CNT=2
+	add_iface_bridge=0
+	s_wan_type=`ccfg_cli get wan_type@system`
+	s_active_wan_type=`ccfg_cli get active_wan_type@system`
+
+	while [ "$CNT" -le "$MAX_CNT" ] ; do
+		if [ $s_active_wan_type == "1" ] || [ $s_wan_type == "1" ] ; then
+			if [ "none" == `ccfg_cli get proto@wan00$CNT` ] && [ "enable" == `ccfg_cli get adminstate@wan00$CNT` ] ; then
+				s_ifname=`ccfg_cli get ifname@wan00$CNT`
+				brctl addif br-lan $s_ifname
+			fi
+			
+		elif [ $s_active_wan_type == "2" ] || [ $s_wan_type == "2"  ] ; then
+			if [ "none" == `ccfg_cli get proto@wan10$CNT` ] && [ "enable" == `ccfg_cli get adminstate@wan10$CNT` ] ; then
+				s_ifname=`ccfg_cli get ifname@wan10$CNT`
+				brctl addif br-lan $s_ifname
+			fi
+			
+		elif [ $s_active_wan_type == "3" ] || [ $s_wan_type == "3" ] ; then
+			if [ "none" == `ccfg_cli get proto@wan05$CNT` ] && [ "enable" == `ccfg_cli get adminstate@wan05$CNT` ] ; then
+				s_ifname=`ccfg_cli get ifname@wan05$CNT`
+				brctl addif br-lan $s_ifname
+			fi
+		fi
+		
+		let CNT=$CNT+1	
+	done
 }
 
 stop_process() {

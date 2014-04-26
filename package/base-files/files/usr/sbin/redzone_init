@@ -1,23 +1,23 @@
 #!/bin/ash
 # Note :
 #   Version :
-#		1.1		daniel  2010/06/15 09:50  
-#		
+#		1.1		daniel  2010/06/15 09:50
+#
 #	Changlog :
-#		0.1 	daniel  2010/06/09 17:26    
+#		0.1 	daniel  2010/06/09 17:26
 #		1.0		daniel  2010/06/11 17:02
-#		1.1		daniel  2010/06/15 09:50  
+#		1.1		daniel  2010/06/15 09:50
 #
 #	Bug :
 #		v1.0 :
 #			1. if there is any empty SSID in front of AP_SSID_4, the AP_SSID_4 will get error
 #			2. the setting of lan dhcp range is wrong in dhcp.conf  ===> fixed in v1.1
-#  
-#  
-#  
 #
 #
-
+#
+#
+#
+. /usr/sbin/iptables_utility.sh
 # some API(function)
 # get AP_SSID
 getname()
@@ -51,7 +51,7 @@ replace_dhcp_conf()
 	echo "sed -i '${row}s/.*/\toption limit\t\"${end}\"/' /etc/config/dhcp" >> /tmp/replace_dhcp_conf.sh
 	let "row+=1"
 	echo "sed -i '${row}s/.*/\toption leasetime\t\"${leasetime}\"/' /etc/config/dhcp" >> /tmp/replace_dhcp_conf.sh
-	
+
 }
 # method hard code
 # br-lan 16 br-redo 23 br-redx 30
@@ -207,6 +207,7 @@ rm -f /tmp/replace_dhcp_conf.sh
 
 Zone1="br-redo br-redx"
 Zone2="br-lan"
+ipt_lock_res
 for Zone1E in $Zone1
 do
 	for Zone2E in $Zone2
@@ -217,7 +218,7 @@ do
 done
 iptables -t filter -I INPUT -s 10.0.0.0/8 -d 192.168.2.1/24 -j DROP
 iptables -t filter -I INPUT -d 10.0.0.0/8 -s 192.168.2.1/24 -j DROP
-
+ipt_unlock_res
 
 
 

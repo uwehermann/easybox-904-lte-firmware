@@ -23,17 +23,17 @@ const struct dhcp_option dhcp_options[] = {
 	{ OPTION_IP | OPTION_LIST                 , 0x07 }, /* DHCP_LOG_SERVER    */
 	{ OPTION_IP | OPTION_LIST                 , 0x08 }, /* DHCP_COOKIE_SERVER */
 	{ OPTION_IP | OPTION_LIST                 , 0x09 }, /* DHCP_LPR_SERVER    */
-	{ OPTION_STRING               | OPTION_REQ, 0x0c }, /* DHCP_HOST_NAME     */
+	{ OPTION_STRING                           , 0x0c }, /* DHCP_HOST_NAME     */
 	{ OPTION_U16                              , 0x0d }, /* DHCP_BOOT_SIZE     */
 	{ OPTION_STRING | OPTION_LIST | OPTION_REQ, 0x0f }, /* DHCP_DOMAIN_NAME   */
 	{ OPTION_IP                               , 0x10 }, /* DHCP_SWAP_SERVER   */
 	{ OPTION_STRING                           , 0x11 }, /* DHCP_ROOT_PATH     */
 	{ OPTION_U8                               , 0x17 }, /* DHCP_IP_TTL        */
 	{ OPTION_U16                              , 0x1a }, /* DHCP_MTU           */
-	{ OPTION_IP                   | OPTION_REQ, 0x1c }, /* DHCP_BROADCAST     */
+	{ OPTION_IP                               , 0x1c }, /* DHCP_BROADCAST     */
 	{ OPTION_STRING                           , 0x28 }, /* nisdomain          */
 	{ OPTION_IP | OPTION_LIST                 , 0x29 }, /* nissrv             */
-	{ OPTION_IP | OPTION_LIST     | OPTION_REQ, 0x2a }, /* DHCP_NTP_SERVER    */
+	{ OPTION_IP | OPTION_LIST                 , 0x2a }, /* DHCP_NTP_SERVER    */
 	{ OPTION_IP | OPTION_LIST                 , 0x2c }, /* DHCP_WINS_SERVER   */
 	{ OPTION_IP                               , 0x32 }, /* DHCP_REQUESTED_IP  */
 	{ OPTION_U32                              , 0x33 }, /* DHCP_LEASE_TIME    */
@@ -49,9 +49,10 @@ const struct dhcp_option dhcp_options[] = {
 	{ OPTION_STR1035 | OPTION_LIST            , 0x77 }, /* search             */
 #endif
 	{ OPTION_STATIC_ROUTES                    , 0x79 }, /* DHCP_STATIC_ROUTES */
+	{ OPTION_6RD                              , 0xd4 }, /* DHCP_6RD           */ 
 	/* MSIE's "Web Proxy Autodiscovery Protocol" support */
 	{ OPTION_STRING                           , 0xfc }, /* wpad               */
-	{ OPTION_STRING | OPTION_REQ              , 0xF0 }, /* option 240         */
+	{ OPTION_STRING                           , 0xF0 }, /* option 240         */
 
 	/* Options below have no match in dhcp_option_strings[],
 	 * are not passed to dhcpc scripts, and cannot be specified
@@ -100,6 +101,7 @@ const char dhcp_option_strings[] ALIGN1 =
 	"search" "\0"
 #endif
 	"staticroutes" "\0" /* DHCP_STATIC_ROUTES  */
+	"ip6rd" "\0"       /* DHCP_6RD            */ 
 	/* MSIE's "Web Proxy Autodiscovery Protocol" support */
 	"wpad" "\0"
 	"opt240" "\0"       /* option 240          */
@@ -122,6 +124,7 @@ const uint8_t dhcp_option_lengths[] ALIGN1 = {
 	[OPTION_S32] =     4,
 	/* Just like OPTION_STRING, we use minimum length here */
 	[OPTION_STATIC_ROUTES] = 5,
+	[OPTION_6RD]           = 22,
 };
 
 

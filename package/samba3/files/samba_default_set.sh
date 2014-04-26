@@ -20,6 +20,9 @@ local PARTITION3
 local PARTITION4
 local MOUNT_NUM
 
+#set to User-Mode for 904-MFR
+ccfg_cli set mode@samba=1
+
 MAX_CFG_KEEP=`ccfg_cli get max_cfg_keep@samba`
 
 echo "samba_default_set" > /dev/console
@@ -88,7 +91,9 @@ do
 done
 
 #echo CHECK = $CHECK, MIN_SEQ_ID = $MIN_SEQ_ID, VALID_ID = $VALID_ID, MAX_SEQ = $MAX_SEQ >/dev/console
-
+if [ -z "$MODEL" ]; then
+	MODEL="#"
+fi
  
 if [ "${CHECK}" == "0" ]; then
 	let MAX_SEQ=$MAX_SEQ+1
@@ -96,6 +101,9 @@ if [ "${CHECK}" == "0" ]; then
 	if [ "${VALID_ID}" == "-1" ]; then
 		ccfg_cli set smb${MIN_SEQ_ID}_drive@samba="1:1:${MAX_SEQ}:${VENDOR}:${MODEL}:"
 		ccfg_cli set smb${MIN_SEQ_ID}_folder0@samba="1:${VENDOR}:1:/:0:::${PARTITION}"
+
+		ccfg_cli set smb_account${MIN_SEQ_ID}@samba="0:0:#:#:Partition:${VENDOR}:${MODEL}:|||||||:|||||||:0:${DEV}:0:1:SN"		
+
 		if [ "${MOUNT_NUM}" -ge "2" ]; then
 			ccfg_cli set smb${MIN_SEQ_ID}_folder1@samba="1:${VENDOR}_1:2:/:2:::${PARTITION2}"
 		fi
@@ -108,6 +116,9 @@ if [ "${CHECK}" == "0" ]; then
 	else
 		ccfg_cli set smb${VALID_ID}_drive@samba="1:1:${MAX_SEQ}:${VENDOR}:${MODEL}:"
 		ccfg_cli set smb${VALID_ID}_folder0@samba="1:${VENDOR}:1:/:0:::${PARTITION}"
+
+		ccfg_cli set smb_account${VALID_ID}@samba="0:0:#:#:Partition:${VENDOR}:${MODEL}:|||||||:|||||||:0:${DEV}:0:1:SN"
+
 		if [ "${MOUNT_NUM}" -ge "2" ]; then
 			ccfg_cli set smb${VALID_ID}_folder1@samba="1:${VENDOR}_1:2:/:2:::${PARTITION2}"
 		fi

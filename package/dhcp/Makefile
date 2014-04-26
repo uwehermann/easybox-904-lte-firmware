@@ -8,12 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=dhcp
-PKG_VERSION:=4.1.1
+PKG_VERSION:=4.1.1-P1
 PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-P1-arcadyan.tar.gz
-PKG_SOURCE_URL:=ftp://192.168.106.196/pub/sources/
-#PKG_MD5SUM:=27d179a3c3fbef576566b456a1168246
+#PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-P1-arcadyan.tar.gz
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+PKG_SOURCE_URL:=http://pkgs.fedoraproject.org/repo/pkgs/dhcp/dhcp-4.1.1-P1.tar.gz/ee390a35687dd75dbfc32c856c0938d1/
+PKG_MD5SUM:=ee390a35687dd75dbfc32c856c0938d1
 
 #PKG_BUILD_DIR:=$(PKG_NAME)-$(PKG_VERSION)-P1-arcadyan
 #PKG_INSTALL_DIR:=$(PKG_NAME)-$(PKG_VERSION)-P1-arcadyan
@@ -43,7 +44,7 @@ endef
 define Package/dhcp-client
   $(call Package/dhcp/Default)
   TITLE+= client
-  DEPENDS+= dhcp-libs
+  DEPENDS:=+dhcp-libs +libumng +libsyslog +arc-middle-framework +arc-middle-mod-ccfg +lib-arc-com
 endef
 
 define Package/dhcp-libs
@@ -54,12 +55,19 @@ endef
 CONFIGURE_VARS += \
         ac_cv_prog_RANLIB=true
 
+define Build/Prepare
+	$(call Build/Prepare/Default)
+	if [ -d ./src ] ; then \
+		$(CP) ./src/* $(PKG_BUILD_DIR)/. ; \
+	fi
+endef
+
 define Build/Configure
 	$(call Build/Configure/Default, )
 endef
 
 TARGET_CFLAGS += -fPIC
-
+EXTRA_LDFLAGS += -lumngsyslog -lmapitrnx -lmapi_ccfg -lArcCom
 define Build/Compile
 	$(call Build/Compile/Default, all)
 	$(MAKE) -C $(PKG_BUILD_DIR) DESTDIR=$(PKG_INSTALL_DIR) install
@@ -78,6 +86,7 @@ endef
 define Package/dhcp-server/install
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/sbin/dhcpd $(1)/usr/sbin/
+	cp $(1)/usr/sbin/dhcpd $(1)/usr/sbin/dhcp6d
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/dhcpd.init $(1)/etc/init.d/dhcpd
 endef
@@ -85,6 +94,7 @@ endef
 define Package/dhcp-client/install
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/sbin/dhclient $(1)/usr/sbin/
+	cp $(1)/usr/sbin/dhclient $(1)/usr/sbin/dhclient6
 endef
 
 define Package/dhcp-libs/install

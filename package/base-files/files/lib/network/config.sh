@@ -44,18 +44,23 @@ scan_interfaces() {
 		esac
 		local iftype ifname device proto
 		config_get iftype "$CONFIG_SECTION" TYPE
-		# daniel  2010/05/27 15:53, ctc added
-		# if the interface asminstate is disable, then do not ifup
-		local state
-		state=`umngcli get adminstate@${CONFIG_SECTION}`
-		#echo "config" ${CONFIG_SECTION} ${state} > /dev/console
-		if [ "${state}" == "disable" ] ; then
-			return ;
-		fi
-		#####################
-
 		case "$iftype" in
 			interface)
+				# daniel  2010/05/27 15:53, ctc added
+				# if the interface asminstate is disable, then do not ifup
+				if [ "${CONFIG_SECTION}" != "loopback" ]; then	
+					local state
+					if [ "${CONFIG_SECTION}" == "lan" ]; then
+						state=`umngcli get adminstate@${CONFIG_SECTION}0`
+					else
+						state=`umngcli get adminstate@${CONFIG_SECTION}`
+					fi
+					#echo "config" ${CONFIG_SECTION} ${state} > /dev/console
+					if [ "${state}" == "disable" ] ; then
+						return ;
+					fi
+				fi
+				#####################
 				append interfaces "$CONFIG_SECTION"
 				config_get proto "$CONFIG_SECTION" proto
 				config_get iftype "$CONFIG_SECTION" type
@@ -162,7 +167,9 @@ prepare_interface() {
 
 		# make sure the interface is removed from any existing bridge and deconfigured,
 		# (deconfigured only if the interface is not set to proto=none)
-		unbridge "$iface"
+		if [ "$proto" != none ]; then
+			unbridge "$iface"
+		fi
 		[ "$proto" = none ] || ifconfig "$iface" 0.0.0.0
 
 		# Change interface MAC address if requested
@@ -289,6 +296,7 @@ setup_interface_static() {
 	env -i ACTION="ifup" INTERFACE="$config" DEVICE="$iface" PROTO=static IP4ADDR="$ipaddr" IP4MASK="$netmask" IP4GW="$gateway" /sbin/hotplug-call "iface" &
 
 	## bitonic update, ctc added
+	/usr/sbin/resolv_update.sh SYSTEM
 	. /usr/sbin/arc-ipv4-linkup.sh $config $ipaddr $netmask $DEFAULT_ROUTER
 	## end of bitonic update
 }
@@ -383,16 +391,19 @@ setup_interface() {
 		config_get mtu "$config" mtu
 		config_get macaddr "$config" macaddr
 		## bitonic test, ctc added
-		if [ "$upper_iface" == "$iface" ]; then
-		{
+		###if [ "$upper_iface" == "$iface" ]; then
+		###{
 			[ -n "$macaddr" ] && $DEBUG ifconfig "$iface" down
 			$DEBUG ifconfig "$iface" ${macaddr:+hw ether "$macaddr"} ${mtu:+mtu $mtu} up
-		}
-		fi
+		###}
+		###fi
 		##end of bitonic test
 	}
 	set_interface_ifname "$config" "$iface"
 
+	ip6_enable=`umngcli get ip6_enable@${config}`
+	ip6_proto=`umngcli get ip6_proto@${config}`
+	ip6_tunnel_type=`umngcli get ip6_tunnel_type@${config}`
 	[ -n "$proto" ] || config_get proto "$config" proto
 	case "$proto" in
 		static)
@@ -403,22 +414,30 @@ setup_interface() {
 #	        fi
 #		    ##################
 
+			### yuelin add ###
+			### This block setting will stop global IPv6 fucntion. So, comment now.
+			### end
+			### yuzhang remove the comment, modify arc-ipv6.c to fix the bug
+			if [ "$glb_ip6_enable" == "1" ] && [ "$iface" == "br-lan" ]; then
+				echo "[config.sh] /usr/sbin/arc_ipv6_lan iface=$iface" >> /tmp/ipv6.log
+				ccfg_cli set ip6_wan_ready@system=0
+				/usr/sbin/arc_ipv6_lan 0 &
+			fi
+			if [ "$glb_ip6_enable" == "1" ] && [ "$iface" == "br-lan1" ]; then
+				echo "[config.sh] /usr/sbin/arc_ipv6_lan iface=$iface" >> /tmp/ipv6.log
+				/usr/sbin/arc_ipv6_lan 1 &
+			fi
+
 			setup_interface_static "$iface" "$config"
 
-			if [ "$glb_ip6_enable" == "1" ]; then
-				ip6_enable=`umngcli get ip6_enable@${config}`
-				if [ "$ip6_enable" == "1" ] ; then
-					ip6_proto=`umngcli get ip6_proto@${config}`
-					if [ "$ip6_proto" == "dhcp" ] ; then
-						echo "[config.sh] dhcp6c_start $iface" >> /tmp/ipv6.log
-						ip6_fwd=`cat /proc/sys/net/ipv6/conf/$iface/forwarding`
-						echo "[config.sh] /proc/sys/net/ipv6/conf/$iface/forwarding=$ip6_fwd" >> /tmp/ipv6.log
-						/usr/sbin/dhcp6c_start &
-					fi
-				else
-					do_sysctl "net.ipv6.conf.$iface.disable_ipv6" 1
-				fi
-			fi
+			#if [ "$glb_ip6_enable" == "1" ]; then
+			#	if [ "$ip6_enable" == "1" ]; then
+			#		echo "[config.sh] wan6c_restart $iface wan4c_proto=$proto" >> /tmp/ipv6.log
+			#		/usr/sbin/wan6c_restart &
+			#	else
+			#		do_sysctl "net.ipv6.conf.$iface.disable_ipv6" 1
+			#	fi
+			#fi
 		;;
 		dhcp)
 #		    ### ygchen add ###
@@ -445,6 +464,13 @@ setup_interface() {
 				$DEBUG ifconfig "$iface" "$ipaddr" ${netmask:+netmask "$netmask"}
 
 			# don't stay running in background if dhcp is not the main proto on the interface (e.g. when using pptp)
+
+			if [ "$ip6_enable" == "1" ] && [ "$ip6_proto" == "tunnel" ] && [ "$ip6_tunnel_type" == "1" ]; then
+				ip6rd="-O ip6rd"
+			else
+				ip6rd=
+			fi
+			echo "[config.sh] ip6rd=$ip6rd" >> /tmp/ipv6.log
 			local dhcpopts
 			[ ."$proto1" != ."$proto" ] && dhcpopts="-n -q"
 			[ "$broadcast" = 1 ] && broadcast="-O broadcast" || broadcast=
@@ -452,28 +478,25 @@ setup_interface() {
 			# 20120731 Titan Liu -- If there is no specified client ID, we assign a one based on DUT WAN MAC
 			[ -z "$clientid" ] && clientid=`/usr/sbin/getmacaddr.sh wan | sed "s/://g"`
 
+			# 20130128 Ron Huang -- Hostname
+			hostname=`ccfg_cli get host_name@system` 
+
 			$DEBUG eval udhcpc -t 0 -i "$iface" \
 				${ipaddr:+-r $ipaddr} \
 				${hostname:+-H $hostname} \
-				${clientid:+-c $clientid} \
+				${clientid:+-m $clientid} \
 				${vendorid:+-V $vendorid} \
-				-b -p "$pidfile" $broadcast \
-				${dhcpopts:- -O rootpath -R &}
+				-b -p "$pidfile" $broadcast $ip6rd \
+				-O staticroutes -R &
 			### ctc ###
 			restart_wansvc.sh "$config"
 			restart_lansvc.sh "$config"
 			###########
 
 			if [ "$glb_ip6_enable" == "1" ]; then
-				ip6_enable=`umngcli get ip6_enable@${config}`
-				if [ "$ip6_enable" == "1" ] ; then
-					ip6_proto=`umngcli get ip6_proto@${config}`
-					if [ "$ip6_proto" == "dhcp" ] ; then
-						echo "[config.sh] dhcp6c_start $iface" >> /tmp/ipv6.log
-						ip6_fwd=`cat /proc/sys/net/ipv6/conf/$iface/forwarding`
-						echo "[config.sh] /proc/sys/net/ipv6/conf/$iface/forwarding=$ip6_fwd" >> /tmp/ipv6.log
-						/usr/sbin/dhcp6c_start &
-					fi
+				if [ "$ip6_enable" == "1" ] && [ "$ip6_proto" == "dhcp" ] ; then
+					echo "[config.sh] dhcp6c_restart $iface" >> /tmp/ipv6.log
+					/usr/sbin/dhcp6c_restart &
 				else
 					do_sysctl "net.ipv6.conf.$iface.disable_ipv6" 1
 				fi

@@ -10,8 +10,8 @@
  * Based on ipt_ULOG.c, which is
  * (C) 2000-2002 by Harald Welte <laforge@netfilter.org>
  *
- * This module accepts two parameters: 
- * 
+ * This module accepts two parameters:
+ *
  * nlbufsiz:
  *   The parameter specifies how big the buffer for each netlink multicast
  * group is. e.g. If you say nlbufsiz=8192, up to eight kb of packets will
@@ -27,7 +27,6 @@
  *   flushed even if it is not full yet.
  *
  */
-
 
 #include <linux/module.h>
 #include <linux/spinlock.h>
@@ -62,14 +61,23 @@ typedef struct {
 static ebt_ulog_buff_t ulog_buffers[EBT_ULOG_MAXNLGROUPS];
 static struct sock *ebtulognl;
 
-#define	EBT_ULOG_MAX_PORT		12
-#define	EBT_ULOG_MAX_PVC		8
 #define	EBT_ULOG_MIN_PKT_LEN	20
-#define	EBT_ULOG_PORT_ETH0		0
-#define	EBT_ULOG_PORT_ETH1		1
-#define	EBT_ULOG_PORT_WLAN		3
-#define	EBT_ULOG_PORT_IPOA		6
-#define	EBT_ULOG_PORT_DSL		7
+
+#define EBT_ULOG_PKT_MAX_INFO_COUNT 1
+
+// Interface Type ID
+#define	EBT_ULOG_PKT_WAN_TYPE	0
+#define	EBT_ULOG_PKT_LAN_TYPE	1
+#define	EBT_ULOG_PKT_WLAN_TYPE	2
+
+// Interface Type String
+#define	EBT_ULOG_PKT_WAN_TYPE_STRING	"wan"
+#define	EBT_ULOG_PKT_LAN_TYPE_STRING	"lan"
+#define	EBT_ULOG_PKT_WLAN_TYPE_STRING	"wlan"
+
+// Capture type
+#define	EBT_ULOG_PKT_BY_INTERFACE 0
+#define	EBT_ULOG_PKT_BY_INTERFACE_TYPE 1
 
 typedef struct {
 	short			vpi;
@@ -83,13 +91,28 @@ typedef struct {
 	unsigned long	txCpy;
 } ebt_ulog_cnt;
 
-static int				pktcap_enable;
-static unsigned short	pktcap_rxportlist;
-static unsigned short	pktcap_txportlist;
-static ebt_ulog_pvc		pktcap_rxpvclist[EBT_ULOG_MAX_PVC];
-static ebt_ulog_pvc		pktcap_txpvclist[EBT_ULOG_MAX_PVC];
+typedef struct {
+	unsigned char	bEnable;
+	unsigned char	nCaptureType; // 0: by interface(eth0.66, let0); 1: by interface type(wan, lan, wlan)
+								  // Ex: UMTS is lte3 interface => 0: only lte3; 1: All wan interfaces(lte0, lte1, lte2, lte3)
+	unsigned char	sIfName[32];
+	unsigned char	nInterfaceType; // 0: wan; 1: lan: 2: wlan
+	unsigned char	nInterfaceIndex;
+	unsigned short	nVlanID; // 0 ~ 4096
+	ebt_ulog_pvc	vpivci;
+	unsigned char	bEnableRX;
+	unsigned char	bEnableTX;
+	ebt_ulog_cnt	counter;
+} ebt_ulog_pkt_info;
+
+static int				pktcap_enable = 0;
 static int				pktcap_pkt_len_min = EBT_ULOG_MIN_PKT_LEN;
-static ebt_ulog_cnt		pktcap_portcnt[EBT_ULOG_MAX_PORT];
+
+static ebt_ulog_pkt_info		pktcap_infolist[EBT_ULOG_PKT_MAX_INFO_COUNT];
+static unsigned char	gbPktcap_debug_enable = 0;
+
+extern void dump_pkt_info(ebt_ulog_pkt_info *pInfo);
+extern ebt_ulog_pkt_info *FindPktInfo(unsigned char *sIfName, int nInterfaceType, int nInterfaceIndex, short vpi, unsigned short vci, unsigned short vlan_id);
 
 /* send one ulog_buff_t to userspace */
 static void ulog_send(unsigned int nlgroup)
@@ -145,23 +168,8 @@ static struct sk_buff *ulog_alloc_skb(unsigned int size)
 	return skb;
 }
 
-static char* ebt_ulog_ifname( int port, short vpi, int vci )
-{
-	static char* ifnames[] = { "eth0", "eth1", "ipoa/pppoa", "dsl", "wlan", "na" };
-
-	switch (port) {
-	  case EBT_ULOG_PORT_ETH0:	return ifnames[0];
-	  case EBT_ULOG_PORT_ETH1:	return ifnames[1];
-	  case EBT_ULOG_PORT_WLAN:	return ifnames[4];
-	  case EBT_ULOG_PORT_IPOA:	return ifnames[2];
-	  case EBT_ULOG_PORT_DSL:	return ifnames[3];
-	  default:					return ifnames[5];
-	}
-}
-
 static void ebt_ulog_packet(unsigned int hooknr, const struct sk_buff *skb, int off,
-   int dir, int port, short vpi, int vci,
-   const struct ebt_ulog_info *uloginfo, const char *prefix)
+   int dir, unsigned char *sIfName, const struct ebt_ulog_info *uloginfo, const char *prefix)
 {
 	ebt_ulog_packet_msg_t*	pm;
 	size_t					size, copy_len;
@@ -169,6 +177,9 @@ static void ebt_ulog_packet(unsigned int hooknr, const struct sk_buff *skb, int 
 	unsigned int			group = uloginfo->nlgroup;
 	ebt_ulog_buff_t*		ub = &ulog_buffers[group];
 	spinlock_t*				lock = &ub->lock;
+
+	if(gbPktcap_debug_enable)
+		printk("[ebt_ulog_packet]\n");
 
 	if ((uloginfo->cprange == 0) ||
 	    (uloginfo->cprange > skb->len - off))
@@ -215,14 +226,14 @@ static void ebt_ulog_packet(unsigned int hooknr, const struct sk_buff *skb, int 
 		*(pm->prefix) = '\0';
 
 	if (dir == 0) { /*ingress*/
-		strcpy(pm->physindev, ebt_ulog_ifname(port,vpi,vci) );
+		strcpy(pm->physindev, sIfName );
 		strcpy(pm->indev, pm->physindev);
 	} else
 		pm->indev[0] = pm->physindev[0] = '\0';
 
 	if (dir == 1) {
 		/* If out exists, then out is a bridge port */
-		strcpy(pm->physoutdev, ebt_ulog_ifname(port,vpi,vci) );
+		strcpy(pm->physoutdev, sIfName );
 		strcpy(pm->outdev, pm->physoutdev);
 	} else
 		pm->outdev[0] = pm->physoutdev[0] = '\0';
@@ -255,89 +266,106 @@ alloc_failure:
 	goto unlock;
 }
 
-static int ebt_packet_loggable( int dir, int port, short vpi, int vci)
-{
-	int				cnt;
-	int				portlist;
-	ebt_ulog_pvc*	ppvclist;
-
-	if (pktcap_enable == 0)
-		return 0;
-
-	if ( dir == 0 )
-	{
-		portlist = pktcap_rxportlist;
-		ppvclist = pktcap_rxpvclist;
-	}
-	else if ( dir == 1 )
-	{
-		portlist = pktcap_txportlist;
-		ppvclist = pktcap_txpvclist;
-	}
-	else
-	{
-		return 0;
-	}
-
-	if ( (portlist & (0x1<<port)) == 0x0 )
-		return 0;
-
-	if ( port == EBT_ULOG_PORT_DSL )
-	{
-		for ( cnt = 0; cnt < EBT_ULOG_MAX_PVC; cnt++ )
-		{
-			if (ppvclist[cnt].vpi == 0 && ppvclist[cnt].vci == 0)
-				return 1;
-			if (ppvclist[cnt].vpi == vpi && ppvclist[cnt].vci == vci)
-				return 1;
-		}
-		return 0;
-	}
-	else
-		return 1;
-}
-
 /* this function is registered with the netfilter core
  *  skb - packet buffer
  *  off - offset of head of packet
  *  dir - packet direction, 0 - rx/ingress, 1 - tx/egress
- *  port - port number, 0 - eth0, 1 - eth1, 6 - IPoA,PPPoA, 7 - IPoE,PPPoE,PTM, 3 - WLAN
  */
-void ebt_log_packet( const struct sk_buff *skb, int off, int dir, int port, short vpi, int vci)
+void ebt_log_packet( const struct sk_buff *skb, int off, int dir, int nInterfaceType, short vpi, int vci, unsigned short vlan_id)
 {
 	struct ebt_ulog_info loginfo;
+	ebt_ulog_pkt_info *pInfo = NULL;
 
 	if (!skb || (int)(skb->len-off) < pktcap_pkt_len_min)
 		return;
 
-	if ( port < EBT_ULOG_MAX_PORT )
-	{
-		if ( dir == 0 )
-			pktcap_portcnt[ port ].rxCnt++;
-		else
-			pktcap_portcnt[ port ].txCnt++;
-	}
+	//printk("[ebt_log_packet] skb->dev->name=%s, off=%d, nInterfaceType=%d, dir=%d, vpi=%d, vci=%d, vlan_id=%d\n", skb->dev->name, off, nInterfaceType, dir, vpi, vci, vlan_id);
+	pInfo = FindPktInfo( (skb->dev != NULL) ? skb->dev->name : NULL, nInterfaceType, 0, vpi, vci, vlan_id);
+	if(pInfo == NULL) return;
+	//dump_pkt_info(pInfo);
 
-	if (!ebt_packet_loggable(dir,port,vpi,vci))
+	if ( dir == 0 )
+		pInfo->counter.rxCnt++;
+	else
+		pInfo->counter.txCnt++;
+
+	// check loggable
+	if(dir == 0)
+	{
+		if(pInfo->bEnableRX == 0)
+		{
+			printk("[ebt_log_packet] dir=0, bEnableRX=0, return\n");
+			return;
+		}
+	}
+	else if(dir == 1)
+	{
+		if(pInfo->bEnableTX == 0)
+		{
+			printk("[ebt_log_packet] dir=1, bEnableTX=0, return\n");
+			return;
+		}
+	}
+	else
+	{
+		printk("[ebt_log_packet] dir != 0 && dir != 1, return\n");
 		return;
-
-	if ( port < EBT_ULOG_MAX_PORT )
-	{
-		if ( dir == 0 )
-			pktcap_portcnt[ port ].rxCpy++;
-		else
-			pktcap_portcnt[ port ].txCpy++;
 	}
+	if( (vpi != 0) && (vci != 0) )
+	{
+		if( (pInfo->vpivci.vpi != vpi) || (pInfo->vpivci.vci != vci) )
+		{
+			printk("[ebt_log_packet] vpi, vci error, return\n");
+			return;
+		}
+	}
+	if(pInfo->nCaptureType == EBT_ULOG_PKT_BY_INTERFACE)
+	{
+		if(vlan_id != 0)
+		{
+			if(pInfo->nVlanID != vlan_id)
+			{
+				printk("[ebt_log_packet] pInfo->nVlanID, vlan_id=%d, return\n", pInfo->nVlanID, vlan_id);
+				return;
+			}
+		}
+	}
+	//
+
+	if ( dir == 0 )
+		pInfo->counter.rxCpy++;
+	else
+		pInfo->counter.txCpy++;
 
 	loginfo.nlgroup = EBT_ULOG_DEFAULT_NLGROUP;
 	loginfo.cprange = 0;
 	loginfo.qthreshold = EBT_ULOG_DEFAULT_QTHRESHOLD;
 	loginfo.prefix[0] = '\0';
 
-	ebt_ulog_packet( 0, skb, off, dir, port, vpi, vci, &loginfo, "WAN_CAP");
+	ebt_ulog_packet( 0, skb, off, dir, pInfo->sIfName, &loginfo, "WAN_CAP");
 }
 
 EXPORT_SYMBOL(ebt_log_packet);
+
+static void proc_write_pktcap_reset_info(int nIndex)
+{
+	if( (nIndex < 0) || (nIndex >= EBT_ULOG_PKT_MAX_INFO_COUNT) )
+		return;
+	memset(&pktcap_infolist[nIndex], 0, sizeof(ebt_ulog_pkt_info) );
+	pktcap_infolist[nIndex].vpivci.vpi = -1;
+}
+
+static void proc_write_pktcap_clear_info_counter()
+{
+	int i;
+
+	for(i=0; i<EBT_ULOG_PKT_MAX_INFO_COUNT; i++)
+	{
+		if(pktcap_infolist[i].bEnable == 0) continue;
+
+		memset(&pktcap_infolist[i].counter, 0, sizeof(ebt_ulog_cnt) );
+	}
+}
 
 static void proc_write_pktcap_reset( void )
 {
@@ -345,14 +373,8 @@ static void proc_write_pktcap_reset( void )
 
 	pktcap_enable = 0;
 
-	pktcap_rxportlist = 0x0;
-	pktcap_txportlist = 0x0;
-
-	for (cnt = 0; cnt < EBT_ULOG_MAX_PVC; cnt++ ) {
-		pktcap_rxpvclist[cnt].vpi = -1;
-		pktcap_rxpvclist[cnt].vci = 0;
-		pktcap_txpvclist[cnt].vpi = -1;
-		pktcap_txpvclist[cnt].vci = 0;
+	for (cnt = 0; cnt < EBT_ULOG_PKT_MAX_INFO_COUNT; cnt++ ) {
+		proc_write_pktcap_reset_info(cnt);
 	}
 
 	pktcap_pkt_len_min = EBT_ULOG_MIN_PKT_LEN;
@@ -390,26 +412,134 @@ static long arc_simple_strtol( const char *cp, char **endp, unsigned int base )
 	return simple_strtoul(cp,endp,base);
 }
 
-static int proc_write_pktcap( struct file*	file, const char* buffer, unsigned long	count, void* data )
+ebt_ulog_pkt_info *GetFreePktInfo()
+{
+	int i;
+
+	for(i=0; i<EBT_ULOG_PKT_MAX_INFO_COUNT; i++)
+	{
+		if(pktcap_infolist[i].bEnable == 1) continue;
+		printk("[GetFreePktInfo] find free index %d:0x%08x\n", i, &pktcap_infolist[i]);
+		return &pktcap_infolist[i];
+	}
+	printk("[GetFreePktInfo] can not find free entry\n");
+	return NULL;
+}
+
+ebt_ulog_pkt_info *FindPktInfo(unsigned char *sIfName, int nInterfaceType, int nInterfaceIndex, short vpi, unsigned short vci, unsigned short vlan_id)
+{
+	int i, ret;
+	unsigned char bATMInterface = 0;
+
+	//printk("[FindPktInfo] sIfName=%s, nInterfaceType=%d, nInterfaceIndex=%d, vpi=%d, vci=%d, vlan_id=%d\n", sIfName, nInterfaceType, nInterfaceIndex, vpi, vci, vlan_id);
+	if( (vpi >= 0) && (vci != 0) )
+	{
+		bATMInterface = 1;
+	}
+	for(i=0; i<EBT_ULOG_PKT_MAX_INFO_COUNT; i++)
+	{
+		if(pktcap_infolist[i].bEnable == 0) continue;
+
+		//dump_pkt_info(&pktcap_infolist[i]);
+
+		if(pktcap_infolist[i].nCaptureType == EBT_ULOG_PKT_BY_INTERFACE)
+		{
+			// ATM: sIfName is NULL
+			if(sIfName != NULL)
+			{
+				if ( strnicmp( pktcap_infolist[i].sIfName, sIfName, strlen(sIfName) ) != 0 )
+					continue;
+			}
+		}
+
+		if(pktcap_infolist[i].nInterfaceType != nInterfaceType)
+			continue;
+
+#if 0
+		if(pktcap_infolist[i].nInterfaceIndex != nInterfaceIndex)
+			continue;
+#endif
+
+		if( (vpi >= 0) && (vci != 0) )
+		{
+			if(pktcap_infolist[i].vpivci.vpi != vpi)
+				continue;
+			if(pktcap_infolist[i].vpivci.vci != vci)
+				continue;
+		}
+
+		if(pktcap_infolist[i].nCaptureType == EBT_ULOG_PKT_BY_INTERFACE)
+		{
+			if(vlan_id != 0)
+			{
+				if(pktcap_infolist[i].nVlanID != vlan_id)
+					continue;
+			}
+		}
+
+		if(gbPktcap_debug_enable)
+			printk("[FindPktInfo] find index %d:0x%08x\n", i, &pktcap_infolist[i]);
+		return &pktcap_infolist[i];
+	}
+	//printk("[FindPktInfo] can not find the existed entry\n");
+	return NULL;
+}
+
+/*
+typedef struct {
+	unsigned char	bEnable;
+	unsigned char	bEnableRX;
+	unsigned char	bEnableTX;
+	unsigned char	nInterfaceType; // 0: wan; 1: lan: 2: wlan
+	unsigned char	sIfName[32];
+	unsigned char	nInterfaceIndex;
+	unsigned short	nVlanID; // 0 ~ 4096
+	ebt_ulog_pvc	vpivci;
+	ebt_ulog_cnt	counter;
+} ebt_ulog_pkt_info;
+*/
+void dump_pkt_info(ebt_ulog_pkt_info *pInfo)
+{
+	if(pInfo == NULL) return;
+	printk("[dump_pkt_info]\n");
+	printk("[dump_pkt_info] bEnable=%d, bEnableRX=%d, bEnableTX=%d, nInterfaceType=%d, nCaptureType=%d\n", pInfo->bEnable, pInfo->bEnableRX, pInfo->bEnableTX, pInfo->nInterfaceType, pInfo->nCaptureType);
+	printk("[dump_pkt_info] sIfName=%s, nInterfaceIndex=%d, nVlanID=%d, vpi=%d, vci=%d\n", pInfo->sIfName, pInfo->nInterfaceIndex, pInfo->nVlanID, pInfo->vpivci.vpi, pInfo->vpivci.vci);
+	printk("[dump_pkt_info] end\n");
+}
+
+#define atoi(str) simple_strtoul(((str != NULL) ? str : ""), NULL, 0)
+static int proc_write_pktcap( struct file*	file, const char* buf, unsigned long count, void* data )
 {
 	char*			pPtr;
 	char			sBuf[128];
 	int				portbitmap;
 	long 			portid;
-	short			vpi;
-	unsigned short 	vci;
+	short			vpi = -1;
+	unsigned short 	vci = 0;
 	ebt_ulog_pvc*	ppvclist;
 	int				tmp, en, cnt;
+	int				nCaptureType = 0; // 0: by interface; 1: by interface type
+	int 			nInterfaceType; // 0: wan; 1: lan; 2: wlan
+	int				nInterfaceIndex;
+	unsigned char	sIfName[32];
+	unsigned short	vlan_id = 0;
+	int 			i;
+	char*			pTmpPtr;
+	char			sTmpData[128];
+	int				len;
+	ebt_ulog_pkt_info *pInfo = NULL;
+	int				nEnableRX = -1, nEnableTX = -1;
 
 	sBuf[0] = sBuf[sizeof(sBuf)-1] = '\0';
 
+	printk("[proc_write_pktcap]\n");
 	/* trim the tailing space, tab and LF/CR*/
 	if ( count > 0 )
 	{
 		if (count >= sizeof(sBuf))
 			count = sizeof(sBuf) - 1;
 
-		if (copy_from_user(sBuf, buffer, count))
+		if (copy_from_user(sBuf, buf, count))
 			return count;
 
 		pPtr = (char*)sBuf + count - 1;
@@ -420,7 +550,6 @@ static int proc_write_pktcap( struct file*	file, const char* buffer, unsigned lo
 		}
 	}
 
-	/* reset */
 	if ( strnicmp( sBuf, "reset", sizeof("reset")-1 ) == 0 )
 	{
 		proc_write_pktcap_reset();
@@ -430,7 +559,7 @@ static int proc_write_pktcap( struct file*	file, const char* buffer, unsigned lo
 	/* clear */
 	if ( strnicmp( sBuf, "clear", sizeof("clear")-1 ) == 0 )
 	{
-		memset( pktcap_portcnt, 0, sizeof(pktcap_portcnt) );
+		proc_write_pktcap_clear_info_counter();
 		return count;
 	}
 
@@ -448,164 +577,241 @@ static int proc_write_pktcap( struct file*	file, const char* buffer, unsigned lo
 		return count;
 	}
 
+	/* debug-on */
+	if ( strnicmp( sBuf, "debug-on", sizeof("debug-on")-1 ) == 0 )
+	{
+		gbPktcap_debug_enable = 1;
+		return count;
+	}
+
+	/* debug-off */
+	if ( strnicmp( sBuf, "debug-off", sizeof("debug-off")-1 ) == 0 )
+	{
+		gbPktcap_debug_enable = 0;
+		return count;
+	}
+
+	// on wan $IFNAME $INTERFACE_INDEX vpivci $VPI $VCI vlan $VLAN_ID rx
+	// on wan $IFNAME $INTERFACE_INDEX vpivci $VPI $VCI vlan $VLAN_ID tx
+	// off wan $IFNAME $INTERFACE_INDEX vlan $VLAN_ID rx
+	// off wan $IFNAME $INTERFACE_INDEX vlan $VLAN_ID tx
 	/* on / off */
 	if ( strnicmp( sBuf, "on", sizeof("on")-1 ) == 0 || strnicmp( sBuf, "off", sizeof("off")-1 ) == 0 )
-	{
+	{	// enable or disable => "on" or "off"
+		if(pktcap_enable==0)
+		{
+			printk("[proc_write_pktcap] You must enable packet capture first\n");
+			return count;
+		}
+
 		if (strnicmp( sBuf, "on", sizeof("on")-1 ) == 0) {
 			en = 1;
 			for (pPtr=sBuf+sizeof("on"); *pPtr==' ' || *pPtr=='\t'; pPtr++) { }
+
+			printk("[proc_write_pktcap] on\n");
 		} else {
 			en = 0;
 			for (pPtr=sBuf+sizeof("off"); *pPtr==' ' || *pPtr=='\t'; pPtr++) { }
+
+			printk("[proc_write_pktcap] off\n");
 		}
-		/* <port> */
-		if (strnicmp( pPtr, "eth0", sizeof("eth0")-1 ) == 0) {
-			portbitmap = (0x1<<EBT_ULOG_PORT_ETH0);
-			pPtr += sizeof("eth0");
+
+		// capture type: "wan", "lan" or "wlan"
+		if(strnicmp(pPtr, EBT_ULOG_PKT_WAN_TYPE_STRING, sizeof(EBT_ULOG_PKT_WAN_TYPE_STRING)-1 ) == 0)
+		{
+			nInterfaceType = EBT_ULOG_PKT_WAN_TYPE;
+			pPtr += sizeof(EBT_ULOG_PKT_WAN_TYPE_STRING);
+
+			printk("[proc_write_pktcap] wan\n");
 		}
-		else if (strnicmp( pPtr, "eth1", sizeof("eth1")-1 ) == 0) {
-			portbitmap = (0x1<<EBT_ULOG_PORT_ETH1);
-			pPtr += sizeof("eth1");
+		else if(strnicmp(pPtr, EBT_ULOG_PKT_LAN_TYPE_STRING, sizeof(EBT_ULOG_PKT_LAN_TYPE_STRING)-1 ) == 0)
+		{
+			nInterfaceType = EBT_ULOG_PKT_LAN_TYPE;
+			pPtr += sizeof(EBT_ULOG_PKT_LAN_TYPE_STRING);
+
+			printk("[proc_write_pktcap] lan\n");
 		}
-		else if (strnicmp( pPtr, "wlan", sizeof("wlan")-1 ) == 0) {
-			portbitmap = (0x1<<EBT_ULOG_PORT_WLAN);
-			pPtr += sizeof("wlan");
+		else if(strnicmp(pPtr, EBT_ULOG_PKT_WLAN_TYPE_STRING, sizeof(EBT_ULOG_PKT_WLAN_TYPE_STRING)-1 ) == 0)
+		{
+			nInterfaceType = EBT_ULOG_PKT_WLAN_TYPE;
+			pPtr += sizeof(EBT_ULOG_PKT_WLAN_TYPE_STRING);
+
+			printk("[proc_write_pktcap] wlan\n");
 		}
-		else if (strnicmp( pPtr, "ipoa", sizeof("ipoa")-1 ) == 0) {
-			portbitmap = (0x1<<EBT_ULOG_PORT_IPOA);
-			pPtr += sizeof("ipoa");
+
+		// interface name: "eth0*", "eth1*", "ptm*", "nas*" or "lte*"
+		for (; *pPtr==' ' || *pPtr=='\t'; pPtr++) { }
+		if( (strnicmp(pPtr, "eth0", sizeof("eth0")-1 ) == 0)
+			|| (strnicmp(pPtr, "eth1", sizeof("eth1")-1 ) == 0)
+			|| (strnicmp(pPtr, "ptm", sizeof("ptm")-1 ) == 0)
+			|| (strnicmp(pPtr, "nas", sizeof("nas")-1 ) == 0)
+			|| (strnicmp(pPtr, "lte", sizeof("lte")-1 ) == 0) )
+		{
+			pTmpPtr=pPtr;
+			for (; *pTmpPtr!=' ' && *pTmpPtr!='\t'; pTmpPtr++) { }
+			memset(sIfName, 0, sizeof(sIfName));
+			memcpy(sIfName, pPtr, pTmpPtr - pPtr);
+			pPtr = pTmpPtr;
+
+			// check whther we can get vlan id. => find '.' within sIfName[]
+			len = strlen(sIfName);
+			i=0;
+			pTmpPtr=NULL;
+			while(len > 0)
+			{
+				if(sIfName[i] == '.')
+				{
+					pTmpPtr=sIfName + i + 1;
+					break;
+				}
+				len--;
+				i++;
+			}
+			vlan_id = atoi(pTmpPtr);
+
+			// interface index: 0-based
+			for (; *pPtr==' ' || *pPtr=='\t'; pPtr++) { }
+			pTmpPtr=pPtr;
+			for (; *pTmpPtr!=' ' && *pTmpPtr!='\t'; pTmpPtr++) { }
+			memset(sTmpData, 0, sizeof(sTmpData));
+			memcpy(sTmpData, pPtr, pTmpPtr - pPtr);
+			nInterfaceIndex=atoi(sTmpData);
+			pPtr = pTmpPtr;
+			printk("[proc_write_pktcap] sIfName=%s, nInterfaceIndex=%d, vlan_id=%d\n", sIfName, nInterfaceIndex, vlan_id);
 		}
-		else if (strnicmp( pPtr, "dsl", sizeof("dsl")-1 ) == 0) {
-			portbitmap = (0x1<<EBT_ULOG_PORT_DSL);
-			pPtr += sizeof("dsl");
+
+		// capture type: 0(by interface); 1(by interface type)
+		for (; *pPtr==' ' || *pPtr=='\t'; pPtr++) { }
+		if( (strnicmp(pPtr, "capture_type", sizeof("capture_type")-1 ) == 0) )
+		{
+			pTmpPtr=pPtr;
+			for (; *pTmpPtr!=' ' && *pTmpPtr!='\t'; pTmpPtr++) { }
+			pPtr = pTmpPtr;
+
+			// capture tpe
+			for (; *pPtr==' ' || *pPtr=='\t'; pPtr++) { }
+			pTmpPtr=pPtr;
+			for (; *pTmpPtr!=' ' && *pTmpPtr!='\t'; pTmpPtr++) { }
+			memset(sTmpData, 0, sizeof(sTmpData));
+			memcpy(sTmpData, pPtr, pTmpPtr - pPtr);
+			nCaptureType=atoi(sTmpData);
+			pPtr = pTmpPtr;
+
+			printk("[proc_write_pktcap] nCaptureType=%d\n", nCaptureType);
 		}
-		else {
-			portid = arc_simple_strtol( pPtr, &pPtr, 0 );
-			if ( portid < 0 || portid > 15 ) {
-				proc_write_pktcap_help();
+
+		// vpivci
+		for (; *pPtr==' ' || *pPtr=='\t'; pPtr++) { }
+		if( (strnicmp(pPtr, "vpivci", sizeof("vpivci")-1 ) == 0) )
+		{
+			pTmpPtr=pPtr;
+			for (; *pTmpPtr!=' ' && *pTmpPtr!='\t'; pTmpPtr++) { }
+			pPtr = pTmpPtr;
+
+			// vpi
+			for (; *pPtr==' ' || *pPtr=='\t'; pPtr++) { }
+			pTmpPtr=pPtr;
+			for (; *pTmpPtr!=' ' && *pTmpPtr!='\t'; pTmpPtr++) { }
+			memset(sTmpData, 0, sizeof(sTmpData));
+			memcpy(sTmpData, pPtr, pTmpPtr - pPtr);
+			vpi=atoi(sTmpData);
+			pPtr = pTmpPtr;
+
+			// vci
+			for (; *pPtr==' ' || *pPtr=='\t'; pPtr++) { }
+			pTmpPtr=pPtr;
+			for (; *pTmpPtr!=' ' && *pTmpPtr!='\t'; pTmpPtr++) { }
+			memset(sTmpData, 0, sizeof(sTmpData));
+			memcpy(sTmpData, pPtr, pTmpPtr - pPtr);
+			vci=atoi(sTmpData);
+			pPtr = pTmpPtr;
+
+			printk("[proc_write_pktcap] vpi=%d, vci=%d\n", vpi, vci);
+		}
+
+		// vlan
+		for (; *pPtr==' ' || *pPtr=='\t'; pPtr++) { }
+		if( (strnicmp(pPtr, "vlan", sizeof("vlan")-1 ) == 0) )
+		{
+			pTmpPtr=pPtr;
+			for (; *pTmpPtr!=' ' && *pTmpPtr!='\t'; pTmpPtr++) { }
+			pPtr = pTmpPtr;
+
+			// vlan id
+			for (; *pPtr==' ' || *pPtr=='\t'; pPtr++) { }
+			pTmpPtr=pPtr;
+			for (; *pTmpPtr!=' ' && *pTmpPtr!='\t'; pTmpPtr++) { }
+			memset(sTmpData, 0, sizeof(sTmpData));
+			memcpy(sTmpData, pPtr, pTmpPtr - pPtr);
+			vlan_id=atoi(sTmpData);
+			pPtr = pTmpPtr;
+
+			printk("[proc_write_pktcap] vlan_id=%d\n", vlan_id);
+		}
+
+		// rx or tx
+		for (; *pPtr==' ' || *pPtr=='\t'; pPtr++) { }
+		if( (strnicmp(pPtr, "rx", sizeof("rx")-1 ) == 0) )
+		{
+			nEnableRX = 1;
+			printk("[proc_write_pktcap] rx\n");
+		}
+		else if( (strnicmp(pPtr, "tx", sizeof("tx")-1 ) == 0) )
+		{
+			nEnableTX = 1;
+			printk("[proc_write_pktcap] tx\n");
+		}
+
+		// set data to pkt info
+		printk("[proc_write_pktcap] sIfName=%s, nInterfaceType=%d, vpi=%d, vci=%d, vlan_id=%d, line %d\n", sIfName, nInterfaceType, vpi, vci, vlan_id, __LINE__);
+		if(en==1)
+		{
+			pInfo = FindPktInfo(sIfName, nInterfaceType, nInterfaceIndex, vpi, vci, vlan_id);
+			if(pInfo == NULL)
+			{
+				pInfo = GetFreePktInfo();
+				if(pInfo == NULL)
+				{
+					printk("[proc_write_pktcap] en=1, can not get free pkt ifno, line %d\n", __LINE__);
+					return count;
+				}
+			}
+
+			pInfo->bEnable = 1;
+			strcpy(pInfo->sIfName, sIfName);
+			pInfo->nCaptureType = nCaptureType;
+			pInfo->nInterfaceType = nInterfaceType;
+			pInfo->nInterfaceIndex = nInterfaceIndex;
+			if(vpi != -1)
+			{
+				pInfo->vpivci.vpi = vpi;
+				pInfo->vpivci.vci = vci;
+			}
+			if(vlan_id != 0)
+			{
+				pInfo->nVlanID = vlan_id;
+			}
+			if(nEnableRX != -1)
+				pInfo->bEnableRX = nEnableRX;
+			if(nEnableTX != -1)
+				pInfo->bEnableTX = nEnableTX;
+			dump_pkt_info(pInfo);
+		}
+		else
+		{	// reset
+			pInfo = FindPktInfo(sIfName, nInterfaceType, nInterfaceIndex, vpi, vci, vlan_id);
+			if(pInfo == NULL)
+			{
+				printk("[proc_write_pktcap] en=0, can not get pkt ifno, line %d\n", __LINE__);
 				return count;
 			}
-			portbitmap = (0x1<<portid);
+			memset(pInfo, 0, sizeof(ebt_ulog_pkt_info) );
+			pInfo->vpivci.vpi = -1;
 		}
-		/* <dir> */
-		for (; *pPtr==' ' || *pPtr=='\t'; pPtr++) { }
-		if (strnicmp( pPtr, "rx", sizeof("rx")-1 ) == 0) {
-			if (en)
-				pktcap_rxportlist |= portbitmap;
-			else
-				pktcap_rxportlist &= ~portbitmap;
-			return count;
-		}
-		else if (strnicmp( pPtr, "tx", sizeof("tx")-1 ) == 0) {
-			if (en)
-				pktcap_txportlist |= portbitmap;
-			else
-				pktcap_txportlist &= ~portbitmap;
-			return count;
-		}
-		else {
-			proc_write_pktcap_help();
-			return count;
-		}
-		return count;
-	}
-
-	/* add / del*/
-	if ( strnicmp( sBuf, "add", sizeof("add")-1 ) == 0 || strnicmp( sBuf, "del", sizeof("del")-1 ) == 0 )
-	{
-		if (strnicmp( sBuf, "add", sizeof("add")-1 ) == 0) {
-			en = 1;
-			for (pPtr=sBuf+sizeof("add"); *pPtr==' ' || *pPtr=='\t'; pPtr++) { }
-		} else {
-			en = 0;
-			for (pPtr=sBuf+sizeof("del"); *pPtr==' ' || *pPtr=='\t'; pPtr++) { }
-		}
-		/* <vpi> */
-		for (; *pPtr==' ' || *pPtr=='\t'; pPtr++) { }
-		if (*pPtr == '\0') {
-			proc_write_pktcap_help();
-			return count;
-		}
-	    tmp = (int)simple_strtol(pPtr, &pPtr, 0);
-		if (tmp < 0 || tmp > 255) {
-			proc_write_pktcap_help();
-			return count;
-		}
-		vpi = (short)tmp;
-		/* <vci> */
-		for (; *pPtr==' ' || *pPtr=='\t'; pPtr++) { }
-		if (*pPtr == '\0') {
-			proc_write_pktcap_help();
-			return count;
-		}
-	    tmp = (int)simple_strtol(pPtr, &pPtr, 0);
-		if (tmp < 0 || tmp > 65535) {
-			proc_write_pktcap_help();
-			return count;
-		}
-		vci = (unsigned short)tmp;
-		/* <dir> */
-		for (; *pPtr==' ' || *pPtr=='\t'; pPtr++) { }
-		if (strnicmp( pPtr, "rx", sizeof("rx")-1 ) == 0)
-			ppvclist = pktcap_rxpvclist;
-		else if (strnicmp( pPtr, "tx", sizeof("tx")-1 ) == 0)
-			ppvclist = pktcap_txpvclist;
-		else {
-			proc_write_pktcap_help();
-			return count;
-		}
-		/* check */
-		if (en == 1) { /* add */
-			for ( cnt = 0; cnt < EBT_ULOG_MAX_PVC; cnt++ ) {
-				if (ppvclist[cnt].vpi == vpi && ppvclist[cnt].vci == vci) {
-					printk( "PVC exists\n" );
-					return count;
-				}
-			}
-			for ( cnt = 0; cnt < EBT_ULOG_MAX_PVC; cnt++ ) {
-				if (ppvclist[cnt].vpi == -1) {
-					ppvclist[cnt].vpi = vpi;
-					ppvclist[cnt].vci = vci;
-					return count;
-				}
-			}
-			printk( "no available PVC entry\n" );
-			return count;
-		}
-		else {
-			for ( cnt = 0; cnt < EBT_ULOG_MAX_PVC; cnt++ ) {
-				if (ppvclist[cnt].vpi == vpi && ppvclist[cnt].vci == vci) {
-					ppvclist[cnt].vpi = -1;
-					return count;
-				}
-			}
-			if ( cnt == EBT_ULOG_MAX_PVC ) {
-				printk( "PVC doesn not exist\n" );
-				return count;
-			}
-		}
-		return count;
-	}
-
-	/* set*/
-	if ( strnicmp( sBuf, "set", sizeof("set")-1 ) == 0 )
-	{
-		for (pPtr=sBuf+sizeof("set"); *pPtr==' ' || *pPtr=='\t'; pPtr++) { }
-		if (*pPtr == '\0') {
-			proc_write_pktcap_help();
-			return count;
-		}
-	    tmp = (int)simple_strtol(pPtr, &pPtr, 0);
-		if (tmp < 0 || tmp > 65535) {
-			proc_write_pktcap_help();
-			return count;
-		}
-		pktcap_pkt_len_min = tmp;
 		return count;
 	}
 
 	proc_write_pktcap_help();
-
 	return count;
 }
 
@@ -613,65 +819,39 @@ static int proc_read_pktcap(char *buf, char **start, off_t offset, int count, in
 {
 	int	cnt;
 	int	len = 0;
+	int i;
 
 	len += sprintf( buf+len, "packet capturing: %s\n", (pktcap_enable ? "enable" : "disable") );
 
-	len += sprintf( buf+len, "rx portlist:" );
-	for ( cnt = 0; cnt < EBT_ULOG_MAX_PORT; cnt++ ) {
-		if ( (pktcap_rxportlist & (0x1<<cnt)) == 0x0 )
-			continue;
-		len += sprintf( buf+len, " %d", cnt );
-		if (cnt == EBT_ULOG_PORT_ETH0)
-			len += sprintf( buf+len, "(eth0)" );
-		else if (cnt == EBT_ULOG_PORT_ETH1)
-			len += sprintf( buf+len, "(eth1)" );
-		else if (cnt == EBT_ULOG_PORT_WLAN)
-			len += sprintf( buf+len, "(wlan)" );
-		else if (cnt == EBT_ULOG_PORT_IPOA)
-			len += sprintf( buf+len, "(ipoa)" );
-		else if (cnt == EBT_ULOG_PORT_DSL)
-			len += sprintf( buf+len, "(dsl)" );
-	}
-	len += sprintf( buf+len, "\n" );
-	for ( cnt = 0; cnt < EBT_ULOG_MAX_PVC; cnt++ )
+/*
+typedef struct {
+	unsigned char	bEnable;
+	unsigned char	sIfName[32];
+	unsigned char	nInterfaceType; // 0: wan; 1: lan: 2: wlan
+	unsigned char	nInterfaceIndex;
+	unsigned short	nVlanID; // 0 ~ 4096
+	ebt_ulog_pvc	vpivci;
+	unsigned char	bEnableRX;
+	unsigned char	bEnableTX;
+	ebt_ulog_cnt	counter;
+} ebt_ulog_pkt_info;
+*/
+	for(i=0; i<EBT_ULOG_PKT_MAX_INFO_COUNT; i++)
 	{
-		if (pktcap_rxpvclist[cnt].vpi == -1)
-			continue;
-		len += sprintf( buf+len, "rx pvc %d: %d/%d\n", cnt, pktcap_rxpvclist[cnt].vpi, pktcap_rxpvclist[cnt].vci );
-	}
-
-	len += sprintf( buf+len, "tx portlist:" );
-	for ( cnt = 0; cnt < EBT_ULOG_MAX_PORT; cnt++ ) {
-		if ( (pktcap_txportlist & (0x1<<cnt)) == 0x0 )
-			continue;
-		len += sprintf( buf+len, " %d", cnt );
-		if (cnt == EBT_ULOG_PORT_ETH0)
-			len += sprintf( buf+len, "(eth0)" );
-		else if (cnt == EBT_ULOG_PORT_ETH1)
-			len += sprintf( buf+len, "(eth1)" );
-		else if (cnt == EBT_ULOG_PORT_WLAN)
-			len += sprintf( buf+len, "(wlan)" );
-		else if (cnt == EBT_ULOG_PORT_IPOA)
-			len += sprintf( buf+len, "(ipoa)" );
-		else if (cnt == EBT_ULOG_PORT_DSL)
-			len += sprintf( buf+len, "(dsl)" );
-	}
-	len += sprintf( buf+len, "\n" );
-	for ( cnt = 0; cnt < EBT_ULOG_MAX_PVC; cnt++ )
-	{
-		if (pktcap_txpvclist[cnt].vpi == -1)
-			continue;
-		len += sprintf( buf+len, "tx pvc %d: %d/%d\n", cnt, pktcap_txpvclist[cnt].vpi, pktcap_txpvclist[cnt].vci );
-	}
-
-	len += sprintf( buf+len, "minimum packet length: %d\n", pktcap_pkt_len_min );
-
-	for ( cnt = 0; cnt < EBT_ULOG_MAX_PORT; cnt++ )
-	{
-		len += sprintf( buf+len, "rxCnt[%02d]: %lu\n", cnt, pktcap_portcnt[cnt].rxCnt );
-		len += sprintf( buf+len, "rxCpy[%02d]: %lu\n", cnt, pktcap_portcnt[cnt].rxCpy );
-		len += sprintf( buf+len, "txCnt[%02d]: %lu\n", cnt, pktcap_portcnt[cnt].txCnt );
-		len += sprintf( buf+len, "txCpy[%02d]: %lu\n", cnt, pktcap_portcnt[cnt].txCpy );
+		if(pktcap_infolist[i].bEnable == 0) continue;
+		len += sprintf( buf+len, "index:%d\n", i );
+		len += sprintf( buf+len, "	sIfName:%s\n", pktcap_infolist[i].sIfName );
+		len += sprintf( buf+len, "	nInterfaceType:%d\n", pktcap_infolist[i].nInterfaceType );
+		len += sprintf( buf+len, "	nInterfaceIndex:%d\n", pktcap_infolist[i].nInterfaceIndex );
+		len += sprintf( buf+len, "	nVlanID:%d\n", pktcap_infolist[i].nVlanID );
+		len += sprintf( buf+len, "	vpi:%d\n", pktcap_infolist[i].vpivci.vpi );
+		len += sprintf( buf+len, "	vci:%d\n", pktcap_infolist[i].vpivci.vci );
+		len += sprintf( buf+len, "	bEnableRX:%d\n", pktcap_infolist[i].bEnableRX );
+		len += sprintf( buf+len, "	bEnableTX:%d\n", pktcap_infolist[i].bEnableTX );
+		len += sprintf( buf+len, "	rxCnt:%d\n", pktcap_infolist[i].counter.rxCnt );
+		len += sprintf( buf+len, "	rxCpy:%d\n", pktcap_infolist[i].counter.rxCpy );
+		len += sprintf( buf+len, "	txCnt:%d\n", pktcap_infolist[i].counter.txCnt );
+		len += sprintf( buf+len, "	txCpy:%d\n", pktcap_infolist[i].counter.txCpy );
 	}
 
 	return len;
@@ -718,8 +898,6 @@ static int ebt_ulog_init(void)
 		proc_file_conf->write_proc = proc_write_pktcap;
 		proc_file_conf->read_proc  = proc_read_pktcap;
 	}
-
-	memset( pktcap_portcnt, 0, sizeof(pktcap_portcnt) );
 
 	return ret;
 }

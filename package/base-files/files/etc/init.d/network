@@ -1,7 +1,7 @@
 #!/bin/sh
 # Copyright (C) 2006 OpenWrt.org
 
-START=40
+START=22
 ### ctc ###
 #STOP=90
 ###########
@@ -26,8 +26,19 @@ boot() {
 	setup_switch
 	### ctc ###
 	ifup2 -a
-	/usr/sbin/setup_netdev.sh port-disable
-	/usr/sbin/setup_netdev.sh system
+	### bitonic(20121130)
+	### In order to speed up DSL training, we do the following modification.
+	### 1. disable switch ports
+	### 2. load ppa module
+	### 3. enable switch ports
+	### 4. run dsl related script files
+	### 5. do switch related config
+	####/usr/sbin/setup_netdev.sh port-disable
+	####/usr/sbin/setup_netdev.sh system
+
+	/usr/sbin/setup_netdev.sh switch-phy-disable
+	/usr/sbin/setup_netdev.sh ppadev
+	/usr/sbin/setup_netdev.sh switch
 #	grep -qs config /etc/config/wireless && {
 #		/sbin/wifi up
 #	} || {
@@ -48,10 +59,6 @@ boot() {
 #		type "coldplug_interface_$proto" >/dev/null && [ "$auto" = 1 ] && \
 #			coldplug_interface_$proto "$ifc"
 #	done
-	###########
-
-	### fpan ### 
-	#echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
 	###########
 
 	### bitonic ###

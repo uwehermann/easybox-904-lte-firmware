@@ -265,7 +265,6 @@ int saveenv(void)
     return ret;
 
   #else
-
 	u64						total;
 	int						ret = 0;
 	nand_info_t*			nand = &nand_info[0];

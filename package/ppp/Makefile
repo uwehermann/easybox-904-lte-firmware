@@ -16,7 +16,7 @@ PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=ftp://ftp.samba.org/pub/ppp/
 PKG_MD5SUM:=848f6c3cafeb6074ffeb293c3af79b7c
 
-PKG_BUILD_DEPENDS:=libpcap
+PKG_BUILD_DEPENDS:=libpcap arc-middle-framework-open arc-middle-mod-ccfg-open
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/kernel.mk
@@ -33,7 +33,7 @@ $(call Package/ppp/Default)
   DEPENDS:=
   TITLE:=PPP daemon
   MENU:=1
-  DEPENDS:=+libsyslog
+  DEPENDS:=+libumng +libsyslog
 endef
 
 define Package/ppp/description
@@ -134,6 +134,7 @@ define Build/Prepare
 	$(CP) ./files/code/pppd/eap.c $(PKG_BUILD_DIR)/pppd
 	$(CP) ./files/code/pppd/ecp.c $(PKG_BUILD_DIR)/pppd
 	$(CP) ./files/code/pppd/fsm.c $(PKG_BUILD_DIR)/pppd
+	$(CP) ./files/code/pppd/fsm.h $(PKG_BUILD_DIR)/pppd
 	$(CP) ./files/code/pppd/ipcp.c $(PKG_BUILD_DIR)/pppd
 	$(CP) ./files/code/pppd/ipcp.h $(PKG_BUILD_DIR)/pppd
 	$(CP) ./files/code/pppd/ipv6cp.c $(PKG_BUILD_DIR)/pppd
@@ -162,7 +163,7 @@ define Build/Compile
 		PRECOMPILED_FILTER=1 \
 		STAGING_DIR="$(STAGING_DIR)" \
 		DESTDIR="$(PKG_INSTALL_DIR)/usr" \
-		LDFLAGS1="-lumngsyslog -L$(STAGING_DIR)/usr/lib" \
+		LDFLAGS1="-lumngsyslog -lmapitrnx -lmapi_ccfg -lArcCom -L$(STAGING_DIR)/usr/lib" \
 		all install
 endef
 

@@ -10,7 +10,7 @@ cfg_enable=0
 cfg_online=0
 cfg_account=
 cfg_password=
-cfg_name= 
+cfg_name=
 cfg_vendor=
 cfg_model=
 cfg_partition_idx=
@@ -18,6 +18,10 @@ cfg_path=
 cfg_readonly=0
 cfg_devname=
 cfg_partition=
+cfg_shareAll=
+cfg_usb_serial=
+#cfg_temp1=
+#cfg_temp2=
 
 CFGIDX1=0
 CFGIDX2=0
@@ -35,7 +39,7 @@ smb_global_add() {
 	[ -z "$workgroup" ] && workgroup=WORKGROUP
 	[ -z "$description" ] && description=samba
 
-	
+
 	sed -i "s/|NAME|/$name/g" /tmp/smb.conf
 	sed -i "s/|WORKGROUP|/$workgroup/g" /tmp/smb.conf
 	sed -i "s/|DESCRIPTION|/$description/g" /tmp/smb.conf
@@ -45,6 +49,7 @@ smb_global_add() {
 #				    $2 - data of "accountX"
 smbcfg_data_parse()
 {
+	local counter
 	if [ -z "$2" ] ; then
 		return
 	fi
@@ -56,8 +61,8 @@ smbcfg_data_parse()
 		cfg_partition_idx=`echo "$2"  | cut -d ':' -f 3`
 		cfg_path=`echo "$2"    | cut -d ':' -f 4`
 		cfg_security=`echo "$2" | cut -d ':' -f 5`
-		cfg_readpassword=`echo "$2" | cut -d ':' -f 6`	
-		cfg_writepassword=`echo "$2" | cut -d ':' -f 7`	
+		cfg_readpassword=`echo "$2" | cut -d ':' -f 6`
+		cfg_writepassword=`echo "$2" | cut -d ':' -f 7`
 		cfg_partition=`echo "$2" | cut -d ':' -f 8`
 
 		#echo cfg_enable = $cfg_enable> /dev/console
@@ -68,22 +73,37 @@ smbcfg_data_parse()
 		#echo cfg_readpassword= $cfg_readpassword> /dev/console
 		#echo cfg_writepassword= $cfg_writepassword> /dev/console
 		#echo cfg_partition= $cfg_partition> /dev/console
-	
-	#user mode	
+
+	#user mode
 	else
 		cfg_enable=`echo "$2"  | cut -d ':' -f 1`
+#cfg_enable=1
 		cfg_online=`echo "$2"  | cut -d ':' -f 2`
 		cfg_account=`echo "$2"    | cut -d ':' -f 3`
 		cfg_password=`echo "$2" | cut -d ':' -f 4`
 		cfg_name=`echo "$2"  | cut -d ':' -f 5`
 		cfg_vendor=`echo "$2"  | cut -d ':' -f 6`
 		cfg_model=`echo "$2"  | cut -d ':' -f 7`
+
+#		cfg_temp1=`echo "$2"  | cut -d ':' -f 8`
 		cfg_partition_idx=`echo "$2"  | cut -d ':' -f 8`
+#		for counter in 1 2 3 4 5 6 7 8
+#		do
+#			cfg_partition_idx[$counter]=`echo "$cfg_temp1"  | cut -d '|' -f $counter`
+#		done
+
+#		cfg_temp2=`echo "$2"  | cut -d ':' -f 9`
 		cfg_path=`echo "$2"  | cut -d ':' -f 9`
+#		for counter in 1 2 3 4 5 6 7 8
+#		do
+#			cfg_path[$counter]=`echo "$cfg_temp2"  | cut -d '|' -f $counter`
+#		done
 		cfg_readonly=`echo "$2"  | cut -d ':' -f 10`
 		cfg_devname=`echo "$2"  | cut -d ':' -f 11`
 		cfg_partition=`echo "$2"  | cut -d ':' -f 12`
-		
+		cfg_shareAll=`echo "$2"  | cut -d ':' -f 13`
+		cfg_usb_serial=`echo "$2"  | cut -d ':' -f 14`
+
 		#echo cfg_enable= $cfg_enable> /dev/console
 		#echo cfg_online= $cfg_online> /dev/console
 		#echo cfg_account = $cfg_account> /dev/console
@@ -96,7 +116,7 @@ smbcfg_data_parse()
 		#echo cfg_readonly = $cfg_readonly> /dev/console
 		#echo cfg_devname = $cfg_devname> /dev/console
 		#echo cfg_partition = $cfg_partition> /dev/console
-	fi                     
+	fi
 }
 
 # $1 - mode, $2 - cfg_idx, $3 - share folder ID
@@ -108,7 +128,7 @@ smbcfg_data_retrieve()
 	else
 		DATA=`ccfg_cli get smb_account$2@samba`
 	fi
-	
+
 	if [ -z "$DATA" ]; then
 		return
 	fi
@@ -116,7 +136,43 @@ smbcfg_data_retrieve()
 	smbcfg_data_parse $1 "$DATA"
 }
 
-smb_sharemode_add() {	
+smbcfg_check()
+{
+	local DATA_ERR=0
+
+	if [ "$cfg_enable" == "0" ] && [ "$cfg_online" == "0" ]; then
+		return
+	fi
+
+	if [ "$cfg_enable" != "0" ] && [ "$cfg_enable" != "1" ]; then
+		DATA_ERR=1
+	fi
+	if [ "$cfg_online" != "0" ] && [ "$cfg_online" != "1" ]; then
+		DATA_ERR=1
+	fi
+	if [ "$cfg_vendor" == "" ]; then
+		DATA_ERR=1
+	fi
+	if [ "$cfg_model" == "" ]; then
+		DATA_ERR=1
+	fi
+	if [ "$cfg_devname" != "" ] && [ "$cfg_devname" != "sda" ] && [ "$cfg_devname" != "sdb" ]; then
+		DATA_ERR=1
+	fi
+	if [ "$cfg_shareAll" != "0" ] && [ "$cfg_shareAll" != "1" ]; then
+		DATA_ERR=1
+	fi
+
+	if [ "$DATA_ERR" == "1" ]; then
+		echo "@@@ DATA ERROR !!! account: "$1 > /dev/console
+		cfg_enable=0
+		cfg_online=0
+		ccfg_cli set smb_account$1@samba=0:0
+		ccfg_cli set smb$1_drive@samba=0:0:0
+	fi
+}
+
+smb_sharemode_add() {
 	local MAX_FOLNUM
 	local FOLDER_ID=0
 	local CFGID=0
@@ -125,8 +181,6 @@ smb_sharemode_add() {
 	local dev_name
 	local mount_folder
 	local ALLPATH
-
-	echo "smb_sharemode_add" > /dev/console
 
 	MAX_FOLDER_NUM=`ccfg_cli get max_folder_num@samba`
 
@@ -142,21 +196,21 @@ smb_sharemode_add() {
 		CFGONLINE=`echo "$DRV_DATA"  | cut -d ':' -f 2`
 		CFG_DEVNAME=`echo "$DRV_DATA"  | cut -d ':' -f 6`
 
-		echo DRV_DATA = $DRV_DATA > /dev/console
-			
+		#echo DRV_DATA = $DRV_DATA > /dev/console
+
 		if [ "${CFGONLINE}" == "1" ]; then
 			while [ "${FOLDER_ID}" -lt "${MAX_FOLDER_NUM}" ]
 			do
 				smbcfg_data_retrieve 1 $CFGID $FOLDER_ID
 
 			dev_id=`ccfg_cli -f "$VOL_INFO_FILE" get ${CFG_DEVNAME}_id@volinfo`
-			echo dev_id = $dev_id > /dev/console
+			#echo dev_id = $dev_id > /dev/console
 
 			dev_name=`ccfg_cli -f "$VOL_INFO_FILE" get devName@disk${dev_id}_${cfg_partition_idx}`
-			echo dev_name = $dev_name > /dev/console
+			#echo dev_name = $dev_name > /dev/console
 
 			mount_folder=${dev_name:2}
-			echo mount_folder = $mount_folder > /dev/console
+			#echo mount_folder = $mount_folder > /dev/console
 
 			if [ "${cfg_path}" != "/" ]; then
 				ALLPATH="/tmp/usb/"${mount_folder}${cfg_path}
@@ -164,19 +218,17 @@ smb_sharemode_add() {
 				ALLPATH="/tmp/usb/"${mount_folder}
 			fi
 
-			echo ALLPATH = $ALLPATH > /dev/console
-
 			if [ -n "$DATA" ] && [ "${cfg_enable}" == "1" ]; then
 				echo -e "\n[$cfg_name]\n\tpath = $ALLPATH" >> /tmp/smb.conf
-				
+
 #Read Only
-				if [ "${cfg_security}" == "1" ]; then				
+				if [ "${cfg_security}" == "1" ]; then
 					echo -e "\twritable = no" >> /tmp/smb.conf
 #Full Access
 				else
 					echo -e "\twritable = yes" >> /tmp/smb.conf
 				fi
-				
+
 				echo -e "\tguest ok = yes" >> /tmp/smb.conf
 				echo -e "\tbrowseable = yes" >> /tmp/smb.conf
 				echo -e "\tcreate mask = 0777" >> /tmp/smb.conf
@@ -197,44 +249,244 @@ smb_usermode_add(){
 	local dev_id
 	local dev_name
 	local mount_folder
-	local ALLPATH
+	local RealPath
+	local SAMBA_HOME
+	local counter
+	local temp_path
+	local temp_partition_idx
+	local content_sharing_enable
+	local nolabel_count=0
+	local display_name
+	local directory_type=1  # type 1= /vol_label/display_name , type 2= complete directory structure.
+	local mount_folders
+	local mount_folder_new
+	local umount_folder
+
+exec >& /dev/console
+ccfg_cli set mode@samba=1
 
 	MAX_ACCOUNT_NUM=`ccfg_cli get max_account_num@samba`
-	
+	content_sharing_enable=`ccfg_cli get content_sharing@drive`
+
 	ACCOUNT_ID=0
 	while [ "${ACCOUNT_ID}" -lt "${MAX_ACCOUNT_NUM}" ]
 	do
 		smbcfg_data_retrieve 2 $ACCOUNT_ID
+		smbcfg_check $ACCOUNT_ID
 
-		if [ -n "${DATA}" ] && [ "${cfg_enable}" == "1" ] && [ "${cfg_online}" == "1" ]; then
+		if [ -n "${DATA}" ] && [ "${cfg_enable}" == "1" ] && [ "${cfg_online}" == "1" ] && [ "${content_sharing_enable}" == "1" ]; then
 			dev_id=`ccfg_cli -f "$VOL_INFO_FILE" get ${cfg_devname}_id@volinfo`
 			#echo dev_id = $dev_id > /dev/console
 
-			dev_name=`ccfg_cli -f "$VOL_INFO_FILE" get devName@disk${dev_id}_${cfg_partition_idx}`
+if [ "$cfg_shareAll" == "1" ]; then
+			temp_partition_idx=1
+else
+			temp_partition_idx=`echo "$cfg_partition_idx"  | cut -d '|' -f 1`
+fi
+			dev_name=`ccfg_cli -f "$VOL_INFO_FILE" get devName@disk${dev_id}_${temp_partition_idx}`
 			#echo dev_name = $dev_name > /dev/console
 
 			mount_folder=${dev_name:2}
 			#echo mount_folder = $mount_folder > /dev/console
 
-			ALLPATH="/tmp/usb/"${mount_folder}${cfg_path}
-			#echo ALLPATH = $ALLPATH > /dev/console
-		
-			echo -e "\n[$cfg_name]\n\tpath = $ALLPATH" >> /tmp/smb.conf
-			echo -e "\tguest ok = no" >> /tmp/smb.conf
-			echo -e "\tvalid users = $cfg_account" >> /tmp/smb.conf
-		
-			if [ "${cfg_readonly}" == "0" ]; then
-				echo -e "\twritable = no" >> /tmp/smb.conf
-			else
-				echo -e "\twritable = yes" >> /tmp/smb.conf
-			fi
+			SAMBA_HOME="/tmp/usb/SambaHome_"${ACCOUNT_ID}
 
-			echo -e "\tbrowseable = yes" >> /tmp/smb.conf
-			echo -e "\tcreate mask = 0777" >> /tmp/smb.conf
-			echo -e "\tdirectory mask = 0777" >> /tmp/smb.conf
+#			echo -e "\n[$cfg_name]\n\tpath = $RealPath" >> /tmp/smb.conf
+#			echo -e "\n[SambaHome_$ACCOUNT_ID]\n\tpath = $SAMBA_HOME" >> /tmp/smb.conf
+
+#load the records of mounted folders, then umount them.
+			mount_folders=`ccfg_cli get smb"$ACCOUNT_ID"_mount@samba`
+			temp_idx=1
+			umount_folder=`echo "$mount_folders"  | cut -d ':' -f $temp_idx`
+			while [ "$umount_folder" != "" ]
+			do
+				echo UMOUNT: $temp_idx : $umount_folder
+				umount -f -l "$SAMBA_HOME/$umount_folder"
+				rmdir "$SAMBA_HOME/$umount_folder"
+				let temp_idx=temp_idx+1
+				umount_folder=`echo "$mount_folders"  | cut -d ':' -f $temp_idx`
+			done
+			ccfg_cli set smb"$ACCOUNT_ID"_mount@samba=''
+
+#			rm -rf $SAMBA_HOME
+			rmdir "$SAMBA_HOME"/*
+			mkdir "$SAMBA_HOME"
+
+if [ "${cfg_account}" != "#" ]; then
+adduser "${cfg_account}" -H -D
+smbpasswd "${cfg_account}" "${cfg_password}"
+fi
+
+if [ "$cfg_shareAll" == "1" ]; then
+#			RealPath="/tmp/usb/"${mount_folder}/
+#			ln -s $RealPath $SAMBA_HOME/ShareAll
+
+			dev_mount_num=`ccfg_cli -f "$VOL_INFO_FILE" get ${cfg_devname}_mount_num@volinfo`
+			dev_id=`ccfg_cli -f "$VOL_INFO_FILE" get ${cfg_devname}_id@volinfo`
+			part_id=1
+
+			while [ "${part_id}" -le "${dev_mount_num}" ]
+			do
+				dev_name=`ccfg_cli -f "$VOL_INFO_FILE" get devName@disk${dev_id}_${part_id}`
+				mount_folder=${dev_name:2}
+				RealPath="/tmp/usb/"${mount_folder}
+				vol_label=`ccfg_cli -f "$VOL_INFO_FILE" get volLabel@disk${dev_id}_${part_id}`
+## To skip HFS or other unknown partition.
+				vol_type=`ccfg_cli -f "$VOL_INFO_FILE" get volType@disk${dev_id}_${part_id}`
+				if [ "${vol_type}" == "Unknown" ] || [ "${vol_type}" == "" ]; then
+					let part_id=$part_id+1
+					continue
+				fi
+
+#				ln -s ${RealPath} ${SAMBA_HOME}/Partition${part_id}
+				if [ "$vol_label" == "<no_label>" ]; then
+					if [ "$nolabel_count" == "0" ]; then
+#						ln -s ${RealPath} ${SAMBA_HOME}/DATA
+						smb_usermode_conf "DATA" "${RealPath}"
+						let nolabel_count=$nolabel_count+2
+					else
+#						ln -s ${RealPath} ${SAMBA_HOME}/DATA-${nolabel_count}
+						smb_usermode_conf "DATA-${nolabel_count}" "${RealPath}"
+						let nolabel_count=$nolabel_count+1
+					fi
+				else
+#					ln -s ${RealPath} ${SAMBA_HOME}/${vol_label}
+					smb_usermode_conf "${vol_label}" "${RealPath}"
+				fi
+				let part_id=$part_id+1
+			done
+
+else
+			for counter in 1 2 3 4 5 6 7 8
+			do
+				temp_path=`echo "$cfg_path"  | cut -d '|' -f $counter`
+				if [ "$temp_path" != "" ]; then
+
+					dev_mount_num=`ccfg_cli -f "$VOL_INFO_FILE" get ${cfg_devname}_mount_num@volinfo`
+					temp_partition_idx=`echo "$cfg_partition_idx"  | cut -d '|' -f $counter`
+					dev_name=${cfg_devname}${temp_partition_idx}	#sdaX or sdbX
+					mount_folder=${dev_name:2}	# aX or bX
+					dev_id=`ccfg_cli -f "$VOL_INFO_FILE" get ${cfg_devname}_id@volinfo`
+
+					# To get the correct volLabel
+					part_id=1
+					while [ "${part_id}" -le "${dev_mount_num}" ];
+					do
+						dev_name_cmp=`ccfg_cli -f "$VOL_INFO_FILE" get devName@disk${dev_id}_${part_id}`
+						temp_vol_label=`ccfg_cli -f "$VOL_INFO_FILE" get volLabel@disk${dev_id}_${part_id}`
+						if [ "$dev_name_cmp" == "$dev_name" ]; then
+							vol_label=$temp_vol_label
+						fi
+						let part_id=part_id+1
+					done
+
+#					vol_label=`ccfg_cli -f "$VOL_INFO_FILE" get volLabel@disk${dev_id}_${temp_partition_idx}`
+					let temp_counter=$counter-1
+					display_name=`ccfg_cli get smb"$ACCOUNT_ID"_folder"$temp_counter"_display_name@samba`
+echo "vol_label = "$vol_label
+echo "display_name = "$display_name
+
+					if [ "$vol_label" == "<no_label>" ]; then
+						if [ "$nolabel_count" == "0" ]; then
+							#ln -s ${RealPath} ${SAMBA_HOME}/DATA
+							vol_label="DATA"
+							let nolabel_count=$nolabel_count+2
+						else
+							#ln -s ${RealPath} ${SAMBA_HOME}/DATA-${nolabel_count}
+							vol_label="DATA"-${nolabel_count}
+							let nolabel_count=$nolabel_count+1
+						fi
+					fi
+
+					RealPath="/tmp/usb/"${mount_folder}$temp_path
+					#ln -s $RealPath $SAMBA_HOME/$cfg_name
+
+					if [ "$temp_path" == "/" ]; then
+#						ln -s $RealPath $SAMBA_HOME/$vol_label
+#						smb_usermode_conf "$vol_label" "${RealPath}"
+						smb_usermode_conf "$display_name" "${RealPath}"
+					else
+						cd $SAMBA_HOME
+						mkdir "$vol_label"
+						cd $vol_label
+
+						if [ "$directory_type" == "1" ]; then
+#							ln -s $RealPath $display_name
+							mkdir "$display_name"
+
+#record mounted folders.
+							mount_folders=`ccfg_cli get smb"$ACCOUNT_ID"_mount@samba`
+							mount_folder_new=$vol_label/$display_name
+							ccfg_cli set smb"$ACCOUNT_ID"_mount@samba="$mount_folders""$mount_folder_new":
+
+							mount -o bind "$RealPath" "$SAMBA_HOME"/"$mount_folder_new"
+							smb_usermode_conf "$vol_label" "$SAMBA_HOME/$vol_label"
+						elif [ "$directory_type" == "2" ]; then
+							token_idx=2  # first token always is empty (ex: /xxx/yyy)
+							path_token=`echo "$temp_path"  | cut -d '/' -f $token_idx`
+							while [ "$path_token" != "" ]
+							do
+								let token_idx=$token_idx+1
+								path_token_next=`echo "$temp_path"  | cut -d '/' -f $token_idx`
+								if [ "$path_token_next" == "" ]; then
+									ln -s $RealPath $path_token
+#									smb_usermode_conf "$vol_label" "$SAMBA_HOME/$vol_label"
+									smb_usermode_conf "$display_name" "$SAMBA_HOME/$vol_label"
+								else
+									mkdir $path_token
+									cd $path_token
+								fi
+								path_token=$path_token_next
+							done
+						fi
+
+						#To get the last string after '/' as sharing folder name ($path##*/)
+#						ln -s "$RealPath" "$SAMBA_HOME/${temp_path##*/}"
+
+						echo "RealPath : "$RealPath
+						echo "SAMBA_HOME : "$SAMBA_HOME
+						echo "temp_path : "$temp_path
+#						echo "temp_path##*/ : "${temp_path##*/}
+#						echo "cfg_path : "$cfg_path
+#						echo "cfg_name : "$cfg_name
+#						echo "mount_folder : "$mount_folder
+#						echo "dev_id : "${dev_id}
+#						echo "dev_name : "$dev_name
+#						echo "cfg_partition_idx : "${cfg_partition_idx}
+#						echo "temp_partition_idx : "${temp_partition_idx}
+					fi
+				fi
+			done
+fi
 		fi
 		let ACCOUNT_ID=$ACCOUNT_ID+1
 	done
+}
+
+#Write config to Samba's smb.conf
+# $1 : section name
+# $2 : path to share
+smb_usermode_conf()
+{
+	echo -e "\n[$1]\n\tpath = $2" >> /tmp/smb.conf
+
+	if [ "${cfg_account}" != "#" ]; then
+		echo -e "\tguest ok = no" >> /tmp/smb.conf
+		echo -e "\tvalid users = $cfg_account" >> /tmp/smb.conf
+	else
+		echo "nobody = guest" > /etc/samba/smbusers
+		echo -e "\tguest ok = yes" >> /tmp/smb.conf
+	fi
+
+	if [ "${cfg_readonly}" == "0" ]; then
+		echo -e "\twritable = yes" >> /tmp/smb.conf
+	else
+		echo -e "\twritable = no" >> /tmp/smb.conf
+	fi
+
+	echo -e "\tbrowseable = yes" >> /tmp/smb.conf
+	echo -e "\tcreate mask = 0777" >> /tmp/smb.conf
+	echo -e "\tdirectory mask = 0777" >> /tmp/smb.conf
 }
 
 #$1 - mode
@@ -256,7 +508,7 @@ smb_online_cfg_check(){
 	local DRV_DATA
 
 	MODE=`ccfg_cli get mode@samba`
-	
+
 	ONLINE1=`ccfg_cli -f "$DRV_STAT_FILE" get online1@drive`
 	VENDOR1=`ccfg_cli -f "$DRV_STAT_FILE" get vendor1@drive`
 	MODEL1=`ccfg_cli -f "$DRV_STAT_FILE" get model1@drive`
@@ -267,12 +519,12 @@ smb_online_cfg_check(){
 	MODEL2=`ccfg_cli -f "$DRV_STAT_FILE" get model2@drive`
 	DEVNAME2=`ccfg_cli -f "$DRV_STAT_FILE" get devname2@drive`
 
-	#echo $ONLINE1 $VENDOR1 $MODEL1 $DEVNAME1> /dev/console	
-	#echo $ONLINE2 $VENDOR2 $MODEL2 $DEVNAME2> /dev/console	
+	#echo $ONLINE1 $VENDOR1 $MODEL1 $DEVNAME1> /dev/console
+	#echo $ONLINE2 $VENDOR2 $MODEL2 $DEVNAME2> /dev/console
 
 	#share mode
 	if [ $MODE -eq 0 ]; then
-		#echo "share mode" > /dev/console		
+		#echo "share mode" > /dev/console
 
 		MAX_CFG_KEEP=`ccfg_cli get max_cfg_keep@samba`
 
@@ -300,14 +552,14 @@ smb_online_cfg_check(){
 					ccfg_cli set smb${CFGID}_drive@samba="${VAL}:0:${SEQ}:${VENDOR}:${MODEL}:"
 				fi
 			fi
-								
+
 			let CFGID=$CFGID+1
 		done
 
 	#user mode
 	else
 		#echo "user mode" > /dev/console
-	
+
 		MAX_ACCOUNT_NUM=`ccfg_cli get max_account_num@samba`
 
 		while [ "${ACCOUNT_ID}" -lt "${MAX_ACCOUNT_NUM}" ]
@@ -315,21 +567,30 @@ smb_online_cfg_check(){
 			ONLINE=0
 
 			smbcfg_data_retrieve 2 $ACCOUNT_ID
-			
+
+			if [ "$cfg_model" == "#" ]; then
+				MODEL1="#"
+				MODEL2="#"
+			fi
+
 			if [ -n "$DATA" ]; then
 				if [ "${ONLINE1}" == "1" ] && [ "${cfg_vendor}" == "${VENDOR1}" ] && [ "${cfg_model}" == "${MODEL1}" ]; then
 					ONLINE=1
 					cfg_devname=$DEVNAME1
-					ccfg_cli set smb_account$ACCOUNT_ID@samba="${cfg_enable}:${ONLINE}:${cfg_account}:${cfg_password}:${cfg_name}:${cfg_vendor}:${cfg_model}:${cfg_partition_idx}:${cfg_path}:${cfg_readonly}:${cfg_devname}:${cfg_partition}"
+					ccfg_cli set smb_account$ACCOUNT_ID@samba="${cfg_enable}:${ONLINE}:${cfg_account}:${cfg_password}:${cfg_name}:${cfg_vendor}:${cfg_model}:${cfg_partition_idx}:${cfg_path}:${cfg_readonly}:${cfg_devname}:${cfg_partition}:${cfg_shareAll}:${cfg_usb_serial}"
 				elif [ "${ONLINE2}" == "1" ] && [ "${cfg_vendor}" == "${VENDOR2}" ] && [ "${cfg_model}" == "${MODEL2}" ]; then
 					ONLINE=1
 					cfg_devname=$DEVNAME2
-					ccfg_cli set smb_account$ACCOUNT_ID@samba="${cfg_enable}:${ONLINE}:${cfg_account}:${cfg_password}:${cfg_name}:${cfg_vendor}:${cfg_model}:${cfg_partition_idx}:${cfg_path}:${cfg_readonly}:${cfg_devname}:${cfg_partition}"
-				fi		
+					ccfg_cli set smb_account$ACCOUNT_ID@samba="${cfg_enable}:${ONLINE}:${cfg_account}:${cfg_password}:${cfg_name}:${cfg_vendor}:${cfg_model}:${cfg_partition_idx}:${cfg_path}:${cfg_readonly}:${cfg_devname}:${cfg_partition}:${cfg_shareAll}:${cfg_usb_serial}"
+				else
+					ONLINE=0
+					cfg_devname=""
+					ccfg_cli set smb_account$ACCOUNT_ID@samba="${cfg_enable}:${ONLINE}:${cfg_account}:${cfg_password}:${cfg_name}:${cfg_vendor}:${cfg_model}:${cfg_partition_idx}:${cfg_path}:${cfg_readonly}:${cfg_devname}:${cfg_partition}:${cfg_shareAll}:${cfg_usb_serial}"
+				fi
 			fi
 
 			let ACCOUNT_ID=$ACCOUNT_ID+1
-			done	
+			done
 	fi
 }
 
@@ -347,12 +608,12 @@ smb_cfg_arrange(){
 	local FOLDER_DATA
 	local FOLDER_DATA_NEXT
 	local FOLDER_ID_NEXT
-	
+
 	local MODE
 
 	MODE=`ccfg_cli get mode@samba`
-	
-	#echo driveID = $1 > /dev/console 
+
+	#echo driveID = $1 > /dev/console
 	#echo in cfg_arrange!!!!! > /dev/console
 
 	#share mode
@@ -363,7 +624,7 @@ smb_cfg_arrange(){
 
 		while [ "${FOLDER_ID}" -lt "${MAX_FOLDER_NUM}" ]
 		do
-			
+
 			FOLDER_DATA=`ccfg_cli get smb${1}_folder${FOLDER_ID}@samba`
 
 			#echo FOLDER_DATA = $FOLDER_DATA >/dev/console
@@ -382,7 +643,7 @@ smb_cfg_arrange(){
 			fi
 			let FOLDER_ID=$FOLDER_ID+1
 		done
-	
+
 	#user mode
 	else
 		MAX_ACCOUNT_NUM=`ccfg_cli get max_account_num@samba`
@@ -425,24 +686,24 @@ smb_user_cfg_set(){
 	#share mode
 	if [ "$mode" == "0" -o  -z "$mode" ] ; then
 		sed -i "s/|SHARE|/share/g" /tmp/smb.conf
-		
-		smb_online_cfg_check 
 
-		smb_sharemode_add 
+		smb_online_cfg_check
+
+		smb_sharemode_add
 	#user mode
 	else
 		sed -i "s/|SHARE|/user/g" /tmp/smb.conf
-		
-		smb_online_cfg_check 
 
-		smb_usermode_add 
+		smb_online_cfg_check
+
+		smb_usermode_add
 	fi
 }
 
 case "$1" in
 	"smb_global_cfg_set")		smb_global_cfg_set;;
 	"smb_user_cfg_set")		    smb_user_cfg_set;;
-	"smb_cfg_arrange")			smb_cfg_arrange $2;;	
+	"smb_cfg_arrange")			smb_cfg_arrange $2;;
 	"smb_online_cfg_check")		smb_online_cfg_check;;
 	"smb_sharemode_add")		smb_sharemode_add;;
 	"smb_usermode_add")			smb_usermode_add;;

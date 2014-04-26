@@ -543,7 +543,7 @@ start_link(unit)
 
     devfd = the_channel->connect();
     if (devfd < 0)
-	goto fail;
+		goto fail;
 
     /* set up the serial device as a ppp interface */
     /*
@@ -980,6 +980,7 @@ auth_withpeer_fail(unit, protocol)
      * authentication secrets.
      */
     lcp_close(unit, "Failed to authenticate ourselves to peer");
+	system("touch /tmp/ppp_auth_fail");
     status = EXIT_AUTH_TOPEER_FAILED;
 }
 

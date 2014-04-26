@@ -1,6 +1,6 @@
 #!/bin/sh /etc/rc.common
 # Copyright (C) 2008 OpenWrt.org
-#START=50
+START=50
 
 DEFAULT=/etc/snmp/snmpd.default
 LIB_D=/var/lib/snmp

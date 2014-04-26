@@ -126,6 +126,7 @@ define BuildKernel
 	+$(MAKE) -C image compile install TARGET_BUILD=
 
   clean: FORCE
+	@-cd $(LINUX_DIR); $(MAKE) distclean
 	rm -rf $(KERNEL_BUILD_DIR)
 
   image-prereq:

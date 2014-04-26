@@ -214,6 +214,17 @@ Includes:
 - libipt_recent
 endef
 
+define Package/iptables-mod-u32
+$(call Package/iptables/Module, +kmod-ipt-u32)
+  TITLE:=U32 iptables extensions
+endef
+
+define Package/iptables-mod-u32/description
+U32 iptables extensions.
+Includes:
+- libxt_u32
+endef
+
 define Package/iptables-utils
 $(call Package/iptables/Module, )
   TITLE:=iptables save and restore utilities
@@ -271,6 +282,13 @@ IPTABLES_MAKEOPTS = \
 		DESTDIR="$(PKG_INSTALL_DIR)" \
 		$(MAKE_TARGETS)
 
+define Build/Prepare
+	$(call Build/Prepare/Default)
+	### wenbin. copy customized ipt_ULOG.h to overwrite original one ###
+	$(CP) ./src/include/linux/netfilter_ipv4/ipt_ULOG.h $(PKG_BUILD_DIR)/include/linux/netfilter_ipv4/
+	##############
+endef
+
 define Build/Compile
 	$(INSTALL_DIR) $(PKG_INSTALL_DIR)
 	$(MAKE) -C $(PKG_BUILD_DIR) $(IPTABLES_MAKEOPTS)
@@ -283,8 +301,13 @@ define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/include
 	$(INSTALL_DIR) $(1)/usr/include/iptables
 	$(INSTALL_DIR) $(1)/usr/include/net/netfilter
+	### wenbin. copy ipt_ULOG.h to staging to overwrite original ###
+	#$(INSTALL_DIR) $(1)/usr/include/linux/netfilter_ipv4
 
-	# XXX: iptables header fixup, some headers are not installed by iptables anymore
+	# XXX-Infineon: iptables header fixup, some headers are not installed by iptables anymore
+	#$(CP) $(PKG_BUILD_DIR)/include/linux/netfilter_ipv4/ipt_ULOG.h $(1)/usr/include/linux/netfilter_ipv4/
+	$(CP) $(PKG_BUILD_DIR)/include/linux/netfilter_ipv4/ipt_ULOG.h $(TOOLCHAIN_DIR)/usr/include/linux/netfilter_ipv4/
+	##############
 	$(CP) $(PKG_BUILD_DIR)/include/net/netfilter/*.h $(1)/usr/include/net/netfilter/
 	$(CP) $(PKG_BUILD_DIR)/include/iptables/*.h $(1)/usr/include/iptables/
 	$(CP) $(PKG_BUILD_DIR)/include/iptables.h $(1)/usr/include/
@@ -381,6 +404,7 @@ $(eval $(call BuildPlugin,iptables-mod-nat,$(IPT_NAT-m)))
 $(eval $(call BuildPlugin,iptables-mod-nat-extra,$(IPT_NAT_EXTRA-m)))
 $(eval $(call BuildPlugin,iptables-mod-iprange,$(IPT_IPRANGE-m)))
 $(eval $(call BuildPlugin,iptables-mod-ulog,$(IPT_ULOG-m)))
+$(eval $(call BuildPlugin,iptables-mod-u32,$(IPT_U32-m)))
 $(eval $(call BuildPackage,ip6tables))
 $(eval $(call BuildPackage,ip6tables-utils))
 $(eval $(call BuildPackage,libiptc))

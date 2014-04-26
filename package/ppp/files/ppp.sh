@@ -68,8 +68,22 @@ start_pppd() {
 #    }
 
 #	config_get_bool ipv6 "$cfg" ipv6 0
+#	[ "$ipv6" -eq 1 ] && ipv6="+ipv6" || ipv6=""
+	glb_ipv6=`umngcli get ip6_enable@system`
 	ipv6=`umngcli get ip6_enable@$cfg`
-	[ "$ipv6" -eq 1 ] && ipv6="+ipv6" || ipv6=""
+	ip6_proto=`umngcli get ip6_proto@$cfg`
+
+	if [ "$glb_ipv6" -eq 1 ]; then
+		if [ "$ipv6" -eq 1 ] && [ "$ip6_proto" == "dhcp" ]; then
+			echo 0 > /proc/sys/net/ipv6/conf/default/disable_ipv6
+			ipv6="+ipv6"
+		else
+			ipv6=""
+		fi
+	else
+		echo 1 > /proc/sys/net/ipv6/conf/default/disable_ipv6
+		ipv6=""
+	fi
 
 	config_get_bool persist "$cfg" persist 1
     [ "$persist" -eq 0 ] && persist="nopersist" || persist="persist maxfail 0 holdoff 3"

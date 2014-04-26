@@ -96,7 +96,7 @@ _start:
 
 reset:
         /* turn off led back light */
-	li      t0, 0x00009190
+	li      t0, 0x0000d190
 	sw      t0, BSP_MIPS_GPIO_P1_DIR
 	
 	li      t0, 0x000085a0
@@ -105,7 +105,7 @@ reset:
 	li      t0, 0x00000000
 	sw      t0, BSP_MIPS_GPIO_P1_ALTSEL1
 		
-	li      t0, 0x00009190
+	li      t0, 0x0000d190
 	sw      t0, BSP_MIPS_GPIO_P1_OD
 	
 	li      t0, 0x00000010

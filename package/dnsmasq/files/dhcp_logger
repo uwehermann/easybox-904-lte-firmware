@@ -12,7 +12,7 @@
 #		DNSMASQ_DOMAIN
 #		DNSMASQ_VENDOR_CLASS
 #		DNSMASQ_SUPPLIED_HOSTNAME
-#		DNSMASQ_USER_CLASS0 .. DNSMASQ_USER_CLASSn 
+#		DNSMASQ_USER_CLASS0 .. DNSMASQ_USER_CLASSn
 #		DNSMASQ_LEASE_LENGTH
 #		DNSMASQ_LEASE_EXPIRES
 #		DNSMASQ_TIME_REMAINING
@@ -44,10 +44,20 @@ lease_event_send()
 	if [ -x "/usr/sbin/libmapi_event_cli" ] ; then
 	    IF=`mac2phyport.sh $MAC`
 	    echo $IF | grep wlan
-	    if [ "$?" == "1" ]; then
-		    /usr/sbin/libmapi_event_cli add dhcp_logger CLIENT lan "ACTION=$ACTION MAC=$MAC IP=$IP HOSTNAME=$HOSTNAME IF=$IF"
-		else
-		    /usr/sbin/libmapi_event_cli add dhcp_logger CLIENT wifi "ACTION=$ACTION MAC=$MAC IP=$IP HOSTNAME=$HOSTNAME IF=$IF"
+	    if [ "$?" != "1" ]; then
+			# update hostname for wireless history list.
+			band="0 1"
+			apidx="0 1"
+			for i in $band ; do
+				for j in $apidx ; do
+					WL_HIS_FILE="/tmp/etc/config/wl_clt_his$i$j"
+					HST="$MAC*$HOSTNAME"
+					CHK=`cat $WL_HIS_FILE | grep $MAC`
+					if [ $CHK != $HST ] ; then
+						sed -i "s/$CHK/$HST/g" $WL_HIS_FILE
+					fi
+				done
+			done
         fi
 	fi
 }
@@ -129,7 +139,7 @@ lease_del()
 	umngcli -f $DHCP_LEASE_INFO unset *@${MAC}
 	umngcli -f $DHCP_LEASE_INFO unset ${IP}@ip
 
-	#lease_event_send
+	lease_event_send
 }
 
 

@@ -167,6 +167,10 @@
 #include "magic.h"
 #include "pathnames.h"
 
+#include "mid_mapi_trnx.h"
+#include "mid_mapi_ccfg.h"
+#include "libArcComApi.h"
+
 static const char rcsid[] = RCSID;
 
 /* global vars */
@@ -309,6 +313,46 @@ static void ipv6cp_script_done __P((void *));
 #define CODENAME(x)	((x) == CONFACK ? "ACK" : \
 			 (x) == CONFNAK ? "NAK" : "REJ")
 
+int iprintf(const char* sFmt, ...)
+{
+	va_list		vlVars;
+	char		sBuf[512];
+	int			iRet;
+	FILE*		fnOut;
+
+	if (sFmt == ARC_COM_NULL)
+		return 0;
+
+#if defined(__x86_64__) || defined(__i386__)
+	fnOut = fopen( "/dev/tty", "w" );
+#else
+	fnOut = fopen( "/dev/console", "w" );
+#endif
+	if (fnOut == ARC_COM_NULL)
+		return 0;
+
+	sBuf[sizeof(sBuf)-1] = '\0';
+
+	va_start(vlVars,sFmt);
+
+	iRet = vsnprintf(sBuf,sizeof(sBuf),sFmt,vlVars);
+
+	va_end(vlVars);
+
+	if (sBuf[sizeof(sBuf)-1] != '\0')
+	{
+		fprintf( fnOut, "NOTE: my_printf() overflow!!!\n");
+	}
+
+	sBuf[sizeof(sBuf)-1] = '\0';
+
+	fprintf( fnOut, "%s", sBuf );
+	fflush( fnOut );
+	fclose( fnOut );
+
+	return iRet;
+}
+
 /*
  * This state variable is used to ensure that we don't
  * run an ipcp-up/down script while one is already running.
@@ -333,6 +377,8 @@ setifaceid(argv)
 
 #define VALIDID(a) ( (((a).s6_addr32[0] == 0) && ((a).s6_addr32[1] == 0)) && \
 			(((a).s6_addr32[2] != 0) || ((a).s6_addr32[3] != 0)) )
+
+	iprintf("[setifaceid]\n");
 
     arg = *argv;
     if ((comma = strchr(arg, ',')) == NULL)
@@ -386,6 +432,8 @@ printifaceid(opt, printer, arg)
     void *arg;
 {
 	ipv6cp_options *wo = &ipv6cp_wantoptions[0];
+
+	iprintf("[printifaceid]\n");
 
 	if (wo->opt_local)
 		printer(arg, "%s", llv6_ntoa(wo->ourid));
@@ -1107,7 +1155,8 @@ ipv6_check_options()
      * Persistent link-local id is only used when user has not explicitly
      * configure/hard-code the id
      */
-    if ((wo->use_persistent) && (!wo->opt_local) && (!wo->opt_remote)) {
+    //if ((wo->use_persistent) && (!wo->opt_local) && (!wo->opt_remote))
+    {
 
 	/*
 	 * On systems where there are no Ethernet interfaces used, there

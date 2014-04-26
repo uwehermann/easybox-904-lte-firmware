@@ -82,6 +82,10 @@ else
 		###### added by ctc ######
 		rm -rf $(TARGET_DIR)/jffs
 		##########################
+		@chmod 755 -R $(TARGET_DIR)/
+		@rm -rf $(TARGET_DIR)/../dftconfig
+		@mv $(TARGET_DIR)/etc/config $(TARGET_DIR)/../dftconfig
+		@ln -sf /tmp/etc/config $(TARGET_DIR)/etc/config
 		$(foreach SZ,$(JFFS2_BLOCKSIZE),$(call Image/mkfs/jffs2/sub,$(SZ)))
 		###### added by ctc ######
 		$(STAGING_DIR_HOST)/bin/mkfs.jffs2 $(JFFS2OPTS) -n -e 0x4000  -o $(KDIR)/root.jffs2-16k.nand.tmp  -d $(TARGET_DIR)
@@ -100,6 +104,8 @@ else
 			$(CP) $(KDIR)/sysconfig.jffs2-*k.nand $(BIN_DIR)/$(SUBTARGET)/. ; \
 		fi
 		##########################
+		@rm $(TARGET_DIR)/etc/config
+		@mv $(TARGET_DIR)/../dftconfig $(TARGET_DIR)/etc/config
     endef
   endif
 
@@ -109,10 +115,16 @@ else
 #		@mkdir -p $(TARGET_DIR)/overlay
 #		$(MKSQUASHFS_CMD) $(TARGET_DIR) $(KDIR)/root.squashfs -nopad -noappend -root-owned $(SQUASHFS_OPTS)
 		@mkdir -p $(TARGET_DIR)/jffs
+		@chmod 755 -R $(TARGET_DIR)/
+		@rm -rf $(TARGET_DIR)/../dftconfig
+		@mv $(TARGET_DIR)/etc/config $(TARGET_DIR)/../dftconfig
+		@ln -sf /tmp/etc/config $(TARGET_DIR)/etc/config
 		$(MKSQUASHFS_CMD) $(TARGET_DIR) $(KDIR)/root.squashfs -nopad -noappend -root-owned $(SQUASHFS_OPTS)
 		$(STAGING_DIR_HOST)/bin/mkimage -A MIPS -O Linux -C lzma -T filesystem -e 0x00 -a 0x00 -n "LTQCPE RootFS" -d $(KDIR)/root.squashfs $(KDIR)/rootfs.img
 		##########################
 		$(call Image/Build,squashfs)
+		@rm $(TARGET_DIR)/etc/config
+		@mv $(TARGET_DIR)/../dftconfig $(TARGET_DIR)/etc/config
     endef
   endif
 
@@ -130,6 +142,60 @@ else
   define Image/mkfs/firmware
 		$$(call Image/Build,firmware)
   endef
+
+  define Image/mkfs/prepare/arcdftconf
+  	[ ! -L $(TARGET_DIR)/etc/passwd ] && { \
+		mv $(TARGET_DIR)/etc/passwd $(TARGET_DIR)/etc/config/passwd; \
+	} || echo "Skip moving $(TARGET_DIR)/etc/passwd to default configuration"
+	[ ! -L $(TARGET_DIR)/etc/group ] && { \
+		mv $(TARGET_DIR)/etc/group $(TARGET_DIR)/etc/config/group; \
+	} || echo "Skip moving $(TARGET_DIR)/etc/group to default configuration"
+	[ ! -L $(TARGET_DIR)/etc/hosts ] && { \
+		mv $(TARGET_DIR)/etc/hosts $(TARGET_DIR)/etc/config/hosts; \
+	} || echo "Skip moving $(TARGET_DIR)/etc/hosts to default configuration"
+	tar -zcvf $(TARGET_DIR)/etc/dftconfig.tgz -C $(TARGET_DIR)/etc config
+  endef
+
+  define Image/mkfs/prepare/arcmid
+	# For forward compatibility with new added middle handler/initializer
+	# For backward compatibility without new added middle handler/initializer, keep original registration DIR
+#	@mkdir -p $(TARGET_DIR)/etc/arc-middle/register/
+#	@cp -rf $(TARGET_DIR)/etc/config/arc-middle/register/. $(TARGET_DIR)/etc/arc-middle/register/.
+  endef
+
+  define Image/mkfs/prepare/arcsymlink
+	[ -f $(TARGET_DIR)/etc/config/passwd ] && { \
+		ln -sf /tmp/etc/config/passwd $(TARGET_DIR)/etc/passwd; \
+	} || echo "Skip creating symlinks for $(TARGET_DIR)/etc/passwd"
+	[ -f $(TARGET_DIR)/etc/config/group ] && { \
+		ln -sf /tmp/etc/config/group $(TARGET_DIR)/etc/group; \
+	} || echo "Skip creating symlinks for $(TARGET_DIR)/etc/group"
+	[ -f $(TARGET_DIR)/etc/config/hosts ] && { \
+		ln -sf /tmp/etc/config/hosts $(TARGET_DIR)/etc/hosts; \
+	} || echo "Skip creating symlinks for $(TARGET_DIR)/etc/hosts"
+	tar -zcvf $(TARGET_DIR)/etc/dftconfig.tgz -C $(TARGET_DIR)/etc config
+	[ -f $(TARGET_DIR)/etc/iproute2/rt_tables ] && { \
+		rm -f $(TARGET_DIR)/etc/iproute2/rt_tables; \
+		ln -sf /etc/config/iproute2/rt_tables $(TARGET_DIR)/etc/iproute2/rt_tables; \
+	} || echo "Skip creating symlinks for $(TARGET_DIR)/etc/iproute2/rt_tables"
+	[ -f $(TARGET_DIR)/opt/twonky_server/twonkyserver-default.ini ] && { \
+		mv -f $(TARGET_DIR)/opt/twonky_server/twonkyserver-default.ini $(TARGET_DIR)/opt/twonky_server/twonkyserver-default.ini.tmp; \
+		ln -sf /tmp/twonkyserver-default.ini $(TARGET_DIR)/opt/twonky_server/twonkyserver-default.ini; \
+	} || echo "Skip creating symlinks for $(TARGET_DIR)/opt/twonky_server/twonkyserver-default.ini"
+  endef
+
+#  define Image/mkfs/prepare/arccert
+#	@mkdir -p $(TARGET_DIR)/usr/sbin
+#	@cp $(TOPDIR)/target/linux/$(BOARD)/image/vf904Cert.pem  $(TARGET_DIR)/usr/sbin
+#  endef
+
+#  define Image/mkfs/prepare/arcfwversion
+#	if [ "x${CONFIG_UBOOT_CONFIG_SW_VERSION}" = "x" ]; then \
+#		sed -i 's/export CONFIG_UBOOT_CONFIG_SW_VERSION.*/export CONFIG_UBOOT_CONFIG_SW_VERSION="Rev-$(shell date +%Y%m%d-%H%M%S)"/g' $(TARGET_DIR)/etc/config.sh; \
+#	else \
+#		sed -i 's/export CONFIG_UBOOT_CONFIG_SW_VERSION.*/export CONFIG_UBOOT_CONFIG_SW_VERSION=${CONFIG_UBOOT_CONFIG_SW_VERSION}/g' $(TARGET_DIR)/etc/config.sh; \
+#	fi
+#  endef
 
   define Image/mkfs/fullimage
 		$$(call Image/Build,fullimage)
@@ -172,6 +238,13 @@ ifneq ($(CONFIG_TARGET_ROOTFS_ISO),)
   endef
 endif
 
+define Image/mkfs/prepare/arcadyan
+	$(call Image/mkfs/prepare/arcdftconf)
+	$(call Image/mkfs/prepare/arcmid)
+	$(call Image/mkfs/prepare/arcsymlink)
+#	$(call Image/mkfs/prepare/arccert)
+	$(call Image/mkfs/prepare/arcfwversion)
+endef
 
 define Image/mkfs/prepare/default
 	- $(FIND) $(TARGET_DIR) -type f -not -perm +0100 -not -name 'ssh_host*' -print0 | $(XARGS) -0 chmod 0644
@@ -183,6 +256,7 @@ endef
 
 define Image/mkfs/prepare
 	$(call Image/mkfs/prepare/default)
+	$(call Image/mkfs/prepare/arcadyan)
 endef
 
 
@@ -205,6 +279,7 @@ define BuildImage
   else
     compile:
   endif
+
 
   ifeq ($(IB),)
     install: compile install-targets FORCE

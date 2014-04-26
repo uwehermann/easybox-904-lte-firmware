@@ -189,15 +189,6 @@ fw_defaults() {
 
 	load_policy "$1"
 
-	echo 1 > /proc/sys/net/ipv4/tcp_syncookies
-	for f in /proc/sys/net/ipv4/conf/*/accept_redirects
-	do
-		echo 0 > $f
-	done
-	for f in /proc/sys/net/ipv4/conf/*/accept_source_route
-	do
-		echo 0 > $f
-	done
 
 	uci_revert_state firewall core
 	uci_set_state firewall core "" firewall_state
@@ -475,23 +466,55 @@ fw_check_notrack() {
 fw_init() {
 	DEFAULTS_APPLIED=
 
-	echo "Loading defaults"
-	config_foreach fw_defaults defaults
-	echo "Loading zones"
-	config_foreach fw_zone zone
-	echo "Loading forwarding"
-	config_foreach fw_forwarding forwarding
-	echo "Loading redirects"
-	config_foreach fw_redirect redirect
-	echo "Loading rules"
-	config_foreach fw_rule rule
-	echo "Loading includes"
-	config_foreach fw_include include
-	uci_set_state firewall core loaded 1
-	config_foreach fw_check_notrack zone
-	unset CONFIG_APPEND
-	config_load network
-	config_foreach fw_addif interface
+	rebuildfile="/etc/config/iptables_rebuild.save"
+	rebuildcfg="/etc/config/firewall"
+	rebuildsub="rebuild"
+	isFastInit=0
+	idx=0
+	for cfg in $rebuildcfg
+	do
+	    if [ -f "$cfg.$rebuildsub" ]; then
+	        rst=`cmp "$cfg" "$cfg.$rebuildsub"`
+		    if [ -z "$rst" ]; then
+		    	isFastInit=$((isFastInit+1))
+		    fi
+	    fi
+	    idx=$((idx+1))
+	done
+
+    if [ $isFastInit -eq $idx ]; then
+		echo "found $rebuildfile quick rebuild start"
+		cat "$rebuildfile" | iptables-restore
+		echo "found $rebuildfile quick rebuild end"
+	else
+		echo "Loading defaults"
+		config_foreach fw_defaults defaults
+		echo "Loading zones"
+		config_foreach fw_zone zone
+		echo "Loading forwarding"
+		config_foreach fw_forwarding forwarding
+		echo "Loading redirects"
+		config_foreach fw_redirect redirect
+		echo "Loading rules"
+		config_foreach fw_rule rule
+		echo "Loading includes"
+		config_foreach fw_include include
+		uci_set_state firewall core loaded 1
+		config_set core loaded 1
+		echo "Loading check notack"
+		config_foreach fw_check_notrack zone
+		unset CONFIG_APPEND
+		echo "Loading network"
+		config_load network
+		echo "Loading add if"
+		config_foreach fw_addif interface
+		iptables-save > $rebuildfile
+		for cfg in $rebuildcfg
+		do
+			cp "$cfg" "$cfg.$rebuildsub"
+		done
+		ccfg_cli commitcfg
+	fi
 }
 
 fw_stop() {

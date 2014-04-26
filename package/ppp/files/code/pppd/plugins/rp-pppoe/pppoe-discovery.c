@@ -74,6 +74,9 @@ int main(int argc, char *argv[])
     conn->sessionSocket = -1;
     conn->printACNames = 1;
 
+	system("rm -f /tmp/ppp_conn_up\n");
+	system("rm -f /tmp/ppp_auth_fail\n");
+	system("touch /tmp/ppp_connecting\n");
     discovery(conn);
     exit(0);
 }

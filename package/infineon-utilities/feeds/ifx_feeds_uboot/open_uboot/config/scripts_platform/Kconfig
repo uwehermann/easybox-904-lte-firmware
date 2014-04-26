@@ -559,6 +559,10 @@ config UBOOT_CONFIG_U_BOOT
     string "u-boot"
     default "u-boot.lq"
 
+config UBOOT_CONFIG_SYSCONFIG
+	string "sysconfig"
+	default "sysconfig.jffs2-128k.nand"
+
 config UBOOT_CONFIG_ROOTFS
     string "rootfs"
     default "rootfs.img"
@@ -779,6 +783,10 @@ config UBOOT_CONFIG_UPDATE_ROOTFS
 	default "tftpboot 80800000 $(tftppath)$(rootfs); nand erase $(f_rootfs_addr) 384000; nand write.fw 80800040 $(f_rootfs_addr) $(filesize)" if ( UBOOT_CONFIG_BOOT_FROM_NAND && UBOOT_CONFIG_FIRMWARE_IN_ROOTFS && UBOOT_CONFIG_NAND_FLASH_32M && UBOOT_CONFIG_IN_SUPERTASK )
 	default "tftpboot $(loadaddr) $(tftppath)$(rootfs); nand erase $(f_rootfs_addr) $(f_rootfs_size); nand write.jffs2 $(loadaddr) $(f_rootfs_addr) $(filesize)" if ( UBOOT_CONFIG_BOOT_FROM_NAND )
 
+config UBOOT_CONFIG_UPDATE_ALL
+	string "update_all"
+	default "run update_kernel; run update_rootfs"
+
 config UBOOT_CONFIG_UPDATE_FIRMWARE
     string "update_firmware"
     default "tftpboot $(loadaddr) $(tftppath)$(firmware); upgrade $(loadaddr) $(filesize)"
@@ -806,7 +814,7 @@ config UBOOT_CONFIG_UPDATE_FLASH
 
 config UBOOT_CONFIG_UPDATE_SYSCONFIG
     string "update_sysconfig"
-	depends on UBOOT_CONFIG_JFFS2_PART && ( UBOOT_CONFIG_NAND_FLASH_32M || UBOOT_CONFIG_NAND_FLASH_512M )
+	depends on UBOOT_CONFIG_NAND_FLASH_32M || UBOOT_CONFIG_NAND_FLASH_512M
     default "tftpboot $(loadaddr) $(tftppath)$(sysconfig); nand erase $(f_sysconfig_addr) $(f_sysconfig_size); nand write.partial $(loadaddr) $(f_sysconfig_addr) $(filesize)"
 
 config UBOOT_CONFIG_UPDATE_KERNEL2
@@ -821,8 +829,16 @@ config UBOOT_CONFIG_UPDATE_JFFS2IMAGE2
 	string "update_jffs2image2"
 	depends on UBOOT_CONFIG_DUAL_IMAGE
 
-endif
+config UBOOT_CONFIG_UPDATE_ALL2
+	string "upadte_all2"
+	depends on UBOOT_CONFIG_DUAL_IMAGE
+	default "run update_kernel2; run update_rootfs2"
 
+config UBOOT_CONFIG_UPDATE_DUAL
+	string "upadte_dual"
+	depends on UBOOT_CONFIG_DUAL_IMAGE
+	default "run update_kernel; run update_rootfs; run update_kernel2; run update_rootfs2"
+endif
 
 if UBOOT_CONFIG_BOOT_FROM_SPI && ( UBOOT_CONFIG_SPI_FLASH_256K || UBOOT_CONFIG_SPI_FLASH_512K )
 

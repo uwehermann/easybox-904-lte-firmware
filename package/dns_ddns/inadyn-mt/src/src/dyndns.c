@@ -20,18 +20,18 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 /*
-	Dyn Dns update main implementation file 
+	Dyn Dns update main implementation file
 	Author: narcis Ilisei
 	Date: May 2003
 
 	History:
         - first implemetnation
-        - 18 May 2003 : cmd line option reading added - 
+        - 18 May 2003 : cmd line option reading added -
         - Nov 2003 - new version
         - April 2004 - freedns.afraid.org system added.
         - October 2004 - Unix syslog capability added.
-        - October 2007 - win32 RAS events trap thread, RAS, 
-          and network online status checking added.  Debug 
+        - October 2007 - win32 RAS events trap thread, RAS,
+          and network online status checking added.  Debug
           level command line parameter added.  Refactored,
           augmented main loop, including moving one time
           initialization outside of loop.  Two files
@@ -39,14 +39,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
           added -- event_trap.c, event_trap.h.
         - November 2007 - multithread safe debug log.  One file
 		  changed -- os.c.
-        - December 2007 - Windows service routines, parser default 
+        - December 2007 - Windows service routines, parser default
           command, and registry, config file, command line command
-          options hierachy.  Parser error handling callback.  
+          options hierachy.  Parser error handling callback.
           Added files service.c, service.h, service_main.c,
-          service_main.h, debug_service.h.  Changed  inadyn_cmd.c, 
+          service_main.h, debug_service.h.  Changed  inadyn_cmd.c,
         - get_cmd.c, os_windows.c, main.c.
-        - June/July 2009 
-	      libao and Windows waveOut interfacing for .wav file 
+        - June/July 2009
+	      libao and Windows waveOut interfacing for .wav file
 		  audible alerts on net down.
          -Sept. 2009
 	      non-blocking socket create, connect
@@ -63,28 +63,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 UNICODE (Win 95/98/ME)
 
-For Windows 32 non-NT (95/98/ME) unicode, Define UNICOWS.  Then compile and link with 
+For Windows 32 non-NT (95/98/ME) unicode, Define UNICOWS.  Then compile and link with
 unicows.lib.  Install unicows.dll.
 
-When linking, order is important.  The following (all of it) on the link line, 
+When linking, order is important.  The following (all of it) on the link line,
 without the cr/lf's, will do:
 
-/nod:kernel32.lib /nod:advapi32.lib /nod:user32.lib /nod:gdi32.lib /nod:shell32.lib 
-/nod:comdlg32.lib /nod:version.lib /nod:mpr.lib /nod:rasapi32.lib /nod:winmm.lib 
-/nod:winspool.lib /nod:vfw32.lib /nod:secur32.lib /nod:oleacc.lib /nod:oledlg.lib 
-/nod:sensapi.lib 
+/nod:kernel32.lib /nod:advapi32.lib /nod:user32.lib /nod:gdi32.lib /nod:shell32.lib
+/nod:comdlg32.lib /nod:version.lib /nod:mpr.lib /nod:rasapi32.lib /nod:winmm.lib
+/nod:winspool.lib /nod:vfw32.lib /nod:secur32.lib /nod:oleacc.lib /nod:oledlg.lib
+/nod:sensapi.lib
 
-unicows.lib 
+unicows.lib
 
-kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib 
-mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib 
+kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib
+mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib
 oledlg.lib sensapi.lib Ws2_32.lib libcmt.lib
 
 There's no unicows.lib debug info, so this should be release target compile only.
 */
 #define DEBUG_BY_FALLEN 1 //Added by Fallen for debugging
 
-#define MODULE_TAG      "INADYN: "  
+#define MODULE_TAG      "INADYN: "
 
 #ifndef EXCLUDE_CONFIG_H
 
@@ -275,7 +275,7 @@ DYNDNS_SYSTEM_INFO dns_system_table[] =
 			(DNS_SYSTEM_REQUEST_FUNC)get_req_for_selfhost_server,
 			DYNDNS_MY_IP_SERVER, DYNDNS_MY_IP_SERVER_URL,
 			"carol.selfhost.de", "/update?", NULL}},
-			
+
 		{DYNDNS_DEFAULT,
 			{"default@dyndns.org", &dyndns_org_dynamic,
 			(DNS_SYSTEM_SRV_RESPONSE_OK_FUNC)is_dyndns_server_rsp_ok,
@@ -388,7 +388,7 @@ DYNDNS_SYSTEM_INFO dns_system_table[] =
 			(DNS_SYSTEM_REQUEST_FUNC)get_req_for_generic_http_dns_server,
 			DYNDNS_MY_IP_SERVER, DYNDNS_MY_IP_SERVER_URL,
 			"dynsip.org", "/nic/update?hostname=", ""}},
-			
+
 		{DHIS_DEFAULT,
 			{"default@dhis.org", NULL,
 			(DNS_SYSTEM_SRV_RESPONSE_OK_FUNC)is_dhis_server_rsp_ok,
@@ -491,7 +491,7 @@ static void dec_forced_update_count(DYN_DNS_CLIENT *p_self)
 
 static RC_TYPE dyn_dns_wait_for_cmd(DYN_DNS_CLIENT *p_self)
 {
-	int			counter;	
+	int			counter;
 	int			counter_init;
 	int			cmd_check_period_ms;
 	DYN_DNS_CMD	old_cmd;
@@ -505,10 +505,10 @@ static RC_TYPE dyn_dns_wait_for_cmd(DYN_DNS_CLIENT *p_self)
 	}
 
 #ifdef USE_THREADS
-	/*keeping track of time out of this routine (for forced update period) -- 
-	  a bit experimental, but appears unneccessary.  Easy enough to 
+	/*keeping track of time out of this routine (for forced update period) --
+	  a bit experimental, but appears unneccessary.  Easy enough to
 	  remove though -- these two functions here, the restart below and in
-	  do_update_alias_table, the create in init, and the destroy in main.  
+	  do_update_alias_table, the create in init, and the destroy in main.
 	  Compiler option?  :-)
 	*/
 	stop_timer(&update_timer);
@@ -516,7 +516,7 @@ static RC_TYPE dyn_dns_wait_for_cmd(DYN_DNS_CLIENT *p_self)
 	dec_forced_update_count(p_self);
 #endif
 
-	
+
 	while(1)
 	{
 
@@ -529,7 +529,7 @@ static RC_TYPE dyn_dns_wait_for_cmd(DYN_DNS_CLIENT *p_self)
 
 		if (p_self->cmd != old_cmd)
 
-			break;		
+			break;
 
 		if (p_self->forced_update_counter) /*unsigned*/
 
@@ -542,12 +542,12 @@ static RC_TYPE dyn_dns_wait_for_cmd(DYN_DNS_CLIENT *p_self)
 				/*
 					If not retrying pendings, forced update retries fallback to update_period.
 
-					So, this setup performs as inadyn if retry pendings off.  But, it will attempt 
-					a forced update before update_period expiration if havn't tried since last update 
-					and not doing pendings.  A bit overdone perhaps...the idea is to decouple ip 
-					change checks (and associated interval) from required account maintenance ip 
-					updates.  A failed update prompted by either update interval trigger will cause 
-					mode shift to pending interval (15 minute default) if pending updates not explicitly 
+					So, this setup performs as inadyn if retry pendings off.  But, it will attempt
+					a forced update before update_period expiration if havn't tried since last update
+					and not doing pendings.  A bit overdone perhaps...the idea is to decouple ip
+					change checks (and associated interval) from required account maintenance ip
+					updates.  A failed update prompted by either update interval trigger will cause
+					mode shift to pending interval (15 minute default) if pending updates not explicitly
 					turned off.
 				*/
 
@@ -651,42 +651,42 @@ static char* get_freedns_update_hash(DYN_DNS_CLIENT *p_self, int cnt, char rsp_b
 {
 	if(DEBUG_BY_FALLEN)
 	printf("FreeDNS Username: [%s]\nFreeDNS Password: [%s]\n", p_self->info.credentials.my_username, p_self->info.credentials.my_password);
-	
+
 	char temp_auth[DYNDNS_MY_USERNAME_LENGTH + DYNDNS_MY_PASSWORD_LENGTH + 2]; //the "plus 2" is for '|' and '\0'
 	strcpy(temp_auth, p_self->info.credentials.my_username);
 	strcat(temp_auth, "|");
 	strcat(temp_auth, p_self->info.credentials.my_password);
-	
+
 	unsigned char sha1_auth_bin[20];
 	char sha1_auth[41];
 	int i;
 	SHA1(temp_auth, strlen(temp_auth), sha1_auth_bin);
 	for(i = 0 ; i < 20 ; i++)
 	sprintf(&sha1_auth[i<<1], "%02x", sha1_auth_bin[i]); //i<<1 == i * 2
-	
+
 	if(DEBUG_BY_FALLEN)
 	printf("FreeDNS SHA1 Auth: [%s]\n", sha1_auth);
-	
+
 	char req_buffer[DYNDNS_HTTP_REQUEST_BUFFER_SIZE] = "";
 	HTTP_TRANSACTION http_tr;
-	
-	http_tr.req_len = sprintf(req_buffer, FREEDNS_GET_UPDATE_HASH_REQUEST_FORMAT, 
-								sha1_auth, 
+
+	http_tr.req_len = sprintf(req_buffer, FREEDNS_GET_UPDATE_HASH_REQUEST_FORMAT,
+								sha1_auth,
 								p_self->info.dyndns_server_name.name[ip_store]);
-								
+
 	http_tr.p_req = req_buffer;
 	http_tr.p_rsp = rsp_buffer;
 	http_tr.max_rsp_len = DYNDNS_HTTP_RESPONSE_BUFFER_SIZE - 1;/*save place for a \0 at the end*/
-	http_tr.rsp_len = 0;		
+	http_tr.rsp_len = 0;
 
 	/*send it*/
 	RC_TYPE rc = RC_OK;
-	
+
 	rc = http_client_transaction(&p_self->http_to_dyndns, &http_tr);
 	http_tr.p_rsp[http_tr.rsp_len]='\0';
 	if(p_self->dbg.level > 2)
 	DBG_PRINTF((LOG_DEBUG,"DYNDNS my Request:\n%s\n", req_buffer));
-	
+
 	if(!(rc == RC_OK))
 	{
 		p_self->alias_info.update_succeeded[i]=false;
@@ -697,18 +697,18 @@ static char* get_freedns_update_hash(DYN_DNS_CLIENT *p_self, int cnt, char rsp_b
 		RC_TYPE rc2 = http_client_shutdown(&p_self->http_to_dyndns);
 		if(!(rc2==RC_OK))
 		DBG_PRINTF((LOG_WARNING,"W:" MODULE_TAG "http client possibly improper shutdown, possible memory leak, system instability...\n"));
-		
+
 		if(DEBUG_BY_FALLEN)
 		printf("FreeDNS update hash response: [%s]\n", rsp_buffer);
-		
+
 		if(DEBUG_BY_FALLEN)
 		printf("FreeDNS hostname: [%s]\n", p_self->alias_info.names[cnt].name);
-		
+
 		char temp_hostname[DYNDNS_SERVER_NAME_LENGTH + 2]; //the "plus 2" is for '\n' and '|'
 		strcpy(temp_hostname, "\n");
 		strcat(temp_hostname, p_self->alias_info.names[cnt].name);
 		strcat(temp_hostname, "|");
-		
+
 		char *str_head_ptr, *str_tail_ptr;
 		str_head_ptr = strstr(rsp_buffer, temp_hostname);
 		if(str_head_ptr == 0)
@@ -716,22 +716,22 @@ static char* get_freedns_update_hash(DYN_DNS_CLIENT *p_self, int cnt, char rsp_b
 			DBG_PRINTF((LOG_WARNING, "The alias hostname is not on FreeDNS domain list!\n"));
 			return 0;
 		}
-		str_head_ptr = strstr(str_head_ptr, p_self->info.dyndns_server_name.name[ip_store]) 
+		str_head_ptr = strstr(str_head_ptr, p_self->info.dyndns_server_name.name[ip_store])
 						+ strlen(p_self->info.dyndns_server_name.name[ip_store]);
 		str_tail_ptr = strstr(str_head_ptr, "\n");
 		if(str_tail_ptr)
 		*str_tail_ptr = '\0';
-		
+
 		if (!((rc=http_client_init(&p_self->http_to_dyndns))==RC_OK))
 		{
 			DBG_PRINTF((LOG_ERR,"E:" MODULE_TAG "Init error:  %s updating alias %s\n",errorcode_get_name(rc),p_self->alias_info.names[i].name));
 			p_self->alias_info.update_succeeded[i]=false;
 			return 0;
 		}
-		
+
 		return str_head_ptr;
 	}
-	
+
 	return 0;
 }
 
@@ -856,7 +856,7 @@ static int get_req_for_majimoto_http_dns_server(DYN_DNS_CLIENT *p_self, int cnt,
 	               p_self->info.dyndns_server_url,
 				   p_self->alias_info.names[cnt].name,
 				   p_self->info.my_ip_address.name[ip_store],
-				   p_self->info.credentials.p_enc_usr_passwd_buffer,				   
+				   p_self->info.credentials.p_enc_usr_passwd_buffer,
 				   p_self->info.dyndns_server_name.name[ip_store]);
 }
 
@@ -869,7 +869,7 @@ static int get_req_for_zerigo_http_dns_server(DYN_DNS_CLIENT *p_self, int cnt,  
 	               p_self->info.dyndns_server_url,
 				   p_self->alias_info.names[cnt].name,
 				   p_self->info.my_ip_address.name[ip_store],
-				   p_self->info.credentials.p_enc_usr_passwd_buffer,				   
+				   p_self->info.credentials.p_enc_usr_passwd_buffer,
 				   p_self->info.dyndns_server_name.name[ip_store]);
 }
 
@@ -952,7 +952,7 @@ static RC_TYPE test_connect(DYN_DNS_CLIENT *p_self)
 
 
 	http_to_ip_server=safe_malloc(sizeof(HTTP_CLIENT));
-	
+
 	rc=http_client_construct(http_to_ip_server);
 
 
@@ -961,7 +961,7 @@ static RC_TYPE test_connect(DYN_DNS_CLIENT *p_self)
 #ifndef USE_THREADS
 	rc=http_client_init(http_to_ip_server);
 #else
-	rc=http_client_test_connect(http_to_ip_server,is_exit_requested_void,p_self);	
+	rc=http_client_test_connect(http_to_ip_server,is_exit_requested_void,p_self);
 #endif
 
 	http_client_shutdown(http_to_ip_server);
@@ -975,7 +975,7 @@ static RC_TYPE test_connect(DYN_DNS_CLIENT *p_self)
 
 /*
     Note:
-        it updates the flag: info->'my_ip_has_changed' if the old address was different 
+        it updates the flag: info->'my_ip_has_changed' if the old address was different
 */
 static RC_TYPE do_check_my_ip_address(DYN_DNS_CLIENT *p_self)
 {
@@ -994,7 +994,7 @@ static RC_TYPE do_check_my_ip_address(DYN_DNS_CLIENT *p_self)
 	if (!((rc=parse_ip_address(&p_ip_str,p_current_str))==RC_OK)) {
 
 		return rc;
-	} 
+	}
 	else {
 
 		if ((strstr(p_ip_str,".")!=NULL))
@@ -1029,7 +1029,7 @@ static RC_TYPE check_my_ip_address(DYN_DNS_CLIENT *p_self)
 {
 	RC_TYPE rc;
 	HTTP_CLIENT *p_http;
-	
+
 
 	p_http = &p_self->http_to_ip_server;
 
@@ -1077,7 +1077,7 @@ static RC_TYPE check_my_ip_address(DYN_DNS_CLIENT *p_self)
 
 			for (i=0;i<p_self->http_to_ip_server.super.super.server_socket_count;i++,
 				p_self->http_to_ip_server.super.super.sock_index++) {
-				
+
 				addr=p_self->http_to_ip_server.super.super.addr_ar[i];
 
 				/*on *nix, IPv4 precedence could mean no IPv6 routes which could cause a crash on socket send*/
@@ -1096,12 +1096,12 @@ static RC_TYPE check_my_ip_address(DYN_DNS_CLIENT *p_self)
 				if (!(addr->ai_family==AF_INET || addr->ai_family==AF_INET6))
 
 					continue;
-					
+
 				/*doing any ip4?*/
 				if ((addr->ai_family==AF_INET) && !(p_self->info.is_update_ip4 || p_self->info.is_update_auto))
 
 					continue;
-					
+
 				/*doing any ip6?*/
 				if ((addr->ai_family==AF_INET6) && !(p_self->info.is_update_ip6 || p_self->info.is_update_auto))
 
@@ -1133,17 +1133,17 @@ static RC_TYPE check_my_ip_address(DYN_DNS_CLIENT *p_self)
 
 						p_self->info.is_got_ip4=is_got_ip4=(is_got_ip4 || (addr->ai_family==AF_INET));
 						p_self->info.is_got_ip6=is_got_ip6=(is_got_ip6 || (addr->ai_family==AF_INET6));
-						
+
 						/*detect if just doing auto (based on ip server) and dump out when done*/
 						if ((is_got_ip4 && is_got_ip6) || !(p_self->info.is_update_ip4 && p_self->info.is_update_ip6))
 
 							/*support ip4 only updates, on dual ip server*/
-							if ((p_self->info.is_update_ip4 && is_got_ip4) || !(p_self->info.is_update_ip4))							
+							if ((p_self->info.is_update_ip4 && is_got_ip4) || !(p_self->info.is_update_ip4))
 
 								break;
 					}
 				}
-			}			
+			}
 		}
 	}
 	while(0);
@@ -1158,7 +1158,7 @@ static RC_TYPE check_my_ip_address(DYN_DNS_CLIENT *p_self)
 /*
     Updates for every maintained name the property: 'update_required'.
     The property will be checked in another function and updates performed.
-        
+
       Action:
         Check if my IP address has changed. -> ALL names have to be updated.
         Note: In the update function the property will set to false if update was successful.
@@ -1174,7 +1174,7 @@ static RC_TYPE do_check_alias_update_table(DYN_DNS_CLIENT *p_self)
 	for (i = 0; i < p_self->alias_info.count; ++i)
 	{
 
-		ip_v=p_self->alias_info.names[i].ip_v_enum;		
+		ip_v=p_self->alias_info.names[i].ip_v_enum;
 
 		/*ip type DUAL_LIST is dual of form, 1.1.1.1,::1 -- both ip types in one update connection*/
 		if (!(is_dyndns_dual=(NULL!=strstr(p_self->alias_info.names[i].ip_v,DUAL_LIST))))
@@ -1183,7 +1183,7 @@ static RC_TYPE do_check_alias_update_table(DYN_DNS_CLIENT *p_self)
 		else
 			is_ip_changed=(p_self->info.my_ip_has_changed[ip_4] || p_self->info.my_ip_has_changed[ip_6]);
 
-		p_self->alias_info.update_required[i] = 
+		p_self->alias_info.update_required[i] =
 
 			/*ip address changed?*/
 			(is_ip_changed
@@ -1194,25 +1194,25 @@ static RC_TYPE do_check_alias_update_table(DYN_DNS_CLIENT *p_self)
 			/*administrative update?*/
 			|| (!(p_self->forced_update_counter)));
 
-		if (p_self->alias_info.update_required[i]) {	
-	
+		if (p_self->alias_info.update_required[i]) {
+
 			if (is_dyndns_dual)
 
 				DBG_PRINTF((LOG_WARNING,"W:" MODULE_TAG "IP address for alias '%s:%s' needs update to '%s%s%s'...\n",
-				        p_self->alias_info.names[i].name,p_self->alias_info.names[i].ip_v, 
+				        p_self->alias_info.names[i].name,p_self->alias_info.names[i].ip_v,
 						p_self->info.my_ip_address.name[ip_4],",",p_self->info.my_ip_address.name[ip_6]));
 
 
 			else
 
 				DBG_PRINTF((LOG_WARNING,"W:" MODULE_TAG "IP address for alias '%s:%s' needs update to '%s'...\n",
-				        p_self->alias_info.names[i].name,p_self->alias_info.names[i].ip_v, 
+				        p_self->alias_info.names[i].name,p_self->alias_info.names[i].ip_v,
 						p_self->info.my_ip_address.name[ip_v]));
 
 			p_self->alias_info.update_required[i]=!(p_self->alias_info.fatal_error[i]);
 		}
 	}
-	
+
 	return RC_OK;
 }
 
@@ -1230,14 +1230,14 @@ static RC_TYPE do_check_alias_update_table(DYN_DNS_CLIENT *p_self)
   'cause on config error, client should stop attempting updates
   'till config fixed.
 
-  dyndns.org has a fourth condition -- includes "badagent", "good 127.0.0.1" -- 
+  dyndns.org has a fourth condition -- includes "badagent", "good 127.0.0.1" --
   both indicating non-conforming update client:
 
   badagent 			The user agent was not sent or HTTP method is not permitted (we recommend use of GET request method).
 
-  good 127.0.0.1	This answer indicates good update only when 127.0.0.1 address is requested by update. 
-					In all other cases it warns user that request was ignored because of agent that does not 
-					follow our specifications. 
+  good 127.0.0.1	This answer indicates good update only when 127.0.0.1 address is requested by update.
+					In all other cases it warns user that request was ignored because of agent that does not
+					follow our specifications.
 */
 static BOOL is_dyndns_server_rsp_ok( DYN_DNS_CLIENT *p_self, char *p_rsp, char *p_ok_string)
 {
@@ -1250,9 +1250,9 @@ static BOOL is_dyndns_server_rsp_ok( DYN_DNS_CLIENT *p_self, char *p_rsp, char *
 
 static BOOL is_dyndns_server_rsp_config( DYN_DNS_CLIENT *p_self, char *p_rsp)
 {
-	return (strstr(p_rsp, "!donator")  != NULL || strstr(p_rsp, "badauth") != NULL 
-			|| strstr(p_rsp, "notfqdn") != NULL || strstr(p_rsp, "nohost") != NULL 
-			|| strstr(p_rsp, "numhost")  != NULL || strstr(p_rsp, "badagent") != NULL 
+	return (strstr(p_rsp, "!donator")  != NULL || strstr(p_rsp, "badauth") != NULL
+			|| strstr(p_rsp, "notfqdn") != NULL || strstr(p_rsp, "nohost") != NULL
+			|| strstr(p_rsp, "numhost")  != NULL || strstr(p_rsp, "badagent") != NULL
 			|| strstr(p_rsp, "abuse") != NULL || strstr(p_rsp, "good 127.0.0.1") != NULL
 			|| strstr(p_rsp, "!yours") != NULL || strstr(p_rsp, "badsys") != NULL
 			|| strstr(p_rsp, "911") != NULL);
@@ -1267,7 +1267,7 @@ static BOOL is_freedns_server_rsp_ok( DYN_DNS_CLIENT *p_self, char *p_rsp, char 
 {
 
 	return (((strstr(p_rsp, "ERROR") == NULL) && strstr(p_rsp, p_self->info.my_ip_address.name[ip_store]) != NULL)
-			|| strstr(p_rsp, "has not changed") != NULL);	
+			|| strstr(p_rsp, "has not changed") != NULL);
 }
 
 static BOOL is_freedns_server_rsp_config( DYN_DNS_CLIENT *p_self, char *p_rsp)
@@ -1313,8 +1313,8 @@ BOOL is_zoneedit_server_rsp_ok( DYN_DNS_CLIENT *p_self, char *p_rsp, char *p_ok_
 static BOOL is_zoneedit_server_rsp_config( DYN_DNS_CLIENT *p_self, char *p_rsp)
 {
 
-	return (strstr(p_rsp, "CODE=\"703\"") != NULL || strstr(p_rsp, "CODE=\"707\"") != NULL 
-			|| strstr(p_rsp, "CODE=\"704\"") != NULL || strstr(p_rsp, "CODE=\"701\"") != NULL 
+	return (strstr(p_rsp, "CODE=\"703\"") != NULL || strstr(p_rsp, "CODE=\"707\"") != NULL
+			|| strstr(p_rsp, "CODE=\"704\"") != NULL || strstr(p_rsp, "CODE=\"701\"") != NULL
 			|| strstr(p_rsp, "CODE=\"705\"") != NULL || strstr(p_rsp, "CODE=\"708\"") != NULL);
 }
 
@@ -1329,7 +1329,7 @@ BOOL is_easydns_server_rsp_ok( DYN_DNS_CLIENT *p_self, char *p_rsp, char *p_ok_s
 static BOOL is_easydns_server_rsp_config( DYN_DNS_CLIENT *p_self, char *p_rsp)
 {
 
-	return (strstr(p_rsp, "NOACCESS")  != NULL || strstr(p_rsp, "NOSERVICE")  != NULL || strstr(p_rsp, "ILLEGAL INPUT") 
+	return (strstr(p_rsp, "NOACCESS")  != NULL || strstr(p_rsp, "NOSERVICE")  != NULL || strstr(p_rsp, "ILLEGAL INPUT")
 			 != NULL || strstr(p_rsp, "TOOSOON") != NULL);
 }
 
@@ -1342,7 +1342,7 @@ static BOOL is_sitelutions_server_rsp_ok( DYN_DNS_CLIENT *p_self, char *p_rsp, c
 static BOOL is_sitelutions_server_rsp_config( DYN_DNS_CLIENT *p_self, char *p_rsp)
 {
 
-	return (strstr(p_rsp, "noauth")  != NULL || strstr(p_rsp, "invalid ip")  != NULL || strstr(p_rsp, "invalid ttl") 
+	return (strstr(p_rsp, "noauth")  != NULL || strstr(p_rsp, "invalid ip")  != NULL || strstr(p_rsp, "invalid ttl")
 			 != NULL || strstr(p_rsp, "no record")  != NULL || strstr(p_rsp, "not owner") != NULL);
 }
 
@@ -1366,19 +1366,19 @@ static BOOL is_he_ipv6_server_rsp_config( DYN_DNS_CLIENT *p_self, char*p_rsp)
 }
 
 /* TZO specific response validator.
-   If we have an HTTP 302 the update wasn't good and we're being redirected 
+   If we have an HTTP 302 the update wasn't good and we're being redirected
 */
 static BOOL is_tzo_server_rsp_ok(DYN_DNS_CLIENT *p_self, char *p_rsp, char *p_ok_string)
 {
-	
+
 	return ((strstr(p_rsp,"\r\n200") != NULL) || (strstr(p_rsp,"\r\n304") != NULL));
 }
 
 static BOOL is_tzo_server_rsp_config( DYN_DNS_CLIENT *p_self, char *p_rsp)
 {
 
-	return ((strstr(p_rsp, "\r\n480") != NULL) || (strstr(p_rsp, "\r\n405") != NULL) || (strstr(p_rsp, "\r\n401") != NULL) || 
-			(strstr(p_rsp, "\r\n403") != NULL) || (strstr(p_rsp, "\r\n414") != NULL) || (strstr(p_rsp, "\r\n407") != NULL) || 
+	return ((strstr(p_rsp, "\r\n480") != NULL) || (strstr(p_rsp, "\r\n405") != NULL) || (strstr(p_rsp, "\r\n401") != NULL) ||
+			(strstr(p_rsp, "\r\n403") != NULL) || (strstr(p_rsp, "\r\n414") != NULL) || (strstr(p_rsp, "\r\n407") != NULL) ||
 			(strstr(p_rsp, "\r\n415") != NULL));
 }
 
@@ -1438,7 +1438,7 @@ static RC_TYPE update_update_state(DYN_DNS_CLIENT *p_self,int updates_needed,int
 
 			/*reset forced update period*/
 			p_self->forced_update_counter=p_self->forced_update_period_sec_orig/p_self->cmd_check_period;
-			p_self->forced_update_period_sec=p_self->forced_update_period_sec_orig;			
+			p_self->forced_update_period_sec=p_self->forced_update_period_sec_orig;
 
 			if ((fp=utf_fopen(p_self->time_cache, "w"))) {
 
@@ -1452,14 +1452,14 @@ static RC_TYPE update_update_state(DYN_DNS_CLIENT *p_self,int updates_needed,int
 				int			i;
 				DYNDNS_IPV	ip_enum;
 				BOOL		is_dyndns_dual;
-				
+
 				for (i=0;i<p_self->alias_info.count;i++) {
 
 					is_dyndns_dual=(NULL!=strstr(p_self->alias_info.names[i].ip_v,DUAL_LIST));
 
 					ip_enum=p_self->alias_info.names[i].ip_v_enum;
 
-					if (p_self->alias_info.update_succeeded[i]) { 						
+					if (p_self->alias_info.update_succeeded[i]) {
 
 						if (!(is_dyndns_dual))
 
@@ -1480,7 +1480,7 @@ static RC_TYPE update_update_state(DYN_DNS_CLIENT *p_self,int updates_needed,int
 				fclose(fp);
 			}
 		}
-	
+
 		/*any pending?*/
 		if (!(updates_needed && !(success_updates==updates_needed))) {
 
@@ -1495,7 +1495,7 @@ static RC_TYPE update_update_state(DYN_DNS_CLIENT *p_self,int updates_needed,int
 		else {
 
 			if (*rc==RC_OK) /*not break after http client init*/
-			
+
 				*rc=RC_DYNDNS_RSP_NOTOK;
 
 			DBG_PRINTF((LOG_WARNING,"W:" MODULE_TAG "One or more (%d) alias updates failed...\n",
@@ -1509,7 +1509,7 @@ static RC_TYPE update_update_state(DYN_DNS_CLIENT *p_self,int updates_needed,int
 static RC_TYPE do_update_alias_table(DYN_DNS_CLIENT *p_self,char *is_forced_update_reset)
 {
 	int		i;
-	int		success_updates=0;	
+	int		success_updates=0;
 	int		update_ok=false;
 	int		config_fails=0;
 	int		updates_needed=p_self->alias_info.count;
@@ -1583,9 +1583,10 @@ static RC_TYPE do_update_alias_table(DYN_DNS_CLIENT *p_self,char *is_forced_upda
 
 					/*build dyndns transaction*/
 					{
-						
+
 						SetDDNSSystemLog(LOG_LEVEL_INFO_STR, LOG_MESSAGE_TYPE_WAN_STR, "DDNS: Updating...\n");
-					
+						system("echo 1 > /tmp/ddns_status.log");
+						
 						HTTP_TRANSACTION http_tr;
 						http_tr.req_len = p_self->info.p_dns_system->p_dns_update_req_func(
 							                  (struct _DYN_DNS_CLIENT*) p_self,i,
@@ -1598,7 +1599,7 @@ static RC_TYPE do_update_alias_table(DYN_DNS_CLIENT *p_self,char *is_forced_upda
 						/*send it*/
 						rc = http_client_transaction(&p_self->http_to_dyndns, &http_tr);
 						http_tr.p_rsp[http_tr.rsp_len]=0;
-						
+
 						if(DEBUG_BY_FALLEN)
 						printf("FreeDNS, the second request data: [%s]\n", p_self->p_req_buffer);
 						if(DEBUG_BY_FALLEN)
@@ -1616,7 +1617,7 @@ static RC_TYPE do_update_alias_table(DYN_DNS_CLIENT *p_self,char *is_forced_upda
 							p_self->alias_info.update_succeeded[i]=false;
 
 						else {
-						
+
 							update_ok =
 								p_self->info.p_dns_system->p_rsp_ok_func((struct _DYN_DNS_CLIENT*)p_self,
 									    http_tr.p_rsp,
@@ -1640,12 +1641,13 @@ static RC_TYPE do_update_alias_table(DYN_DNS_CLIENT *p_self,char *is_forced_upda
 								DBG_PRINTF((LOG_WARNING,"W:" MODULE_TAG "Alias '%s' to IP '%s' updated successfully.\n",
 											p_self->alias_info.names[i].name,
 											p_self->info.my_ip_address.name[ip_store]));
-											
-								
-								SetDDNSSystemLog(LOG_LEVEL_INFO_STR, LOG_MESSAGE_TYPE_WAN_STR, "DDNS: Domain name '%s' to IP '%s' updated successfully.\n", 
+
+
+								SetDDNSSystemLog(LOG_LEVEL_INFO_STR, LOG_MESSAGE_TYPE_WAN_STR, "DDNS: Domain name '%s' to IP '%s' updated successfully.\n",
 											p_self->alias_info.names[i].name,
 											p_self->info.my_ip_address.name[ip_store]);
-
+								system("echo 0 > /tmp/ddns_status.log");
+								
 								if (p_self->external_command)
 
 									os_shell_execute(p_self->external_command);
@@ -1657,15 +1659,17 @@ static RC_TYPE do_update_alias_table(DYN_DNS_CLIENT *p_self,char *is_forced_upda
 								if (!(p_self->info.p_dns_system->p_rsp_config_func((struct _DYN_DNS_CLIENT*)p_self,http_tr.p_rsp))) {
 
 									DBG_PRINTF((LOG_WARNING,"W:" MODULE_TAG "Error updating alias %s\n",p_self->alias_info.names[i].name));
-									
-									SetDDNSSystemLog(LOG_LEVEL_INFO_STR, LOG_MESSAGE_TYPE_WAN_STR, "DDNS: Error updating domain name %s\n", 
+
+									SetDDNSSystemLog(LOG_LEVEL_INFO_STR, LOG_MESSAGE_TYPE_WAN_STR, "DDNS: Error updating domain name %s\n",
 											p_self->alias_info.names[i].name);
-								} 
+									system("echo 1 > /tmp/ddns_status.log");
+								}
 								else {
 
 									DBG_PRINTF((LOG_WARNING,"W:" MODULE_TAG "Error validating DYNDNS svr answer. Check usr,pass,hostname!\n"));
 									SetDDNSSystemLog(LOG_LEVEL_INFO_STR, LOG_MESSAGE_TYPE_WAN_STR, "DDNS: Update error. Check account, password, and domain name\n");
-									
+									system("echo 1 > /tmp/ddns_status.log");
+											
 									p_self->alias_info.fatal_error[i]=TRUE;
 
 									DBG_PRINTF((LOG_CRIT,"C:" MODULE_TAG "\n"\
@@ -1683,8 +1687,8 @@ static RC_TYPE do_update_alias_table(DYN_DNS_CLIENT *p_self,char *is_forced_upda
 							http_tr.p_rsp[http_tr.rsp_len] = 0;
 							char *temp = strstr(http_tr.p_rsp, "\r\n\r\n");
 							if(temp)
-							SetDDNSSystemLog(LOG_LEVEL_WARNING_STR, LOG_MESSAGE_TYPE_WAN_STR, "DDNS: Server response: [%s]\n", (temp + 4));
-							
+							SetDDNSSystemLog(LOG_LEVEL_INFO_STR, LOG_MESSAGE_TYPE_WAN_STR, "DDNS: Server response: [%s]\n", (temp + 4));
+
 							if (p_self->dbg.level > LOG_CRIT)
 							{
 								//http_tr.p_rsp[http_tr.rsp_len] = 0;
@@ -1696,12 +1700,12 @@ static RC_TYPE do_update_alias_table(DYN_DNS_CLIENT *p_self,char *is_forced_upda
 
 				{
 					RC_TYPE rc2 = http_client_shutdown(&p_self->http_to_dyndns);
-					
+
 					if (!(rc2==RC_OK))
 
 						DBG_PRINTF((LOG_WARNING,"W:" MODULE_TAG "http client possibly improper shutdown, possible memory leak, system instability...\n"));
 
-				}				
+				}
 
 				if (i<p_self->alias_info.count-1)
 
@@ -1785,10 +1789,10 @@ RC_TYPE get_default_config_data(DYN_DNS_CLIENT *p_self)
 
 			p_self->wave_file=safe_malloc(strlen(DYNDNS_DEFAULT_WAVE_FILE) + 1);
 			strcpy(p_self->wave_file,DYNDNS_DEFAULT_WAVE_FILE);
-		}	
+		}
 
 		/*
-			default:  tell wave routines 
+			default:  tell wave routines
 			use quarter bytes/sec buffer
 		*/
 		p_self->wave_buff_factor=DYNDNS_DEFAULT_WAVE_BUFF_FACTOR;
@@ -2002,7 +2006,7 @@ RC_TYPE dyn_dns_construct(DYN_DNS_CLIENT **pp_self)
 
 /*
 	Resource free.
-*/	
+*/
 RC_TYPE dyn_dns_destruct(DYN_DNS_CLIENT *p_self)
 {
 	RC_TYPE rc;
@@ -2169,7 +2173,7 @@ RC_TYPE dyn_dns_destruct(DYN_DNS_CLIENT *p_self)
 /*
 	Sets up the object.
 	- sets the IPs of the DYN DNS server
-    - if proxy server is set use it! 
+    - if proxy server is set use it!
 	- ...
 */
 RC_TYPE do_dyn_dns_init(DYN_DNS_CLIENT *p_self)
@@ -2204,7 +2208,7 @@ RC_TYPE dyn_dns_init(DYN_DNS_CLIENT *p_self)
 	RC_TYPE	rc;
 
 	if (!((rc=do_dyn_dns_init(p_self))==RC_OK))
-		
+
 		return rc;
 
 	p_self->forced_update_counter=p_self->forced_update_period_sec/p_self->cmd_check_period;
@@ -2277,7 +2281,7 @@ static RC_TYPE dyn_dns_handle_bad_config(DYN_DNS_CLIENT *p_self)
 /*
 	- increment the forced update times counter
 	- detect current IP
-		- connect to an HTTP server 
+		- connect to an HTTP server
 		- parse the response for IP addr
 
 	- for all the names that have to be maintained
@@ -2332,7 +2336,8 @@ RC_TYPE dyn_dns_update_ip(DYN_DNS_CLIENT *p_self)
 
 				DBG_PRINTF((LOG_WARNING,"W:DYNDNS: Failed checking current ip...\n"));
 				SetDDNSSystemLog(LOG_LEVEL_INFO_STR, LOG_MESSAGE_TYPE_WAN_STR, "DDNS: Failed checking current ip...\n");
-
+				system("echo 1 > /tmp/ddns_status.log");
+				
 				if (p_self->net_retries<ip_attempts++) {
 
 					is_update_pending=true;
@@ -2373,7 +2378,7 @@ RC_TYPE dyn_dns_update_ip(DYN_DNS_CLIENT *p_self)
 			DBG_PRINTF((LOG_INFO,"I:DYNDNS: dyn_dns_update_ip entering update loop...\n"));
 
 			while(!(is_exit_requested(p_self))) {
-				
+
 				if (!(do_is_dyndns_online(p_self))) {
 
 					if (p_self->net_retries<net_attempts++) {
@@ -2388,7 +2393,7 @@ RC_TYPE dyn_dns_update_ip(DYN_DNS_CLIENT *p_self)
 				else {
 
 					/*update IPs marked as not identical with my IP*/
-					
+
 					rc = do_update_alias_table(p_self,&is_forced_update_reset);
 
 					if (rc==RC_OK) {
@@ -2402,8 +2407,8 @@ RC_TYPE dyn_dns_update_ip(DYN_DNS_CLIENT *p_self)
 
 					if (p_self->net_retries<ip_attempts++) {
 
-						is_update_pending=(!(rc==RC_DYNDNS_RSP_CONFIG));						
-						
+						is_update_pending=(!(rc==RC_DYNDNS_RSP_CONFIG));
+
 						break;
 					}
 
@@ -2444,7 +2449,7 @@ int is_exit_requested(DYN_DNS_CLIENT *p_self)
 
 	return (p_self->cmd==CMD_STOP);
 #else
-	return ((returnSignaled) || (p_self->cmd==CMD_STOP));	
+	return ((returnSignaled) || (p_self->cmd==CMD_STOP));
 #endif
 
 }
@@ -2521,7 +2526,7 @@ void alert_if_offline(DYN_DNS_CLIENT *p_dyndns,void *p_data)
 	alert_cond_param.p_dyndns=p_dyndns;
 
 
-	while (1) {	
+	while (1) {
 
 		if (is_alert_thread_exit) {
 
@@ -2565,7 +2570,7 @@ void alert_if_offline(DYN_DNS_CLIENT *p_dyndns,void *p_data)
 			wave_params->gain=p_dyndns->wave_gain;
 			wave_params->wave_file=waveout;
 			wave_params->cb_client_data=&alert_cond_param;
-			wave_params->p_func=sound_abort_cond;				
+			wave_params->p_func=sound_abort_cond;
 
 
 			do {
@@ -2599,13 +2604,13 @@ void alert_if_offline(DYN_DNS_CLIENT *p_dyndns,void *p_data)
 				}
 
 				sleep_lightly_ms(p_dyndns->alert_interval,&alert_abort_cond,&alert_cond_param);
-				
+
 
 			} while (1);
 
 			free(wave_params);
 			free(waveout);
-		}		
+		}
 	}
 }
 
@@ -2622,11 +2627,11 @@ static void exit_alert_thread()
 
 	DBG_PRINTF((LOG_INFO, "I:" MODULE_TAG "Joining alert thread:  %d...\n",thread_alert));
 
-#ifndef _WIN32	
+#ifndef _WIN32
 
 	if (thread_alert)
 
-		pthread_join(thread_alert,NULL);		
+		pthread_join(thread_alert,NULL);
 
 #else
 
@@ -2645,14 +2650,14 @@ static void exit_online_thread()
 	DBG_PRINTF((LOG_INFO, "I:" MODULE_TAG "Entered exit_online_thread.  Setting return flag...\n"));
 
 	is_online_thread_exit=TRUE;
-		
+
 	DBG_PRINTF((LOG_INFO, "I:" MODULE_TAG "Joining online test thread:  %d...\n",thread_online_test));
 
-#ifndef _WIN32	
+#ifndef _WIN32
 
 	if (thread_online_test)
 
-		pthread_join(thread_online_test,NULL);	
+		pthread_join(thread_online_test,NULL);
 #else
 
 	if (thread_online_test)
@@ -2827,7 +2832,7 @@ static void is_dyndns_online_thread(void *p_data)
 					/*sleep less, check status more, if offline*/
 					sleep_lightly_ms(p_self->status_offline_interval,&thread_exit_cond,p_self);
 				}
-			}	
+			}
 
 			exit_alert_thread();
 
@@ -2995,15 +3000,15 @@ int service_event_handler(SERVICE_EVENT service_event)
 
 	/*
 		this is also set via call to threads
-		exit routine, in main loop on return 
-		from updating and/or waiting sleep 
+		exit routine, in main loop on return
+		from updating and/or waiting sleep
 		before update.  setting here as well
-		could get online status alert threads 
-		to return sooner.  the main possible 
-		bottleneck on program quit is if in 
-		middle of a network comm --	an update, 
-		or do_dyndns_is_online online status 
-		check -- socket routines are blocking 
+		could get online status alert threads
+		to return sooner.  the main possible
+		bottleneck on program quit is if in
+		middle of a network comm --	an update,
+		or do_dyndns_is_online online status
+		check -- socket routines are blocking
 		type.
 	*/
 
@@ -3042,7 +3047,7 @@ void start_ras_thread(DYN_DNS_CLIENT *p_dyndns,RAS_THREAD_DATA **p_ras_thread_da
 		if (p_dyndns->dbg.level>=LOG_ERR)
 
 			DBG_PRINTF((LOG_ERR, "E:" MODULE_TAG "RAS events trapping constructor returned NULL.  Continuing without RAS events trapping...\n"));
-	}	
+	}
 }
 
 static void atomic_inc(DYN_DNS_CLIENT *p_self,int *src,int inc,HANDLE hMutex)
@@ -3082,10 +3087,10 @@ RC_TYPE dyn_dns_reinit(DYN_DNS_CLIENT *p_dyndns)
 /*find the alias given by parameter alias in list of p_dyndns structure alias names and set
   correponding update state boolean to parameter is_updated
 
-  some of the stuff related to ip type (auto,ip4,ip6,etc.) is not neccessary as all 
-  input here is already in the form: alias:type as of advent of upgrading/rewriting 
+  some of the stuff related to ip type (auto,ip4,ip6,etc.) is not neccessary as all
+  input here is already in the form: alias:type as of advent of upgrading/rewriting
   ip cache file if neccessary, on startup.  the alias type code remains because it
-  is more general (it does not assume there's an alias ip type indicator in input 
+  is more general (it does not assume there's an alias ip type indicator in input
   parameter, alias, and appends :auto if need be) -- may come in handy*/
 static void set_update_state(DYN_DNS_CLIENT *p_dyndns,char *alias,bool is_updated)
 {
@@ -3101,12 +3106,12 @@ static void set_update_state(DYN_DNS_CLIENT *p_dyndns,char *alias,bool is_update
 
 
 	/*backward compat -- add ip version indicator*/
-	
+
 
 	alias_in=safe_malloc(strlen(alias)+1); /*save pre-processed version of alias*/
 	strcpy(alias_in,alias);
 
-	if ((alias_type=strstr(alias_in,":"))) { 
+	if ((alias_type=strstr(alias_in,":"))) {
 
 		is_auto=!(strcmp((alias_type+1),"auto"));
 
@@ -3132,7 +3137,7 @@ static void set_update_state(DYN_DNS_CLIENT *p_dyndns,char *alias,bool is_update
 		alias_cmp_src=safe_malloc(strlen(p_dyndns->alias_info.names[i].name)+9);
 		strcat(strcat(strcpy(alias_cmp_src,p_dyndns->alias_info.names[i].name),":"),p_dyndns->alias_info.names[i].ip_v);
 
-		if (!(strcmp(alias_cmp_src,alias_ip_v)) || (strstr(p_dyndns->alias_info.names[i].ip_v,DUAL_LIST) 
+		if (!(strcmp(alias_cmp_src,alias_ip_v)) || (strstr(p_dyndns->alias_info.names[i].ip_v,DUAL_LIST)
 			&& !(strcmp(p_dyndns->alias_info.names[i].name,alias_in)))) {
 
 			p_dyndns->alias_info.update_succeeded[i]=is_updated;
@@ -3173,7 +3178,7 @@ RC_TYPE upgrade_ip_cache(DYN_DNS_CLIENT *p_dyndns)
 
 	FILE		*fp;
 	RC_TYPE		rc=RC_OK;
-	
+
 
 	fp=utf_fopen(p_dyndns->ip_cache,"r");
 
@@ -3214,7 +3219,7 @@ RC_TYPE upgrade_ip_cache(DYN_DNS_CLIENT *p_dyndns)
 
 				if (!(is_rewrite))
 
-					is_rewrite=!(strstr(in_str[line_count],":auto") || strstr(in_str[line_count],":ip4") 
+					is_rewrite=!(strstr(in_str[line_count],":auto") || strstr(in_str[line_count],":ip4")
 						|| strstr(in_str[line_count],":ip6"));
 
 				i=0;
@@ -3283,8 +3288,8 @@ RC_TYPE upgrade_ip_cache(DYN_DNS_CLIENT *p_dyndns)
 
 /*  Record the last ip as per that in ip cache file.  Report it via log output.
 
-	Set update need for each space separated ip, alias pair line read.  
-	
+	Set update need for each space separated ip, alias pair line read.
+
 	Set global is_update_pending if number of aliases read less than p_dyndns->alias_info.count.
 */
 
@@ -3293,7 +3298,7 @@ RC_TYPE check_ip_cache(DYN_DNS_CLIENT *p_dyndns)
 
 	FILE		*fp;
 	RC_TYPE		rc=RC_OK;
-	
+
 
 	fp=utf_fopen(p_dyndns->ip_cache,"r");
 
@@ -3408,7 +3413,7 @@ BOOL is_completed_iterations(DYN_DNS_CLIENT *p_dyndns,int *iteration)
 RC_TYPE init_update_loop(DYN_DNS_CLIENT *p_dyndns,int argc, char* argv[],void **p_data,BOOL *init_flag)
 {
 	RC_TYPE			rc = RC_OK;
-	RC_TYPE			rc_cmd_line = RC_OK;	
+	RC_TYPE			rc_cmd_line = RC_OK;
 
 #ifndef _WIN32
 
@@ -3603,7 +3608,7 @@ RC_TYPE init_update_loop(DYN_DNS_CLIENT *p_dyndns,int argc, char* argv[],void **
 		/*
 			Windows RAS/connect/disconnect events threads
 		*/
-		start_ras_thread(p_dyndns,p_ras_thread_data);		
+		start_ras_thread(p_dyndns,p_ras_thread_data);
 #endif
 
 #ifdef USE_THREADS
@@ -3614,7 +3619,7 @@ RC_TYPE init_update_loop(DYN_DNS_CLIENT *p_dyndns,int argc, char* argv[],void **
 		start_online_test_thread(p_dyndns,p_ras_thread_data);
 
 		/*use update_timer when out of cmd wait loop servicing commands --
-		  update/net comm can take some time, especially with retries 
+		  update/net comm can take some time, especially with retries
 		  parameter(s) set.  Makes forced_update_period more accurate.*/
 		create_timer(&update_timer,25);
 #endif
@@ -3637,7 +3642,7 @@ RC_TYPE init_update_loop(DYN_DNS_CLIENT *p_dyndns,int argc, char* argv[],void **
 		- perform various init actions as specified in the options
 		- create and init dyn_dns object.
 		- launch the IP update action loop
-*/		
+*/
 int dyn_dns_main(DYN_DNS_CLIENT *p_dyndns, int argc, char* argv[])
 {
 
@@ -3667,7 +3672,7 @@ int dyn_dns_main(DYN_DNS_CLIENT *p_dyndns, int argc, char* argv[])
 		{
 
 			/*update IP address in a loop*/
-			
+
 			if (((rc=dyn_dns_update_ip(p_dyndns))==RC_OK))
 
 				increment_iterations(p_dyndns);
@@ -3704,7 +3709,7 @@ int dyn_dns_main(DYN_DNS_CLIENT *p_dyndns, int argc, char* argv[])
 				DBG_PRINTF((LOG_INFO,"I:" MODULE_TAG "Iterations (%d) completed.  Exiting program...\n", current_iteration));
 
 				break;
-			} 
+			}
 			else {
 
 				if (!(rc==RC_OK)) {
@@ -3735,7 +3740,7 @@ int dyn_dns_main(DYN_DNS_CLIENT *p_dyndns, int argc, char* argv[])
 
 		}
 		while(1);
-	
+
 #ifdef USE_THREADS
 
 	destroy_timer(&update_timer);
@@ -3747,7 +3752,7 @@ int dyn_dns_main(DYN_DNS_CLIENT *p_dyndns, int argc, char* argv[])
 	DBG_PRINTF((LOG_INFO, "I:" MODULE_TAG "Returned from exit_online_test_threads...\n"));
 #endif
 
-	
+
 #ifdef _WIN32
 
 	destroy_trap_ras_events(&p_ras_thread_data);

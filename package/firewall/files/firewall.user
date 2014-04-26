@@ -8,6 +8,24 @@
 IPT="iptables"
 PPA_FILTER_PROC=/proc/ppa/api/filter
 
+#get wan interface information
+. /etc/functions.sh
+wanifs=`cat /etc/config/network | grep wan | cut -d" " -f3`
+config_load network
+
+echo 1 > /proc/sys/net/ipv4/tcp_syncookies
+echo 20480 > /proc/sys/net/netfilter/nf_conntrack_expect_max
+
+for f in /proc/sys/net/ipv4/conf/*/accept_redirects
+do
+	echo 0 > $f
+done
+for f in /proc/sys/net/ipv4/conf/*/accept_source_route
+do
+	echo 0 > $f
+done
+########################################
+
 ipt_lock_res
 # IGMPPrxoy setting
 #$IPT -I INPUT -d 224.0.0.0/4 -j ACCEPT
@@ -38,13 +56,15 @@ $IPT -A LOG_ACCEPT -j ACCEPT
 ########SPI###########
 ($IPT -F SPI_RULES >/dev/null 2>&1) || $IPT -N SPI_RULES
 # NMAP FIN/URG/PSH
-$IPT -A SPI_RULES -p tcp --tcp-flags ALL FIN,URG,PSH -m recent --name NMAP_FIN_URG_PSH --set
-$IPT -A SPI_RULES -m recent --update --name NMAP_FIN_URG_PSH --seconds 1 --hitcount 10 -j ULOG --ulog-nlgroup 1 --ulog-prefix '[NMAP Xmas] : '
-$IPT -A SPI_RULES -p tcp --tcp-flags ALL FIN,URG,PSH -j DROP
+$IPT -A SPI_RULES -p tcp --tcp-flags ALL FIN,URG,PSH -m recent --set --name NMAP_FIN_URG_PSH
+$IPT -A SPI_RULES -p tcp --tcp-flags ALL FIN,URG,PSH -m recent --update --name NMAP_FIN_URG_PSH --seconds 1 --hitcount 10 -j DROP
+$IPT -A SPI_RULES -p tcp --tcp-flags ALL FIN,URG,PSH -m recent --update --name NMAP_FIN_URG_PSH --seconds 1 --hitcount 9 -j ULOG --ulog-nlgroup 1 --ulog-prefix '[NMAP Xmas] : '
+
 #SmurfAttack.cap
-$IPT -A SPI_RULES -p icmp --icmp-type echo-request -m addrtype --dst-type BROADCAST -m recent --name SMURFATTACK --set
-$IPT -A SPI_RULES -m recent --update --name SMURFATTACK --seconds 1 --hitcount 20 -j ULOG --ulog-nlgroup 1 --ulog-prefix '[SmurfAttack] : '
-$IPT -A SPI_RULES -p icmp --icmp-type echo-request -m addrtype --dst-type BROADCAST -j DROP
+($IPT -F SPI_RULES_ICMP_SMURF >/dev/null 2>&1) || $IPT -N SPI_RULES_ICMP_SMURF
+$IPT -A SPI_RULES_ICMP_SMURF -p icmp --icmp-type echo-request -m addrtype --dst-type BROADCAST -m recent --name SMURFATTACK --set
+$IPT -A SPI_RULES_ICMP_SMURF -p icmp --icmp-type echo-request -m addrtype --dst-type BROADCAST -m recent --update --name SMURFATTACK --seconds 1 --hitcount 20 -j ULOG --ulog-nlgroup 1 --ulog-prefix '[SmurfAttack] : '
+$IPT -A SPI_RULES_ICMP_SMURF -p icmp --icmp-type echo-request -m addrtype --dst-type BROADCAST -j DROP
 #fragmentation Flood
 $IPT -A SPI_RULES -f -m recent --name FRAG_FLOOD --set
 $IPT -A SPI_RULES -m recent --update --name FRAG_FLOOD --seconds 1 --hitcount 20 -j ULOG --ulog-nlgroup 1 --ulog-prefix '[fragFlood] : '
@@ -80,21 +100,44 @@ $IPT -A SPI_RULES -p icmp --icmp-type router-advertisement -j DROP
 #Furtive port scanner
 #$IPT -A SPI_RULES -p tcp --tcp-flags SYN,ACK,FIN,RST RST -m limit --limit 1/s -j ACCEPT
 #PingOfDeath.cap(Ping of death)
-$IPT -A SPI_RULES -p ICMP --icmp-type echo-request -m length ! --length 1:65500 -j ULOG --ulog-nlgroup 1 --ulog-prefix '[DoS PingDeath] : '
-$IPT -A SPI_RULES -p ICMP --icmp-type echo-request -m length ! --length 1:65500 -j DROP
+($IPT -F SPI_RULES_ICMP_PINGDEATH >/dev/null 2>&1) || $IPT -N SPI_RULES_ICMP_PINGDEATH
+$IPT -A SPI_RULES_ICMP_PINGDEATH -p ICMP --icmp-type echo-request -m length ! --length 1:65500 -m recent --name ICMPPINGDEATH --set
+$IPT -A SPI_RULES_ICMP_PINGDEATH -p ICMP --icmp-type echo-request -m length ! --length 1:65500 -m recent --update --name ICMPPINGDEATH --seconds 1 --hitcount 20 -j ULOG --ulog-nlgroup 1 --ulog-prefix '[DoS PingDeath] : '
+$IPT -A SPI_RULES_ICMP_PINGDEATH -p ICMP --icmp-type echo-request -m length ! --length 1:65500 -j DROP
 #PingFlood.cap log ping from wan is block by default(Ping-flood)
 $IPT -A SPI_RULES -p icmp --icmp-type echo-request -m recent --name DOS_PINGF --set
 $IPT -A SPI_RULES -m recent --update --name DOS_PINGF --seconds 1 --hitcount 20 -j ULOG --ulog-nlgroup 1 --ulog-prefix '[DoS Ping] : '
 $IPT -A SPI_RULES -m recent --update --name DOS_PINGF --seconds 1 --hitcount 20 -j DROP
 #Port scan protection
-$IPT -A SPI_RULES -p tcp --tcp-flags ALL FIN,URG,PSH -j ULOG --ulog-nlgroup 1 --ulog-prefix '[Port scan] : '
-$IPT -A SPI_RULES -p tcp --tcp-flags ALL FIN,URG,PSH -j DROP
-$IPT -A SPI_RULES -p tcp --tcp-flags SYN,FIN SYN,FIN -j ULOG --ulog-nlgroup 1 --ulog-prefix '[Port scan] : '
-$IPT -A SPI_RULES -p tcp --tcp-flags SYN,FIN SYN,FIN -j DROP
-#SynFlood.cap Syn-flood protection
-$IPT -A SPI_RULES -p tcp --syn -m recent --name DOS_SYN --set
-$IPT -A SPI_RULES -m recent --update --name DOS_SYN --seconds 1 --hitcount 20 -j ULOG --ulog-nlgroup 1 --ulog-prefix '[DoS SYN] : '
-$IPT -A SPI_RULES -m recent --update --name DOS_SYN --seconds 1 --hitcount 20 -j DROP
+($IPT -F SPI_RULES_TCP_PORTSCAN >/dev/null 2>&1) || $IPT -N SPI_RULES_TCP_PORTSCAN
+$IPT -A SPI_RULES_TCP_PORTSCAN -p tcp --tcp-flags ALL FIN,URG,PSH -j ULOG --ulog-nlgroup 1 --ulog-prefix '[Port scan] : '
+$IPT -A SPI_RULES_TCP_PORTSCAN -p tcp --tcp-flags ALL FIN,URG,PSH -j DROP
+$IPT -A SPI_RULES_TCP_PORTSCAN -p tcp --tcp-flags SYN,FIN SYN,FIN -j ULOG --ulog-nlgroup 1 --ulog-prefix '[Port scan] : '
+$IPT -A SPI_RULES_TCP_PORTSCAN -p tcp --tcp-flags SYN,FIN SYN,FIN -j DROP
+#Teardrop
+($IPT -F SPI_RULES_UDP_TEAR >/dev/null 2>&1) || $IPT -N SPI_RULES_UDP_TEAR
+$IPT -A SPI_RULES_UDP_TEAR -p UDP -f -m recent --name TEARDROP --set
+$IPT -A SPI_RULES_UDP_TEAR -p UDP -f -m recent --update --name TEARDROP --seconds 1 --hitcount 20 -j ULOG --ulog-nlgroup 1 --ulog-prefix '[Tear Drop] : '
+$IPT -A SPI_RULES_UDP_TEAR -p UDP -f -j DROP
+#TCP SYN with Data "empty"
+($IPT -F SPI_RULES_TCP_SYNDATA >/dev/null 2>&1) || $IPT -N SPI_RULES_TCP_SYNDATA
+#UDB Bomb "empty"
+($IPT -F SPI_RULES_UDB_BOMB >/dev/null 2>&1) || $IPT -N SPI_RULES_UDB_BOMB
+
+($IPT -F SPI_RULES_TCP_LAND >/dev/null 2>&1) || $IPT -N SPI_RULES_TCP_LAND
+($IPT -F SPI_RULES_IP_SPROOF >/dev/null 2>&1) || $IPT -N SPI_RULES_IP_SPROOF
+
+
+#########blcok rule for lan to wan
+($IPT -F SPI_RULES_LAN >/dev/null 2>&1) || $IPT -N SPI_RULES_LAN
+hitnum=200
+#UDP FLOODING from LAN to WAN
+$IPT -A SPI_RULES_LAN -p udp -m state --state NEW  -m recent --name UDP_FLOOD --set
+$IPT -A SPI_RULES_LAN -p udp -m state --state NEW  -m recent --update --name UDP_FLOOD --seconds 1 --hitcount $(($hitnum+1)) -j DROP
+$IPT -A SPI_RULES_LAN -p udp -m state --state NEW  -m recent --update --name UDP_FLOOD --seconds 1 --hitcount $hitnum -j ULOG --ulog-nlgroup 1 --ulog-prefix '[UDP SYN FLOOD] : '
+
+
+
 
 #####################PPA init############################
 echo 'del-all' > ${PPA_FILTER_PROC}
@@ -117,7 +160,8 @@ WANIF=`wandataif.sh`
 $IPT -I OUTPUT -o ${WANIF:0:3}+ -p udp --dport 80 -j DROP
 $IPT -I OUTPUT -o ${WANIF:0:3}+ -d 239.255.255.250 -p udp --dport 1900 -j DROP
 $IPT -I OUTPUT -o ${WANIF:0:3}+ -p udp --dport 137:138 -j DROP
-$IPT -I INPUT -p udp --dport 5002:5022 -j ACCEPT
+#use sip alg instead
+#$IPT -I INPUT -p udp --dport 5002:5022 -j ACCEPT
 
 if [ -e /etc/config/nat.user ]; then
 	. /etc/config/nat.user
@@ -130,9 +174,31 @@ fi
 if [ -e /etc/config/firewall_tr69.user ]; then
 	. /etc/config/firewall_tr69.user
 fi
+# WebDAV
+if [ -f /etc/config/firewall_webdav.user ] ; then
+	. /etc/config/firewall_webdav.user
+fi
+# VPN
+if [ -f /tmp/wftp/firewall_vpn.user ] ; then
+	. /tmp/wftp/firewall_vpn.user
+fi
+
 $IPT -I INPUT -i br-lan -j FW_FILTER_MAC
 
-$IPT -I FORWARD -i br-lan -j FW_FILTER_ACCESS
+for wanif in $wanifs; do
+	#echo "$wanif"
+	config_get realifname ${wanif} ifname
+	if [ -n "$realifname" ]; then
+		config_get proto ${wanif} proto
+		if [ "${proto:0:3}" = "ppp" ]; then
+			#realifname=${proto:0:3}`echo "$wanif" | sed -e "s/wan//" -e "s/^0*\([1-9]\)/\1/"`
+			realifname=`echo $wanif | sed -e "s/wan/ppp/" -e "s/p0*\([1-9]\)/p\1/"`
+		fi
+		#echo "realifname:$realifname"
+		#access control
+		$IPT -I FORWARD -i br-lan -o $realifname -j FW_FILTER_ACCESS
+	fi
+done
 $IPT -I FORWARD -i br-lan -j FW_FILTER_MAC
 # HTTP Redirect
 ($IPT -t nat -N HTTPREDIR_NAT_RULES >/dev/null 2>&1)
@@ -146,6 +212,19 @@ $IPT -t nat -A SERVICES_NAT_RULES -j TR69_NAT_RULES
 if [ -f /tmp/wftp/firewall.wftp ] ; then
 	. /tmp/wftp/firewall.wftp
 fi
+
+#execute scripts for external modules
+files=`find /etc/config/firewallExt/ -name "M1_??_*.user"`
+for f in $files
+do
+	#if [ -x $f ];then
+	if [ -r $f ] && [ -f $f ];then
+		echo $f will be executed by firewall.user
+		. $f
+	else
+		echo $f execution fail by firewall.user
+	fi
+done
 
 # WLAN ISOLATE
 #if [ -f /usr/sbin/firewall_wlan2.user ] ; then
@@ -164,12 +243,22 @@ do
 	ppacmd addwan -i $ppaif
 done
 if [ "$ppa_lan_enb" == "1" -a "$ppa_wan_enb" == "1" ]; then
-	ppacmd control --enable-lan --enable-wan
+	#ppacmd control --enable-lan --enable-wan
+	/usr/sbin/qos/ppa_enable_w_swqos.sh
 elif [ "$ppa_lan_enb" == "1" -a "$ppa_wan_enb" == "0" ]; then
 	ppacmd control --enable-lan --disable-wan
 elif [ "$ppa_lan_enb" == "0" -a "$ppa_wan_enb" == "1" ]; then
 	ppacmd control --disable-lan --enable-wan
 fi
+
+##add rules from lan to wan
+$IPT -I FORWARD -i br-lan -j  SPI_RULES_LAN
+## port transfer from 5060 to 15060-15100
+config_load network
+config_get LAST_LAN_IP lan ipaddr
+config_get LAST_LAN_MASK lan netmask
+$IPT -t nat -I POSTROUTING -s ${LAST_LAN_IP}/${LAST_LAN_MASK} -p udp --sport 5060 -j MASQUERADE --to-ports 15060-15100
 echo "`date` firewall.user finished" > /dev/console
+
 
 ipt_unlock_res

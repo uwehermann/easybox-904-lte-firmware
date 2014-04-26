@@ -298,6 +298,22 @@ endef
 
 $(eval $(call KernelPackage,ipt-ulog))
 
+define KernelPackage/ipt-u32
+$(call KernelPackage/ipt/Depends,)
+  TITLE:=U32 support
+  KCONFIG:=$(KCONFIG_IPT_U32)
+  FILES:=$(foreach mod,$(IPT_U32-m),$(LINUX_DIR)/net/$(mod).$(LINUX_KMOD_SUFFIX))
+  AUTOLOAD:=$(call AutoLoad,45,$(notdir $(IPT_U32-m)))
+endef
+
+define KernelPackage/ipt-u32/description
+  Kernel modules for U32
+  Includes:
+  - U32
+endef
+
+$(eval $(call KernelPackage,ipt-u32))
+
 
 define KernelPackage/ipt-iprange
 $(call KernelPackage/ipt/Depends,)
