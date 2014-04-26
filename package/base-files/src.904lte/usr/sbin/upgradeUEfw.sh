@@ -71,16 +71,20 @@ if [ "$?" != "0" ] ; then
 fi
 
 # runUEupgrade.sh
+echo lte_upg_start=on > /proc/arcusb/config
+
 umts_firmwareupt upgrade /tmp/UEfw
 ret=$?
 
 if [ "$ret" -eq 0 ] ; then
     # success
     echo "upgrade LTE firmware success!" > /dev/console
+    echo lte_upg_start=off > /proc/arcusb/config
 else
     #fail
     echo "upgrade LTE firmware failed!" > /dev/console
 	/usr/sbin/libmapi_mon_cli stop_upgrade
+	echo lte_upg_start=off > /proc/arcusb/config
     return 1
 fi
 

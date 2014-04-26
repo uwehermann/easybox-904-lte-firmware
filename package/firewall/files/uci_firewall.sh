@@ -2,6 +2,7 @@
 # Copyright (C) 2008 John Crispin <blogic@openwrt.org>
 
 . /etc/functions.sh
+. /usr/sbin/iptables_utility.sh
 
 IPTABLES="echo iptables"
 IPTABLES=iptables
@@ -22,6 +23,7 @@ DEF_OUTPUT=DROP
 DEF_FORWARD=DROP
 CONNTRACK_ZONES=
 NOTRACK_DISABLED=
+
 
 find_item() {
 	local item="$1"; shift
@@ -53,7 +55,7 @@ create_zone() {
 	config_get exists $ZONE_LIST $1
 	[ -n "$exists" ] && return
 	config_set $ZONE_LIST $1 1
-
+	ipt_lock_res
 	$IPTABLES -N zone_$1
 	$IPTABLES -N zone_$1_MSSFIX
 	$IPTABLES -N zone_$1_ACCEPT
@@ -67,6 +69,7 @@ create_zone() {
 	$IPTABLES -N zone_$1_prerouting -t nat
 	$IPTABLES -t raw -N zone_$1_notrack
 	[ "$6" == "1" ] && $IPTABLES -t nat -A POSTROUTING -j zone_$1_nat
+	ipt_unlock_res
 }
 
 addif() {
@@ -101,6 +104,7 @@ addif() {
 	##
 
 	logger "adding $network ($ifname) to firewall zone $zone"
+ipt_lock_res
 	$IPTABLES -A input -i "$ifname" -j zone_${zone}
 	$IPTABLES -I zone_${zone}_MSSFIX 1 -o "$ifname" -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
 	$IPTABLES -I zone_${zone}_ACCEPT 1 -o "$ifname" -j ACCEPT
@@ -113,6 +117,7 @@ addif() {
 	$IPTABLES -I PREROUTING 1 -t nat -i "$ifname" -j zone_${zone}_prerouting
 	$IPTABLES -A forward -i "$ifname" -j zone_${zone}_forward
 	$IPTABLES -t raw -I PREROUTING 1 -i "$ifname" -j zone_${name}_notrack
+ipt_unlock_res
 	uci_set_state firewall core "${network}_ifname" "$ifname"
 	uci_set_state firewall core "${network}_zone" "$zone"
 }
@@ -123,6 +128,7 @@ delif() {
 	local zone="$3"
 
 	logger "removing $network ($ifname) from firewall zone $zone"
+ipt_lock_res
 	$IPTABLES -D input -i "$ifname" -j zone_$zone
 	$IPTABLES -D zone_${zone}_MSSFIX -o "$ifname" -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
 	$IPTABLES -D zone_${zone}_ACCEPT -o "$ifname" -j ACCEPT
@@ -134,6 +140,7 @@ delif() {
 	$IPTABLES -D zone_${zone}_nat -t nat -o "$ifname" -j MASQUERADE
 	$IPTABLES -D PREROUTING -t nat -i "$ifname" -j zone_${zone}_prerouting
 	$IPTABLES -D forward -i "$ifname" -j zone_${zone}_forward
+ipt_unlock_res
 	uci_revert_state firewall core "${network}_ifname"
 	uci_revert_state firewall core "${network}_zone"
 }
@@ -142,29 +149,35 @@ load_synflood() {
 	local rate=${1:-25}
 	local burst=${2:-50}
 	echo "Loading synflood protection"
+ipt_lock_res
 	$IPTABLES -N syn_flood
 	$IPTABLES -A syn_flood -p tcp --syn -m limit --limit $rate/second --limit-burst $burst -j RETURN
 	$IPTABLES -A syn_flood -j DROP
 	$IPTABLES -A INPUT -p tcp --syn -j syn_flood
+ipt_unlock_res
 }
 
 fw_set_chain_policy() {
 	local chain=$1
 	local target=$2
+	ipt_lock_res
 	[ "$target" == "REJECT" ] && {
 		$IPTABLES -A $chain -j reject
 		target=DROP
 	}
 	$IPTABLES -P $chain $target
+	ipt_unlock_res
 }
 
 fw_clear() {
+	ipt_lock_res
 	$IPTABLES -F
 	$IPTABLES -t nat -F
 	$IPTABLES -t nat -X
 	$IPTABLES -t raw -F
 	$IPTABLES -t raw -X
 	$IPTABLES -X
+	ipt_unlock_res
 }
 
 fw_defaults() {
@@ -188,28 +201,30 @@ fw_defaults() {
 
 	uci_revert_state firewall core
 	uci_set_state firewall core "" firewall_state
-
+ipt_lock_res
 	$IPTABLES -P INPUT DROP
 	$IPTABLES -P OUTPUT DROP
 	$IPTABLES -P FORWARD DROP
-
+ipt_unlock_res
 	fw_clear
 	config_get_bool drop_invalid $1 drop_invalid 0
 
 	[ "$drop_invalid" -gt 0 ] && {
+		ipt_lock_res
 		$IPTABLES -A INPUT -m state --state INVALID -j DROP
 		$IPTABLES -A OUTPUT -m state --state INVALID -j DROP
 		$IPTABLES -A FORWARD -m state --state INVALID -j DROP
+		ipt_unlock_res
 		NOTRACK_DISABLED=1
 	}
-
+ipt_lock_res
 	$IPTABLES -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 	$IPTABLES -A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 	$IPTABLES -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
 
 	$IPTABLES -A INPUT -i lo -j ACCEPT
 	$IPTABLES -A OUTPUT -o lo -j ACCEPT
-
+ipt_unlock_res
 	config_get syn_flood $1 syn_flood
 	config_get syn_rate $1 syn_rate
 	config_get syn_burst $1 syn_burst
@@ -217,7 +232,7 @@ fw_defaults() {
 
 	echo "Adding custom chains"
 	fw_custom_chains
-
+ipt_lock_res
 	$IPTABLES -N input
 	$IPTABLES -N output
 	$IPTABLES -N forward
@@ -229,7 +244,7 @@ fw_defaults() {
 	$IPTABLES -N reject
 	$IPTABLES -A reject -p tcp -j REJECT --reject-with tcp-reset
 #	$IPTABLES -A reject -j REJECT --reject-with icmp-port-unreachable
-
+ipt_unlock_res
 	fw_set_chain_policy INPUT "$DEF_INPUT"
 	fw_set_chain_policy OUTPUT "$DEF_OUTPUT"
 	fw_set_chain_policy FORWARD "$DEF_FORWARD"
@@ -293,6 +308,7 @@ fw_rule() {
 	[ -n "$src" -a -n "$dest" ] && ZONE=zone_${src}_forward
 	[ -n "$dest" ] && TARGET=zone_${dest}_$target
 	add_rule() {
+		ipt_lock_res
 		$IPTABLES -I $ZONE 1 \
 			${proto:+-p $proto} \
 			${src_ip:+-s $src_ip} \
@@ -301,6 +317,7 @@ fw_rule() {
 			${dest_ip:+-d $dest_ip} \
 			${dest_port:+--dport $dest_port} \
 			-j $TARGET
+		ipt_unlock_res
 	}
 	[ "$proto" == "tcpudp" -o -z "$proto" ] && {
 		proto=tcp
@@ -322,8 +339,10 @@ fw_forwarding() {
 	config_get_bool mtu_fix $1 mtu_fix 0
 	[ -n "$src" ] && z_src=zone_${src}_forward || z_src=forward
 	[ -n "$dest" ] && z_dest=zone_${dest}_ACCEPT || z_dest=ACCEPT
+	ipt_lock_res
 	$IPTABLES -I $z_src 1 -j $z_dest
 	[ "$mtu_fix" -gt 0 -a -n "$dest" ] && $IPTABLES -I $z_src 1 -j zone_${dest}_MSSFIX
+	ipt_unlock_res
 
 	# propagate masq zone flag
 	find_item "$src" $CONNTRACK_ZONES && append CONNTRACK_ZONES $dest
@@ -368,6 +387,7 @@ fw_redirect() {
 		dest_port2="$dest_port_first:$dest_port_last"; }
 
 	add_rule() {
+		ipt_lock_res
 		$IPTABLES -A zone_${src}_prerouting -t nat \
 			${proto:+-p $proto} \
 			${src_ip:+-s $src_ip} \
@@ -384,6 +404,7 @@ fw_redirect() {
 			${dest_port2:+--dport $dest_port2} \
 			${src_mac:+-m mac --mac-source $src_mac} \
 			-j ACCEPT
+		ipt_unlock_res
 	}
 	[ "$proto" == "tcpudp" -o -z "$proto" ] && {
 		proto=tcp
@@ -412,6 +433,7 @@ fw_addif() {
 
 fw_custom_chains() {
 	[ -n "$CUSTOM_CHAINS" ] || return 0
+	ipt_lock_res
 	$IPTABLES -N input_rule
 	$IPTABLES -N output_rule
 	$IPTABLES -N forwarding_rule
@@ -423,26 +445,31 @@ fw_custom_chains() {
 	$IPTABLES -A FORWARD -j forwarding_rule
 	$IPTABLES -A PREROUTING -t nat -j prerouting_rule
 	$IPTABLES -A POSTROUTING -t nat -j postrouting_rule
+	ipt_unlock_res
 }
 
 fw_custom_chains_zone() {
 	local zone="$1"
 
 	[ -n "$CUSTOM_CHAINS" ] || return 0
+	ipt_lock_res
 	$IPTABLES -N input_${zone}
 	$IPTABLES -N forwarding_${zone}
 	$IPTABLES -N prerouting_${zone} -t nat
 	$IPTABLES -I zone_${zone} 1 -j input_${zone}
 	$IPTABLES -I zone_${zone}_forward 1 -j forwarding_${zone}
 	$IPTABLES -I zone_${zone}_prerouting 1 -t nat -j prerouting_${zone}
+	ipt_unlock_res
 }
 
 fw_check_notrack() {
 	local zone="$1"
+	ipt_lock_res
 	config_get name "$zone" name
 	[ -n "$NOTRACK_DISABLED" ] || \
 		find_item "$name" $CONNTRACK_ZONES || \
 		$IPTABLES -t raw -A zone_${name}_notrack -j NOTRACK
+	ipt_unlock_res
 }
 
 fw_init() {
@@ -469,8 +496,10 @@ fw_init() {
 
 fw_stop() {
 	fw_clear
+	ipt_lock_res
 	$IPTABLES -P INPUT ACCEPT
 	$IPTABLES -P OUTPUT ACCEPT
 	$IPTABLES -P FORWARD ACCEPT
+	ipt_unlock_res
 	uci_revert_state firewall
 }

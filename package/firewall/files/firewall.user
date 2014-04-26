@@ -4,11 +4,11 @@
 
 # default firewall rules for ipv6
 
-
+. /usr/sbin/iptables_utility.sh
 IPT="iptables"
 PPA_FILTER_PROC=/proc/ppa/api/filter
 
-
+ipt_lock_res
 # IGMPPrxoy setting
 #$IPT -I INPUT -d 224.0.0.0/4 -j ACCEPT
 #$IPT -I FORWARD -d 224.0.0.0/4 -j ACCEPT
@@ -134,8 +134,9 @@ $IPT -I INPUT -i br-lan -j FW_FILTER_MAC
 
 $IPT -I FORWARD -i br-lan -j FW_FILTER_ACCESS
 $IPT -I FORWARD -i br-lan -j FW_FILTER_MAC
-
-
+# HTTP Redirect
+($IPT -t nat -N HTTPREDIR_NAT_RULES >/dev/null 2>&1)
+$IPT -t nat -I PREROUTING -j HTTPREDIR_NAT_RULES
 #TR69
 #$IPT -I INPUT -j TR69_RULES
 $IPT -A SERVICES_RULES -j TR69_RULES
@@ -150,6 +151,7 @@ fi
 #if [ -f /usr/sbin/firewall_wlan2.user ] ; then
 #	. /usr/sbin/firewall_wlan2.user
 #fi
+
 
 # reset ppa WAN sessions
 ppa_lan_enb=`ppacmd status | grep -c "LAN.*enable"`
@@ -170,3 +172,4 @@ elif [ "$ppa_lan_enb" == "0" -a "$ppa_wan_enb" == "1" ]; then
 fi
 echo "`date` firewall.user finished" > /dev/console
 
+ipt_unlock_res

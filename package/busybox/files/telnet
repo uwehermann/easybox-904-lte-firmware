@@ -17,6 +17,11 @@ start() {
 	MPTEST=`/bin/grep -ci mptest /proc/cmdline`
 	NOVLAN=`/bin/grep -ci novlan /proc/cmdline`
 
+	if ([ "$MPTEST" -ge 1 ] || [ "$NOVLAN" -ge 1 ]);
+	then
+		rm /etc/config/passwd+
+	fi
+
 	if ( ! has_root_pwd /etc/passwd && ! has_root_pwd /etc/shadow ) || \
 	   ( [ ! -x /usr/sbin/dropbear ] && [ ! -x /usr/sbin/sshd ] );
 	then

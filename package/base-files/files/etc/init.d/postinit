@@ -53,7 +53,7 @@ start() {
 
 
 ######## sowa ++ #######
-	LOG=`uboot_env --get --name log2file`
+	LOG=`/usr/sbin/uboot_env.sh --get --name log2file`
 	if [ $LOG == "1" ] ; then
 		if [ -x /usr/sbin/console_log.sh ] ; then
 			/etc/init.d/cron add console_log_chk '*/1 * * * * /usr/sbin/console_log.sh'
@@ -68,7 +68,7 @@ start() {
 		/etc/init.d/brn_sip bandwidth 10000 &
 	fi
 
-	if [ `uboot_env --get --name flashargs | grep -c -e bridge -e mptest -e calibrate -e emi` -ge 1 ] ; then
+	if [ `/usr/sbin/uboot_env.sh --get --name flashargs | grep -c -e bridge -e mptest -e calibrate -e emi` -ge 1 ] ; then
 		echo "######################################################" > /dev/console
 		echo "#                                                    #" > /dev/console
 		echo "#       WARNING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!       #" > /dev/console
@@ -79,7 +79,7 @@ start() {
 	fi
 
 	if [ `grep -c "export CONFIG_UBOOT_CONFIG_DUAL_IMAGE=1" /etc/config.sh` -ge 1 ] ; then
-		BOOTID=`uboot_env --get --name bootid --force 2>&-`
+		BOOTID=`/usr/sbin/uboot_env.sh --get --name bootid --force 2>&-`
 		echo "######################################################" > /dev/console
 		echo "#                                                    #" > /dev/console
 		if [ "$BOOTID" != "2" ] ; then
@@ -92,7 +92,7 @@ start() {
 	fi
 	
 	# update boot counter
-	uboot_env --set --name bootnum --value 0
+	/usr/sbin/uboot_env.sh --set --name bootnum --value 0
 
 	# periodically check missed task
 	if [ -x /usr/sbin/arc-tsk-health-chk.sh ] ; then

@@ -85,6 +85,56 @@ void part_bias_init( struct mtd_info *mtd, struct mtd_partition *parts, int nbpa
 	  #endif
 		block_num = (u_int32_t)parts[part].size / part_block_size;
 		last_block = block_num - 1;
+		
+#if 1	
+		block      = (u_int32_t)parts[part].offset/part_block_size;
+		last_block = block + block_num - 1;
+
+		if (part == 0) {
+			printk("using NEW partition bias algorithm.\n");
+		}
+				
+		// scan bad blocks
+		for ( off=(u_int32_t)parts[part].offset, block=(u_int32_t)parts[part].offset/part_block_size ;
+			  block <= last_block ; off+=part_block_size, block++)
+		{
+			if (mtd->block_isbad(mtd,off) == 0)
+			{
+				pBias[block] = 0;
+				
+			}
+			else {
+				pBias[block] = 1;
+			}
+		}
+		
+		// find the first available block from current block and calculate the offset
+		for ( off=(u_int32_t)parts[part].offset, block=(u_int32_t)parts[part].offset/part_block_size ;
+			  block <= last_block ; off+=part_block_size, block++)
+		{
+			int i;
+			i = block;
+			while (i <= last_block) {
+				if (pBias[i] == 0) {
+					pBias[block] = i - block;
+			 		if (i != block) {
+			 			pBias[i] = 1;
+			 		}
+			 		break;
+				}
+				i++;
+			}
+			if (i > last_block) {
+				pBias[block] = last_block - block;
+			}
+		}
+
+#else
+		// original codes by ctc
+		// depending on the bad block situation, sometimes it will have wrong mapping.
+		block_num = (u_int32_t)parts[part].size / part_block_size;
+		last_block = block_num - 1;
+		
 		for ( cnt=0, bias=0, off=(u_int32_t)parts[part].offset, block=(u_int32_t)parts[part].offset/part_block_size ;
 			  cnt < last_block ;
 			  cnt++, off+=part_block_size, block++)
@@ -113,6 +163,8 @@ void part_bias_init( struct mtd_info *mtd, struct mtd_partition *parts, int nbpa
 			if ( (cnt+pBias[block]) > last_block)
 				pBias[block] = last_block - cnt;
 		}
+#endif
+		
 	  #if 0 /* ctc. keep the original partition size */
 	   #if 1
 		if (parts[part].mask_flags & MTD_WRITEABLE)

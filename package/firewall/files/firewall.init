@@ -4,12 +4,12 @@
 START=43
 
 TRUST_HOST_FILE=/tmp/firewall.trust
+. /usr/sbin/iptables_utility.sh
 
 start()
 {
-	`echo 'Firewall start(firewall.init)' > /var/lock/initFirewall.lock`
+	echo "firewall init start"
 	if [ `/bin/grep -c -i bridge /proc/cmdline` -ge 1 ] ; then
-		rm -f /var/lock/initFirewall.lock
 		return
 	fi
 
@@ -22,15 +22,13 @@ start()
 	[ -f ${TRUST_HOST_FILE} ] && (. ${TRUST_HOST_FILE} >/dev/null 2>&1)
 	gen_trust_file 1
 	[ -f ${TRUST_HOST_FILE} ] && (. ${TRUST_HOST_FILE} >/dev/null 2>&1)
-	rm -f /var/lock/initFirewall.lock
+	echo "firewall init end"
 }
 
 stop()
 {
-	`echo 'Firewall stop(firewall.init)' > /var/lock/initFirewall.lock`
 	. /lib/firewall/uci_firewall.sh
 	fw_stop
-	rm -f /var/lock/initFirewall.lock
 }
 
 restart()
@@ -61,9 +59,12 @@ gen_trust_file()
 		MAX=0
 	fi
 
-	echo 'IPT="iptables"' > ${TRUST_HOST_FILE}
-
+	if [ ! -f ${TRUST_HOST_FILE} ]; then
+		echo '. /usr/sbin/iptables_utility.sh' >> ${TRUST_HOST_FILE}
+		echo 'IPT="iptables"' > ${TRUST_HOST_FILE}
+	fi
 	CNT=1
+	echo 'ipt_lock_res' >> ${TRUST_HOST_FILE}
 	while [ "$CNT" -le "$MAX" ] ; do
 		IP=`umngcli get ip${CNT}@trustip`
 		if [ -n "$IP" ] ; then
@@ -71,6 +72,7 @@ gen_trust_file()
 		fi
 		let CNT=$CNT+1
 	done
+	echo 'ipt_unlock_res' >> ${TRUST_HOST_FILE}
 }
 
 # $1: <ip address>[/submask_bit]

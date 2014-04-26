@@ -504,19 +504,26 @@ upgrade_fullimage_nor_or_nand()
 
 	rm -f $HEAD_FILE.?
 
-	if [ $ROOTFS_SZ -ge $KERNEL_SZ ] ; then
-		dd if="$FILE" of="$ROOTFS_FILE" bs=$ROOTFS_SZ count=1
-		dd if="$FILE" of="$KERNEL_FILE" bs=$ROOTFS_SZ count=1 skip=1
-	else
-		dd if="$FILE" of="$ROOTFS_FILE" bs=$ROOTFS_SZ count=1
-		let CNT=$KERNEL_SZ/$ROOTFS_SZ+1
-		dd if="$FILE" of="$KERNEL_FILE" bs=$ROOTFS_SZ count=$CNT skip=1
-	fi
+# modified by htf
+        tail -c $(( $KERNEL_SZ + 32 )) $FILE > $KERNEL_FILE
+        truncate -s $KERNEL_SZ $KERNEL_FILE
+        truncate -s $ROOTFS_SZ $FILE
+        mv  $FILE $ROOTFS_FILE
 
-	dd if="$KERNEL_FILE" of="${KERNEL_FILE}2" bs=$KERNEL_SZ count=1
-	mv -f "${KERNEL_FILE}2" "$KERNEL_FILE"
-
-	rm -f $FILE
+# Code from ammon
+#	if [ $ROOTFS_SZ -ge $KERNEL_SZ ] ; then
+#		dd if="$FILE" of="$ROOTFS_FILE" bs=$ROOTFS_SZ count=1
+#		dd if="$FILE" of="$KERNEL_FILE" bs=$ROOTFS_SZ count=1 skip=1
+#	else
+#		dd if="$FILE" of="$ROOTFS_FILE" bs=$ROOTFS_SZ count=1
+#		let CNT=$KERNEL_SZ/$ROOTFS_SZ+1
+#		dd if="$FILE" of="$KERNEL_FILE" bs=$ROOTFS_SZ count=$CNT skip=1
+#	fi
+#
+#	dd if="$KERNEL_FILE" of="${KERNEL_FILE}2" bs=$KERNEL_SZ count=1
+#	mv -f "${KERNEL_FILE}2" "$KERNEL_FILE"
+#
+#	rm -f $FILE
 
 	if  ! [ -f "$ROOTFS_FILE" ] || ! [ -f "$KERNEL_FILE" ] ; then
 		rm -f "$KERNEL_FILE"

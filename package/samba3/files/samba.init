@@ -9,7 +9,8 @@ SAMBA_CFG_PROG=/usr/sbin/sambacfg.sh
 boot() {
 	$SAMBA_CFG_PROG smb_user_cfg_set
 
-	cp /etc/samba/smbpasswd.tmp /tmp/smbpasswd
+	#cp /etc/samba/smbpasswd.tmp /tmp/smbpasswd
+	ln -sf /tmp/etc/config/smbpasswd /tmp/smbpasswd
 
 	start	
 }
