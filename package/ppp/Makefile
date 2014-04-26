@@ -33,7 +33,7 @@ $(call Package/ppp/Default)
   DEPENDS:=
   TITLE:=PPP daemon
   MENU:=1
-  DEPENDS:=+libumng
+  DEPENDS:=+libsyslog
 endef
 
 define Package/ppp/description

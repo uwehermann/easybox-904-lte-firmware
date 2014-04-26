@@ -61,7 +61,6 @@ define Package/pure-ftpd/install
 #	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ptracetest $(1)/usr/sbin
 #	$(INSTALL_BIN) $(foreach i,ftpd pw ftpwho mrtginfo pwconvert quotacheck statsdecode uploadscript authd, \
 #		$(PKG_BUILD_DIR)/src/pure-$(i)) $(1)/usr/sbin
-	$(INSTALL_BIN) ./files/ftp_fw_upgrade.sh $(1)/etc/init.d/ftp_fw_upgrade.sh
 	$(INSTALL_BIN) $(foreach i,ftpd pw ftpwho, $(PKG_BUILD_DIR)/src/pure-$(i)) $(1)/usr/sbin
 endef
 
