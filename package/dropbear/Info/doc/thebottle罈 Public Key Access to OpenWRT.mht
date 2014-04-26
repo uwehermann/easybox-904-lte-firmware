@@ -1,0 +1,617 @@
+From: <¥Ñ Windows Internet Explorer 7 Àx¦s>
+Subject: thebottle? Public Key Access to OpenWRT
+Date: Fri, 16 Mar 2012 16:16:45 +0800
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----=_NextPart_000_0077_01CD0390.2EA5BC80"
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6109
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0077_01CD0390.2EA5BC80
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://thebottle.org/blog/computers/public-key-access-to-openwrt/
+
+=EF=BB=BF<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" =
+"http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML lang=3Den-US =
+xmlns=3D"http://www.w3.org/1999/xhtml"><HEAD><TITLE>thebottle=C2=BB =
+Public Key Access to OpenWRT</TITLE>
+<META http-equiv=3DContent-Type content=3D"text/html; charset=3Dutf-8">
+<STYLE type=3Dtext/css media=3Dscreen>@import url( =
+http://thebottle.org/blog/wp-content/themes/thebottle/style.css );
+</STYLE>
+<LINK title=3D"RSS 2.0" href=3D"http://thebottle.org/blog/feed/"=20
+type=3Dapplication/rss+xml rel=3Dalternate><LINK title=3D"RSS .92"=20
+href=3D"http://thebottle.org/blog/feed/rss/" type=3Dtext/xml =
+rel=3Dalternate><LINK=20
+title=3D"Atom 0.3" href=3D"http://thebottle.org/blog/feed/atom/"=20
+type=3Dapplication/atom+xml rel=3Dalternate><LINK=20
+href=3D"http://thebottle.org/blog/xmlrpc.php" rel=3Dpingback><LINK =
+title=3D"July 2011"=20
+href=3D"http://thebottle.org/blog/2011/07/" rel=3Darchives><LINK =
+title=3D"March 2011"=20
+href=3D"http://thebottle.org/blog/2011/03/" rel=3Darchives><LINK=20
+title=3D"January 2011" href=3D"http://thebottle.org/blog/2011/01/"=20
+rel=3Darchives><LINK title=3D"October 2010"=20
+href=3D"http://thebottle.org/blog/2010/10/" rel=3Darchives><LINK =
+title=3D"March 2010"=20
+href=3D"http://thebottle.org/blog/2010/03/" rel=3Darchives><LINK =
+title=3D"July 2009"=20
+href=3D"http://thebottle.org/blog/2009/07/" rel=3Darchives><LINK =
+title=3D"June 2009"=20
+href=3D"http://thebottle.org/blog/2009/06/" rel=3Darchives><LINK =
+title=3D"May 2009"=20
+href=3D"http://thebottle.org/blog/2009/05/" rel=3Darchives><LINK =
+title=3D"April 2009"=20
+href=3D"http://thebottle.org/blog/2009/04/" rel=3Darchives><LINK=20
+title=3D"February 2009" href=3D"http://thebottle.org/blog/2009/02/"=20
+rel=3Darchives><LINK title=3D"January 2009"=20
+href=3D"http://thebottle.org/blog/2009/01/" rel=3Darchives><LINK=20
+title=3D"February 2008" href=3D"http://thebottle.org/blog/2008/02/"=20
+rel=3Darchives><LINK title=3D"September 2007"=20
+href=3D"http://thebottle.org/blog/2007/09/" rel=3Darchives><LINK =
+title=3D"June 2007"=20
+href=3D"http://thebottle.org/blog/2007/06/" rel=3Darchives><LINK =
+title=3D"May 2007"=20
+href=3D"http://thebottle.org/blog/2007/05/" rel=3Darchives><LINK =
+title=3D"April 2007"=20
+href=3D"http://thebottle.org/blog/2007/04/" rel=3Darchives><LINK =
+title=3D"March 2007"=20
+href=3D"http://thebottle.org/blog/2007/03/" rel=3Darchives><LINK=20
+title=3D"February 2007" href=3D"http://thebottle.org/blog/2007/02/"=20
+rel=3Darchives><LINK title=3D"January 2007"=20
+href=3D"http://thebottle.org/blog/2007/01/" rel=3Darchives><LINK=20
+title=3D"December 2006" href=3D"http://thebottle.org/blog/2006/12/"=20
+rel=3Darchives><LINK title=3D"November 2006"=20
+href=3D"http://thebottle.org/blog/2006/11/" rel=3Darchives><LINK=20
+title=3D"October 2006" href=3D"http://thebottle.org/blog/2006/10/"=20
+rel=3Darchives><LINK title=3D"September 2006"=20
+href=3D"http://thebottle.org/blog/2006/09/" rel=3Darchives><LINK =
+title=3D"August 2006"=20
+href=3D"http://thebottle.org/blog/2006/08/" rel=3Darchives><LINK=20
+title=3D"thebottle =C2=BB Public Key Access to OpenWRT Comments Feed"=20
+href=3D"http://thebottle.org/blog/computers/public-key-access-to-openwrt/=
+feed/"=20
+type=3Dapplication/rss+xml rel=3Dalternate><LINK title=3DRSD=20
+href=3D"http://thebottle.org/blog/xmlrpc.php?rsd" =
+type=3Dapplication/rsd+xml=20
+rel=3DEditURI><LINK =
+href=3D"http://thebottle.org/blog/wp-includes/wlwmanifest.xml"=20
+type=3Dapplication/wlwmanifest+xml rel=3Dwlwmanifest><LINK =
+title=3Dthebottle=20
+href=3D"http://thebottle.org/blog/" rel=3Dindex><LINK title=3D"Brat =
+Pizza"=20
+href=3D"http://thebottle.org/blog/the-swamp/brat-pizza/" =
+rel=3Dstart><LINK=20
+title=3D"SIP Scanning and VoIP Security"=20
+href=3D"http://thebottle.org/blog/voip/sip-scanning-and-voip-security/"=20
+rel=3Dprev><LINK title=3D"Caller ID Spoof (On Demand)"=20
+href=3D"http://thebottle.org/blog/voip/caller-id-spoof-on-demand/" =
+rel=3Dnext>
+<META content=3D"MSHTML 6.00.6000.17102" name=3DGENERATOR><LINK=20
+href=3D"http://thebottle.org/blog/computers/public-key-access-to-openwrt/=
+"=20
+rel=3Dcanonical><LINK href=3D"http://thebottle.org/blog/?p=3D217" =
+rel=3Dshortlink>
+<META content=3D"How to setup public key access in OpenWRT." =
+name=3Ddescription>
+<META=20
+content=3D"allow wan,configure dropbear,dropbear,dropbear =
+public,openwrt,private key,public key,putty,puttygen,wan,wan port"=20
+name=3Dkeywords></HEAD>
+<BODY>
+<DIV id=3Dmnu>
+<P>thebottle</P>
+<UL id=3Dnav>
+  <LI><A title=3DHome href=3D"http://thebottle.org/">Home</A>=20
+  <LI><A title=3D"Personal Library Manager"=20
+  href=3D"http://thebottle.org/overview.php">PLM</A>=20
+  <LI><A class=3Dhere title=3DBlog =
+href=3D"http://thebottle.org/blog/">Blog</A>=20
+  <LI><A title=3DGallery=20
+  =
+href=3D"http://thebottle.org/blog/computers/public-key-access-to-openwrt/=
+#">Gallery</A>=20
+
+  <LI><A title=3DLinks href=3D"http://thebottle.org/links.htm">Links</A> =
+
+</LI></UL></DIV>
+<DIV id=3Dcontainer>
+<DIV>
+<H1>thebottle Blog</H1></DIV>
+<DIV id=3Dwpmenu>
+<UL>
+  <LI class=3Dcategories>Categories
+  <UL>
+    <LI class=3D"cat-item cat-item-5"><A title=3D"View all posts filed =
+under Books"=20
+    href=3D"http://thebottle.org/blog/category/books/">Books</A> (1)=20
+    <LI class=3D"cat-item cat-item-6"><A=20
+    title=3D"View all posts filed under Computers"=20
+    href=3D"http://thebottle.org/blog/category/computers/">Computers</A> =
+(14)=20
+    <LI class=3D"cat-item cat-item-4"><A title=3D"View all posts filed =
+under Poker"=20
+    href=3D"http://thebottle.org/blog/category/poker/">Poker</A> (4)=20
+    <LI class=3D"cat-item cat-item-7"><A=20
+    title=3D"View all posts filed under Politics"=20
+    href=3D"http://thebottle.org/blog/category/politics/">Politics</A> =
+(2)=20
+    <LI class=3D"cat-item cat-item-8"><A title=3D"View all posts filed =
+under Random"=20
+    href=3D"http://thebottle.org/blog/category/random/">Random</A> (5)=20
+    <LI class=3D"cat-item cat-item-10"><A=20
+    title=3D"View all posts filed under The Swamp"=20
+    href=3D"http://thebottle.org/blog/category/the-swamp/">The Swamp</A> =
+(13)=20
+    <LI class=3D"cat-item cat-item-69"><A title=3D"View all posts filed =
+under VoIP"=20
+    href=3D"http://thebottle.org/blog/category/voip/">VoIP</A> (8)=20
+</LI></UL></LI></UL>
+<UL>
+  <LI><LABEL for=3Ds>Search:</LABEL>=20
+  <FORM action=3D/blog/index.php method=3Dget>
+  <DIV><INPUT id=3Ds size=3D15 name=3Ds><BR><INPUT style=3D"MARGIN-TOP: =
+3px" type=3Dsubmit value=3DSearch>=20
+  </DIV></FORM></LI></UL>
+<UL>
+  <LI>Archives:=20
+  <UL>
+    <LI><A title=3D"July 2011" =
+href=3D"http://thebottle.org/blog/2011/07/">July=20
+    2011</A>=20
+    <LI><A title=3D"March 2011" =
+href=3D"http://thebottle.org/blog/2011/03/">March=20
+    2011</A>=20
+    <LI><A title=3D"January 2011"=20
+    href=3D"http://thebottle.org/blog/2011/01/">January 2011</A>=20
+    <LI><A title=3D"October 2010"=20
+    href=3D"http://thebottle.org/blog/2010/10/">October 2010</A>=20
+    <LI><A title=3D"March 2010" =
+href=3D"http://thebottle.org/blog/2010/03/">March=20
+    2010</A>=20
+    <LI><A title=3D"July 2009" =
+href=3D"http://thebottle.org/blog/2009/07/">July=20
+    2009</A>=20
+    <LI><A title=3D"June 2009" =
+href=3D"http://thebottle.org/blog/2009/06/">June=20
+    2009</A>=20
+    <LI><A title=3D"May 2009" =
+href=3D"http://thebottle.org/blog/2009/05/">May=20
+    2009</A>=20
+    <LI><A title=3D"April 2009" =
+href=3D"http://thebottle.org/blog/2009/04/">April=20
+    2009</A>=20
+    <LI><A title=3D"February 2009"=20
+    href=3D"http://thebottle.org/blog/2009/02/">February 2009</A>=20
+    <LI><A title=3D"January 2009"=20
+    href=3D"http://thebottle.org/blog/2009/01/">January 2009</A>=20
+    <LI><A title=3D"February 2008"=20
+    href=3D"http://thebottle.org/blog/2008/02/">February 2008</A>=20
+    <LI><A title=3D"September 2007"=20
+    href=3D"http://thebottle.org/blog/2007/09/">September 2007</A>=20
+    <LI><A title=3D"June 2007" =
+href=3D"http://thebottle.org/blog/2007/06/">June=20
+    2007</A>=20
+    <LI><A title=3D"May 2007" =
+href=3D"http://thebottle.org/blog/2007/05/">May=20
+    2007</A>=20
+    <LI><A title=3D"April 2007" =
+href=3D"http://thebottle.org/blog/2007/04/">April=20
+    2007</A>=20
+    <LI><A title=3D"March 2007" =
+href=3D"http://thebottle.org/blog/2007/03/">March=20
+    2007</A>=20
+    <LI><A title=3D"February 2007"=20
+    href=3D"http://thebottle.org/blog/2007/02/">February 2007</A>=20
+    <LI><A title=3D"January 2007"=20
+    href=3D"http://thebottle.org/blog/2007/01/">January 2007</A>=20
+    <LI><A title=3D"December 2006"=20
+    href=3D"http://thebottle.org/blog/2006/12/">December 2006</A>=20
+    <LI><A title=3D"November 2006"=20
+    href=3D"http://thebottle.org/blog/2006/11/">November 2006</A>=20
+    <LI><A title=3D"October 2006"=20
+    href=3D"http://thebottle.org/blog/2006/10/">October 2006</A>=20
+    <LI><A title=3D"September 2006"=20
+    href=3D"http://thebottle.org/blog/2006/09/">September 2006</A>=20
+    <LI><A title=3D"August 2006" =
+href=3D"http://thebottle.org/blog/2006/08/">August=20
+    2006</A> </LI></UL></LI></UL>
+<UL>
+  <LI>Meta:=20
+  <UL>
+    <LI><A=20
+    =
+href=3D"http://thebottle.org/blog/wp-login.php?action=3Dregister">Registe=
+r</A>=20
+    <LI><A href=3D"http://thebottle.org/blog/wp-login.php">Log in</A>=20
+    <LI><A title=3D"Syndicate this site using RSS"=20
+    href=3D"feed:http://thebottle.org/blog/feed/"><ABBR=20
+    title=3D"Really Simple Syndication">RSS</ABBR></A>=20
+    <LI><A title=3D"The latest comments to all posts in RSS"=20
+    href=3D"feed:http://thebottle.org/blog/comments/feed/">Comments =
+<ABBR=20
+    title=3D"Really Simple Syndication">RSS</ABBR></A> =
+</LI></UL></LI></UL></DIV>
+<DIV id=3Dcontent>
+<H2>July 1, 2009</H2>
+<DIV class=3Dpost id=3Dpost-217>
+<H3 style=3D"FONT-SIZE: 105%"><A=20
+href=3D"http://thebottle.org/blog/computers/public-key-access-to-openwrt/=
+"=20
+rel=3Dbookmark>Public Key Access to OpenWRT</A></H3>
+<DIV class=3Dmeta>Filed under: <A title=3D"View all posts in Computers"=20
+href=3D"http://thebottle.org/blog/category/computers/"=20
+rel=3D"category tag">Computers</A> =E2=80=94 Tony @ 9:11 am </DIV>
+<DIV class=3Dstorycontent>
+<P>I allow SSH and only SSH into my router via WAN. I have the web =
+interface and=20
+all other ports that don=E2=80=99t have specific forwards blocked for =
+obvious reasons.=20
+When you install OpenWRT it automatically blocks everything from the WAN =
+side,=20
+so this doesn=E2=80=99t require any configuration. Although if you are =
+like me and you=20
+require access to your network from outside then you will need to make =
+some=20
+changes.</P>
+<P>You don=E2=80=99t want to have password authentication on the WAN =
+side or it is=20
+possible to get compromised by a brute force attack. The solution is to=20
+implement public key access.</P>
+<P><SPAN id=3Dmore-217></SPAN><BR>First open <A=20
+href=3D"http://www.chiark.greenend.org.uk/~sgtatham/putty/" =
+target=3D_blank>PuTTY=20
+Key Generator</A> and from the top menu select Key &gt; SSH2 RSA key. =
+Then click=20
+on the <I>Generate</I> button and move your mouse around the window =
+until it=20
+gets enough random data and creates your key. Now click on the <I>Save =
+private=20
+key</I> button and save your key somewhere that you won=E2=80=99t lose =
+it. If you want=20
+to password protect your key then enter a password in the password =
+boxes. You=20
+can create one with a password and one without password if you want. =
+Copy the=20
+text on the top where it says <I>Public key for pasting into OpenSSH=20
+authorized_keys file</I>. It should look something like this:</P>
+<P><CODE>ssh-rsa=20
+AAAAB3NzaC1yc2EAAAABJQAAAIEAqnogKGS3oHTp4nDfLzdwL4NlbZR3i5UXvk+oE9T<BR>3o=
+iycPk3r+Nj4WCWjjNnwUN/561S0G891EQNv8I3BkN1wox7ImM0SV33rdKx1md1Ay<BR>txfs0=
+rcymT0DS/+3AbyskzoZHmZfs3PWforj0yoEhT9SVdkwPPOq+935aM8cb33tE0=3D<BR>rsa-k=
+ey-20090701</CODE></P>
+<P>Now ssh into your router and you will be adding that to the =
+authorized_keys=20
+file with the following command:</P>
+<P><CODE>root@router:~# echo ssh-rsa=20
+AAAAB3NzaC1yc2EAAAABJQAAAIEAqnogKGS3oHTp4nDfLzdwL4NlbZR3i5UXvk+oE9T<BR>3o=
+iycPk3r+Nj4WCWjjNnwUN/561S0G891EQNv8I3BkN1wox7ImM0SV33rdKx1md1Ay<BR>txfs0=
+rcymT0DS/+3AbyskzoZHmZfs3PWforj0yoEhT9SVdkwPPOq+935aM8cb33tE0=3D<BR>rsa-k=
+ey-20090701=20
+&gt;&gt; /etc/dropbear/authorized_keys</CODE></P>
+<P>You will be pasting your own public key that you copied instead of =
+the one=20
+that is in the example.</P>
+<P>We still have a few more options that need to be changed. You =
+don=E2=80=99t want to=20
+leave dropbear running on the default port or it is more likely to be =
+discovered=20
+and attacked.</P>
+<P><CODE>root@router:~# vi /etc/config/dropbear</CODE></P>
+<P>Change PasswordAuth =3D off and Port =3D 443. You can change the port =
+to anything=20
+that you like, but you want to choose something that is not common. I =
+like port=20
+443 because it is the SSL port so when I am tunneling through my router =
+from=20
+work my traffic looks natural. Also, port 443 is never going to be =
+blocked.=20
+PasswordAuth off is just turning off the password authentication which =
+we don=E2=80=99t=20
+want anymore because we are using keys.</P>
+<P>We still need to open up the port that dropbear is running on to the =
+WAN,=20
+because as I mentioned earlier OpenWRT has all inbound WAN ports closed. =
+</P>
+<P><CODE>root@router:~# vi /etc/config/firewall</CODE></P>
+<P>You can do this by editing the firewall configuration file and =
+adding:</P>
+<P><CODE><BR>config 'rule' 'ssh'<BR>option 'src' 'wan'<BR>option 'proto' =
+
+'tcp'<BR>option 'src_ip' ''<BR>option 'dest_ip' ''<BR>option 'dest_port' =
+
+'443'<BR>option 'target' 'ACCEPT'</CODE></P>
+<P>Or you can do this in the web interface. I have X-WRT and I am not =
+sure what=20
+web interface it uses, but for me it is under Network &gt; Firewall &gt; =
+
+Incoming Ports.</P>
+<P>Quick note=E2=80=A6 Some people mention that you should also run =
+dropbear on a local=20
+port with password authentication turned on in case you lose your =
+private key.=20
+This is not necessary if you have a web interface because you can always =
+get=20
+into your web interface from LAN and edit the files to turn password=20
+authentication back on until you update the key file. But for those =
+without a=20
+web interface you will want to do the following:</P>
+<P><CODE>root@router:~# vi /etc/init.d/dropbear</CODE></P>
+<P>You should see this line, or a line like it that starts dropbear.</P>
+<P><CODE>/usr/sbin/dropbear $DROPBEAR_ARGS</CODE></P>
+<P>Just add another line below it.</P>
+<P><CODE>/usr/sbin/dropbear -p 22</CODE></P>
+<P>Now you will also have password access from LAN on port 22.</P>
+<P>After making all of these changes you will need to reboot or just run =
+
+/etc/init.d/dropbear restart</P>
+<P>In order to access it, open PuTTY and enter your IP and port. Then =
+under=20
+Connection &gt; Data for <I>Auto-login username</I> enter root. Under =
+Connection=20
+&gt; SSH &gt; Auth click on <I>Browse</I> and select your private key. I =
+
+recommend saving the session and then creating a shortcut to it. You can =
+create=20
+shortcuts to putty sessions by running putty.exe =
+@sesssion_name.</P></DIV>
+<DIV class=3Dfeedback><A title=3D"Comment on Public Key Access to =
+OpenWRT"=20
+href=3D"http://thebottle.org/blog/computers/public-key-access-to-openwrt/=
+#comments">Comments=20
+(3)</A> </DIV>
+<HR align=3Dleft width=3D"75%" SIZE=3D1>
+</DIV><!-- You can start editing here. -->
+<H3 id=3Dcomments>3 Responses to =E2=80=9CPublic Key Access to =
+OpenWRT=E2=80=9D</H3>
+<DIV class=3Dnavigation>
+<DIV class=3Dalignleft></DIV>
+<DIV class=3Dalignright></DIV></DIV>
+<OL class=3Dcommentlist>
+  <LI class=3D"comment even thread-even depth-1" id=3Dcomment-3202>
+  <DIV class=3Dcomment-body id=3Ddiv-comment-3202>
+  <DIV class=3D"comment-author vcard"><CITE class=3Dfn><A class=3Durl=20
+  href=3D"http://www.postparrot.com/" rel=3D"external nofollow">Issac=20
+  Maez</A></CITE> <SPAN class=3Dsays>says:</SPAN> </DIV>
+  <DIV class=3D"comment-meta commentmetadata"><A=20
+  =
+href=3D"http://thebottle.org/blog/computers/public-key-access-to-openwrt/=
+comment-page-1/#comment-3202">March=20
+  6, 2010 at 12:54 am</A> </DIV>
+  <P>Thanks for this post, answers a bunch of questions I was =
+having.</P>
+  <DIV class=3Dreply></DIV></DIV>
+  <LI class=3D"comment odd alt thread-odd thread-alt depth-1" =
+id=3Dcomment-4715>
+  <DIV class=3Dcomment-body id=3Ddiv-comment-4715>
+  <DIV class=3D"comment-author vcard"><CITE class=3Dfn><A class=3Durl=20
+  href=3D"http://guruplug.org/" rel=3D"external =
+nofollow">arnulf</A></CITE> <SPAN=20
+  class=3Dsays>says:</SPAN> </DIV>
+  <DIV class=3D"comment-meta commentmetadata"><A=20
+  =
+href=3D"http://thebottle.org/blog/computers/public-key-access-to-openwrt/=
+comment-page-1/#comment-4715">June=20
+  11, 2010 at 5:08 pm</A> </DIV>
+  <P>Thanks Tony !</P>
+  <P>After restarting router this works like a charm !</P>
+  <P>But I would not recommend to add a private key without =
+password,<BR>use=20
+  =E2=80=9CAdd Key=E2=80=9D in PageAnt.exe (putty package) then password =
+only<BR>has to be=20
+  entered once. If a shortcut is made to PageAnt the path<BR>to *.ppk =
+file could=20
+  be given there. Right-click on PageAnt icon<BR>in toolbar to restart =
+one of=20
+  the saved sessions.</P>
+  <P>Also works for guruplug=E2=80=99s, and other linux-boxes, from home =
+folder:<BR>echo=20
+  =E2=80=A6your key =E2=80=A6 &gt;&gt; .ssh/authorized_keys</P>
+  <DIV class=3Dreply></DIV></DIV>
+  <LI=20
+  class=3D"comment byuser comment-author-admin bypostauthor even =
+thread-even depth-1"=20
+  id=3Dcomment-4716>
+  <DIV class=3Dcomment-body id=3Ddiv-comment-4716>
+  <DIV class=3D"comment-author vcard"><CITE class=3Dfn>Tony</CITE> <SPAN =
+
+  class=3Dsays>says:</SPAN> </DIV>
+  <DIV class=3D"comment-meta commentmetadata"><A=20
+  =
+href=3D"http://thebottle.org/blog/computers/public-key-access-to-openwrt/=
+comment-page-1/#comment-4716">June=20
+  11, 2010 at 5:53 pm</A> </DIV>
+  <P>I have a key without a password but it never leaves the computer =
+that it=20
+  was created on and it is secured through other means=E2=80=A6 I also =
+have a key with a=20
+  password that travels with me.</P>
+  <P>But you are right=E2=80=A6 for a general rule of thumb always use =
+passwords on your=20
+  key files.</P>
+  <DIV class=3Dreply></DIV></DIV></LI></OL>
+<DIV class=3Dnavigation>
+<DIV class=3Dalignleft></DIV>
+<DIV class=3Dalignright></DIV></DIV>
+<DIV id=3Drespond>
+<H3>Leave a Reply</H3>
+<DIV id=3Dcancel-comment-reply><SMALL><A id=3Dcancel-comment-reply-link=20
+style=3D"DISPLAY: none"=20
+href=3D"http://thebottle.org/blog/computers/public-key-access-to-openwrt/=
+#respond"=20
+rel=3Dnofollow>Click here to cancel reply.</A></SMALL> </DIV>
+<FORM id=3Dcommentform =
+action=3Dhttp://thebottle.org/blog/wp-comments-post.php=20
+method=3Dpost>
+<P><INPUT id=3Dauthor tabIndex=3D1 size=3D22 name=3Dauthor> <LABEL=20
+for=3Dauthor><SMALL>Name (required)</SMALL></LABEL></P>
+<P><INPUT id=3Demail tabIndex=3D2 size=3D22 name=3Demail> <LABEL =
+for=3Demail><SMALL>Mail=20
+(will not be published) (required)</SMALL></LABEL></P>
+<P><INPUT id=3Durl tabIndex=3D3 size=3D22 name=3Durl> <LABEL=20
+for=3Durl><SMALL>Website</SMALL></LABEL></P><!--<p><small><strong>XHTML:<=
+/strong> You can use these tags: <code>&lt;a href=3D&quot;&quot; =
+title=3D&quot;&quot;&gt; &lt;abbr title=3D&quot;&quot;&gt; &lt;acronym =
+title=3D&quot;&quot;&gt; &lt;b&gt; &lt;blockquote =
+cite=3D&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del =
+datetime=3D&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q =
+cite=3D&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; =
+</code></small></p>-->
+<P><TEXTAREA id=3Dcomment tabIndex=3D4 name=3Dcomment rows=3D10 =
+cols=3D58></TEXTAREA></P>
+<P><INPUT id=3Dsubmit tabIndex=3D5 type=3Dsubmit value=3D"Submit =
+Comment" name=3Dsubmit>=20
+<INPUT id=3Dcomment_post_ID type=3Dhidden value=3D217 =
+name=3Dcomment_post_ID> <INPUT=20
+id=3Dcomment_parent type=3Dhidden value=3D0 name=3Dcomment_parent> </P>
+<P style=3D"DISPLAY: none"><INPUT id=3Dakismet_comment_nonce =
+type=3Dhidden=20
+value=3D6a2c5a43a9 name=3Dakismet_comment_nonce></P></FORM></DIV>
+<DIV class=3Dnavigation>
+<DIV class=3Dalignleft></DIV>
+<DIV class=3Dalignright></DIV></DIV></DIV></DIV>
+<P style=3D"TEXT-ALIGN: center">=C2=A9 2006-2010 by =
+thebottle</P></BODY></HTML>
+
+------=_NextPart_000_0077_01CD0390.2EA5BC80
+Content-Type: text/css;
+	charset="big5"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://thebottle.org/blog/wp-content/themes/thebottle/style.css
+
+BODY {
+	FONT-SIZE: 95%; FONT-FAMILY: Times, serif; BACKGROUND-COLOR: #eee
+}
+A:link {
+	COLOR: #666
+}
+A:visited {
+	COLOR: #666
+}
+A:hover {
+	COLOR: #000
+}
+H1 {
+	FONT-SIZE: 200%; PADDING-TOP: 10px; FONT-FAMILY: times, serif; =
+TEXT-DECORATION: underline
+}
+H2 {
+	FONT-SIZE: 125%; FONT-FAMILY: times, serif
+}
+H3 {
+	FONT-SIZE: 95%; FONT-FAMILY: times, serif
+}
+P {
+	FONT-SIZE: 95%; FONT-FAMILY: times, serif
+}
+UL.disc {
+	LIST-STYLE-POSITION: inside; FONT-SIZE: 95%; LIST-STYLE-TYPE: disc
+}
+#commentform TEXTAREA {
+	WIDTH: 80%
+}
+#commentform #author {
+	BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 0.2em; BORDER-TOP: =
+#000000 1px solid; PADDING-LEFT: 0.2em; BACKGROUND: #e6e6e6; =
+PADDING-BOTTOM: 0.2em; BORDER-LEFT: #000000 1px solid; PADDING-TOP: =
+0.2em; BORDER-BOTTOM: #000000 1px solid
+}
+#commentform #email {
+	BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 0.2em; BORDER-TOP: =
+#000000 1px solid; PADDING-LEFT: 0.2em; BACKGROUND: #e6e6e6; =
+PADDING-BOTTOM: 0.2em; BORDER-LEFT: #000000 1px solid; PADDING-TOP: =
+0.2em; BORDER-BOTTOM: #000000 1px solid
+}
+#commentform #url {
+	BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 0.2em; BORDER-TOP: =
+#000000 1px solid; PADDING-LEFT: 0.2em; BACKGROUND: #e6e6e6; =
+PADDING-BOTTOM: 0.2em; BORDER-LEFT: #000000 1px solid; PADDING-TOP: =
+0.2em; BORDER-BOTTOM: #000000 1px solid
+}
+#commentform #answer {
+	BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 0.2em; BORDER-TOP: =
+#000000 1px solid; PADDING-LEFT: 0.2em; BACKGROUND: #e6e6e6; =
+PADDING-BOTTOM: 0.2em; BORDER-LEFT: #000000 1px solid; PADDING-TOP: =
+0.2em; BORDER-BOTTOM: #000000 1px solid
+}
+#commentform TEXTAREA {
+	BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 0.2em; BORDER-TOP: =
+#000000 1px solid; PADDING-LEFT: 0.2em; BACKGROUND: #e6e6e6; =
+PADDING-BOTTOM: 0.2em; BORDER-LEFT: #000000 1px solid; PADDING-TOP: =
+0.2em; BORDER-BOTTOM: #000000 1px solid
+}
+.navigation {
+	MARGIN-TOP: 30px; DISPLAY: block; MARGIN-BOTTOM: 10px; TEXT-ALIGN: =
+center
+}
+.alignright {
+	FLOAT: right
+}
+.alignleft {
+	FLOAT: left
+}
+#mnu {
+=09
+}
+#mnu P {
+	PADDING-RIGHT: 50px; PADDING-LEFT: 0px; FONT-SIZE: 150%; =
+PADDING-BOTTOM: 0px; MARGIN: 0px 0px -30px; COLOR: #999; PADDING-TOP: =
+0px; FONT-FAMILY: impact, serif; TEXT-ALIGN: right
+}
+#container {
+	BORDER-RIGHT: #666 2px solid; BORDER-TOP: #666 2px solid; MARGIN: 10px; =
+OVERFLOW: hidden; BORDER-LEFT: #666 2px solid; BORDER-BOTTOM: #666 2px =
+solid; BACKGROUND-COLOR: #ccc
+}
+#container H1 {
+	MARGIN-LEFT: 30px; PADDING-TOP: 20px
+}
+#wpmenu {
+	BORDER-RIGHT: #999 1px solid; PADDING-RIGHT: 30px; BACKGROUND-POSITION: =
+50% top; BORDER-TOP: #999 1px solid; MARGIN-TOP: 0px; DISPLAY: inline; =
+PADDING-LEFT: 0px; FLOAT: right; BACKGROUND-IMAGE: =
+url(/images/logo2.gif); PADDING-BOTTOM: 30px; BORDER-LEFT: #999 1px =
+solid; MARGIN-RIGHT: 30px; PADDING-TOP: 30px; BORDER-BOTTOM: #999 1px =
+solid; BACKGROUND-REPEAT: repeat-y; BACKGROUND-COLOR: #efefef
+}
+#content {
+	BORDER-RIGHT: #999 1px solid; PADDING-RIGHT: 15px; BORDER-TOP: #999 1px =
+solid; PADDING-LEFT: 15px; PADDING-BOTTOM: 30px; MARGIN: 0px 275px 50px =
+30px; BORDER-LEFT: #999 1px solid; BORDER-BOTTOM: #999 1px solid; =
+BACKGROUND-COLOR: #efefef
+}
+UL#nav {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 35px; PADDING-BOTTOM: 0px; MARGIN: =
+15px 10px -9px; FONT: bold 95% times, serif; PADDING-TOP: 0px
+}
+#nav LI {
+	DISPLAY: inline; LIST-STYLE-TYPE: none
+}
+#nav A {
+	BORDER-RIGHT: #999 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #999 1px =
+solid; PADDING-LEFT: 5px; BACKGROUND: url(/images/but.jpg) #e1e1e1 =
+repeat-x right top; PADDING-BOTTOM: 2px; BORDER-LEFT: #999 1px solid; =
+COLOR: #8c8c8c; PADDING-TOP: 2px; BORDER-BOTTOM: #999 1px; =
+TEXT-DECORATION: none
+}
+#nav A:link {
+	COLOR: #8c8c8c
+}
+#nav A:hover {
+	BORDER-RIGHT: #666 1px solid; BORDER-TOP: #666 1px solid; BORDER-LEFT: =
+#666 1px solid; COLOR: #666; BORDER-BOTTOM: #666 1px; BACKGROUND-COLOR: =
+#ccc
+}
+#nav A.here {
+	BORDER-RIGHT: #666 1px solid; BACKGROUND-POSITION: right top; =
+BORDER-TOP: #666 1px solid; BACKGROUND-IMAGE: url(/images/but.jpg); =
+BORDER-LEFT: #666 1px solid; COLOR: #666; BORDER-BOTTOM: #666 1px; =
+BACKGROUND-REPEAT: repeat-x; BACKGROUND-COLOR: #ccc
+}
+
+------=_NextPart_000_0077_01CD0390.2EA5BC80--

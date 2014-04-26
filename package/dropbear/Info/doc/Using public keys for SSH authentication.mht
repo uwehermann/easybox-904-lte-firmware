@@ -1,0 +1,721 @@
+From: <¥Ñ Windows Internet Explorer 7 Àx¦s>
+Subject: Using public keys for SSH authentication
+Date: Sat, 17 Mar 2012 21:47:40 +0800
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2180
+
+=EF=BB=BF<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" =
+"http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML><HEAD><TITLE>Using public keys for SSH authentication</TITLE>
+<META http-equiv=3DContent-Type content=3D"text/html; charset=3Dutf-8">
+<META content=3D"MSHTML 6.00.5730.13" name=3DGENERATOR></HEAD>
+<BODY>
+<P><A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter7.html">P=
+revious</A>=20
+| <A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/index.html">Cont=
+ents</A>=20
+| <A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/IndexPage.html">=
+Index</A>=20
+| <A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter9.html">N=
+ext</A></P>
+<UL>
+  <LI><A=20
+  =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#C8=
+">Chapter=20
+  8: Using public keys for SSH authentication</A>
+  <UL>
+    <LI><A=20
+    =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.1">8.1=20
+    Public key authentication - an introduction</A>
+    <LI><A=20
+    =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2">8.2=20
+    Using PuTTYgen, the PuTTY key generator</A>
+    <UL>
+      <LI><A=20
+      =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.1">8.2.1=20
+      Generating a new key</A>
+      <LI><A=20
+      =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.2">8.2.2=20
+      Selecting the type of key</A>
+      <LI><A=20
+      =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.3">8.2.3=20
+      Selecting the size (strength) of the key</A>
+      <LI><A=20
+      =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.4">8.2.4=20
+      The =E2=80=98Generate=E2=80=99 button</A>
+      <LI><A=20
+      =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.5">8.2.5=20
+      The =E2=80=98Key fingerprint=E2=80=99 box</A>
+      <LI><A=20
+      =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.6">8.2.6=20
+      Setting a comment for your key</A>
+      <LI><A=20
+      =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.7">8.2.7=20
+      Setting a passphrase for your key</A>
+      <LI><A=20
+      =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.8">8.2.8=20
+      Saving your private key to a disk file</A>
+      <LI><A=20
+      =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.9">8.2.9=20
+      Saving your public key to a disk file</A>
+      <LI><A=20
+      =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.10">8.2.10=20
+      =E2=80=98Public key for pasting into authorized_keys =
+file=E2=80=99</A>
+      <LI><A=20
+      =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.11">8.2.11=20
+      Reloading a private key</A>
+      <LI><A=20
+      =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.12">8.2.12=20
+      Dealing with private keys in other formats</A></LI></UL>
+    <LI><A=20
+    =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.3">8.3=20
+    Getting ready for public key authentication</A></LI></UL></LI></UL>
+<H1><A name=3DC8></A>Chapter 8: Using public keys for SSH =
+authentication</H1>
+<H2><A name=3DS8.1></A>8.1 Public key authentication - an =
+introduction</H2>
+<P>Public key authentication is an alternative means of identifying =
+yourself to=20
+a login server, instead of typing a password. It is more secure and more =
+
+flexible, but more difficult to set up. </P>
+<P>In conventional password authentication, you prove you are who you =
+claim to=20
+be by proving that you know the correct password. The only way to prove =
+you know=20
+the password is to tell the server what you think the password is. This =
+means=20
+that if the server has been hacked, or <EM>spoofed</EM> (see <A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter2.html#S2=
+.2">section=20
+2.2</A>), an attacker can learn your password. </P>
+<P>Public key authentication solves this problem. You generate a <EM>key =
+
+pair</EM>, consisting of a public key (which everybody is allowed to =
+know) and a=20
+private key (which you keep secret and do not give to anybody). The =
+private key=20
+is able to generate <EM>signatures</EM>. A signature created using your =
+private=20
+key cannot be forged by anybody who does not have that key; but anybody =
+who has=20
+your public key can verify that a particular signature is genuine. </P>
+<P>So you generate a key pair on your own computer, and you copy the =
+public key=20
+to the server. Then, when the server asks you to prove who you are, =
+PuTTY can=20
+generate a signature using your private key. The server can verify that=20
+signature (since it has your public key) and allow you to log in. Now if =
+the=20
+server is hacked or spoofed, the attacker does not gain your private key =
+or=20
+password; they only gain one signature. And signatures cannot be =
+re-used, so=20
+they have gained nothing. </P>
+<P>There is a problem with this: if your private key is stored =
+unprotected on=20
+your own computer, then anybody who gains access to <EM>that</EM> will =
+be able=20
+to generate signatures as if they were you. So they will be able to log =
+in to=20
+your server under your account. For this reason, your private key is =
+usually=20
+<EM>encrypted</EM> when it is stored on your local machine, using a =
+passphrase=20
+of your choice. In order to generate a signature, PuTTY must decrypt the =
+key, so=20
+you have to type your passphrase. </P>
+<P>This can make public-key authentication less convenient than password =
+
+authentication: every time you log in to the server, instead of typing a =
+short=20
+password, you have to type a longer passphrase. One solution to this is =
+to use=20
+an <EM>authentication agent</EM>, a separate program which holds =
+decrypted=20
+private keys and generates signatures on request. PuTTY's authentication =
+agent=20
+is called Pageant. When you begin a Windows session, you start Pageant =
+and load=20
+your private key into it (typing your passphrase once). For the rest of =
+your=20
+session, you can start PuTTY any number of times and Pageant will =
+automatically=20
+generate signatures without you having to do anything. When you close =
+your=20
+Windows session, Pageant shuts down, without ever having stored your =
+decrypted=20
+private key on disk. Many people feel this is a good compromise between =
+security=20
+and convenience. See <A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter9.html#C9=
+">chapter=20
+9</A> for further details. </P>
+<P>There is more than one public-key algorithm available. The most =
+common is=20
+RSA, but others exist, notably DSA (otherwise known as DSS), the USA's =
+federal=20
+Digital Signature Standard. The key types supported by PuTTY are =
+described in <A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.2">section=20
+8.2.2</A>. </P>
+<H2><A name=3DS8.2></A>8.2 Using PuTTYgen, the PuTTY key generator</H2>
+<P>PuTTYgen is a key generator. It generates pairs of public and private =
+keys to=20
+be used with PuTTY, PSCP, and Plink, as well as the PuTTY authentication =
+agent,=20
+Pageant (see <A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter9.html#C9=
+">chapter=20
+9</A>). PuTTYgen generates RSA and DSA keys. </P>
+<P>When you run PuTTYgen you will see a window where you have two =
+choices:=20
+=E2=80=98Generate=E2=80=99, to generate a new public/private key pair, =
+or =E2=80=98Load=E2=80=99 to load in an=20
+existing private key. </P>
+<H3><A name=3DS8.2.1></A>8.2.1 Generating a new key</H3>
+<P>This is a general outline of the procedure for generating a new key =
+pair. The=20
+following sections describe the process in more detail. </P>
+<UL>
+  <LI>First, you need to select which type of key you want to generate, =
+and also=20
+  select the strength of the key. This is described in more detail in <A =
+
+  =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.2">section=20
+  8.2.2</A> and <A=20
+  =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.3">section=20
+  8.2.3</A>.=20
+  <LI>Then press the =E2=80=98Generate=E2=80=99 button, to actually =
+generate the key. <A=20
+  =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.4">Section=20
+  8.2.4</A> describes this step.=20
+  <LI>Once you have generated the key, select a comment field (<A=20
+  =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.6">section=20
+  8.2.6</A>) and a passphrase (<A=20
+  =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.7">section=20
+  8.2.7</A>).=20
+  <LI>Now you're ready to save the private key to disk; press the =
+=E2=80=98Save private=20
+  key=E2=80=99 button. (See <A=20
+  =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.8">section=20
+  8.2.8</A>). </LI></UL>
+<P>Your key pair is now ready for use. You may also want to copy the =
+public key=20
+to your server, either by copying it out of the =E2=80=98Public key for =
+pasting into=20
+authorized_keys file=E2=80=99 box (see <A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.10">section=20
+8.2.10</A>), or by using the =E2=80=98Save public key=E2=80=99 button =
+(<A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.9">section=20
+8.2.9</A>). However, you don't need to do this immediately; if you want, =
+you can=20
+load the private key back into PuTTYgen later (see <A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.11">section=20
+8.2.11</A>) and the public key will be available for copying and pasting =
+again.=20
+</P>
+<P><A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.3">section=20
+8.3</A> describes the typical process of configuring PuTTY to attempt =
+public-key=20
+authentication, and configuring your SSH server to accept it. </P>
+<H3><A name=3DS8.2.2></A>8.2.2 Selecting the type of key</H3>
+<P>Before generating a key pair using PuTTYgen, you need to select which =
+type of=20
+key you need. PuTTYgen currently supports three types of key: </P>
+<UL>
+  <LI>An RSA key for use with the SSH 1 protocol.=20
+  <LI>An RSA key for use with the SSH 2 protocol.=20
+  <LI>A DSA key for use with the SSH 2 protocol. </LI></UL>
+<P>The SSH 1 protocol only supports RSA keys; if you will be connecting =
+using=20
+the SSH 1 protocol, you must select the first key type or your key will =
+be=20
+completely useless. </P>
+<P>The SSH 2 protocol supports more than one key type. The two types =
+supported=20
+by PuTTY are RSA and DSA. </P>
+<P>The PuTTY developers <EM>strongly</EM> recommend you use RSA. DSA has =
+an=20
+intrinsic weakness which makes it very easy to create a signature which =
+contains=20
+enough information to give away the <EM>private</EM> key! This would =
+allow an=20
+attacker to pretend to be you for any number of future sessions. PuTTY's =
+
+implementation has taken very careful precautions to avoid this =
+weakness, but we=20
+cannot be 100% certain we have managed it, and if you have the choice we =
+
+strongly recommend using RSA keys instead. </P>
+<P>If you really need to connect to an SSH server which only supports =
+DSA, then=20
+you probably have no choice but to use DSA. If you do use DSA, we =
+recommend you=20
+do not use the same key to authenticate with more than one server. </P>
+<H3><A name=3DS8.2.3></A>8.2.3 Selecting the size (strength) of the =
+key</H3>
+<P>The =E2=80=98Number of bits=E2=80=99 input box allows you to choose =
+the strength of the key=20
+PuTTYgen will generate. </P>
+<P>Currently 1024 bits should be sufficient for most purposes. </P>
+<P>Note that an RSA key is generated by finding two primes of half the =
+length=20
+requested, and then multiplying them together. For example, if you ask =
+PuTTYgen=20
+for a 1024-bit RSA key, it will create two 512-bit primes and multiply =
+them. The=20
+result of this multiplication might be 1024 bits long, or it might be =
+only 1023;=20
+so you may not get the exact length of key you asked for. This is =
+perfectly=20
+normal, and you do not need to worry. The lengths should only ever =
+differ by=20
+one, and there is no perceptible drop in security as a result. </P>
+<P>DSA keys are not created by multiplying primes together, so they =
+should=20
+always be exactly the length you asked for. </P>
+<H3><A name=3DS8.2.4></A>8.2.4 The =E2=80=98Generate=E2=80=99 =
+button</H3>
+<P>Once you have chosen the type of key you want, and the strength of =
+the key,=20
+press the =E2=80=98Generate=E2=80=99 button and PuTTYgen will begin the =
+process of actually=20
+generating the key. </P>
+<P>First, a progress bar will appear and PuTTYgen will ask you to move =
+the mouse=20
+around to generate randomness. Wave the mouse in circles over the blank =
+area in=20
+the PuTTYgen window, and the progress bar will gradually fill up as =
+PuTTYgen=20
+collects enough randomness. You don't need to wave the mouse in =
+particularly=20
+imaginative patterns (although it can't hurt); PuTTYgen will collect =
+enough=20
+randomness just from the fine detail of <EM>exactly</EM> how far the =
+mouse has=20
+moved each time Windows samples its position. </P>
+<P>When the progress bar reaches the end, PuTTYgen will begin creating =
+the key.=20
+The progress bar will reset to the start, and gradually move up again to =
+track=20
+the progress of the key generation. It will not move evenly, and may=20
+occasionally slow down to a stop; this is unfortunately unavoidable, =
+because key=20
+generation is a random process and it is impossible to reliably predict =
+how long=20
+it will take. </P>
+<P>When the key generation is complete, a new set of controls will =
+appear in the=20
+window to indicate this. </P>
+<H3><A name=3DS8.2.5></A>8.2.5 The =E2=80=98Key fingerprint=E2=80=99 =
+box</H3>
+<P>The =E2=80=98Key fingerprint=E2=80=99 box shows you a fingerprint =
+value for the generated=20
+key. This is derived cryptographically from the <EM>public</EM> key =
+value, so it=20
+doesn't need to be kept secret. </P>
+<P>The fingerprint value is intended to be cryptographically secure, in =
+the=20
+sense that it is computationally infeasible for someone to invent a =
+second key=20
+with the same fingerprint, or to find a key with a particular =
+fingerprint. So=20
+some utilities, such as the Pageant key list box (see <A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter9.html#S9=
+.2.1">section=20
+9.2.1</A>) and the Unix <CODE>ssh-add</CODE> utility, will list key =
+fingerprints=20
+rather than the whole public key. </P>
+<H3><A name=3DS8.2.6></A>8.2.6 Setting a comment for your key</H3>
+<P>If you have more than one key and use them for different purposes, =
+you don't=20
+need to memorise the key fingerprints in order to tell them apart. PuTTY =
+allows=20
+you to enter a <EM>comment</EM> for your key, which will be displayed =
+whenever=20
+PuTTY or Pageant asks you for the passphrase. </P>
+<P>The default comment format, if you don't specify one, contains the =
+key type=20
+and the date of generation, such as <CODE>rsa-key-20011212</CODE>. =
+Another=20
+commonly used approach is to use your name and the name of the computer =
+the key=20
+will be used on, such as <CODE>simon@simons-pc</CODE>. </P>
+<P>To alter the key comment, just type your comment text into the =
+=E2=80=98Key comment=E2=80=99=20
+box before saving the private key. If you want to change the comment =
+later, you=20
+can load the private key back into PuTTYgen, change the comment, and =
+save it=20
+again. </P>
+<H3><A name=3DS8.2.7></A>8.2.7 Setting a passphrase for your key</H3>
+<P>The =E2=80=98Key passphrase=E2=80=99 and =E2=80=98Confirm =
+passphrase=E2=80=99 boxes allow you to choose a=20
+passphrase for your key. The passphrase will be used to encrypt the key =
+on disk,=20
+so you will not be able to use the key without first entering the =
+passphrase.=20
+</P>
+<P>When you save the key, PuTTY will check that the =E2=80=98Key =
+passphrase=E2=80=99 and=20
+=E2=80=98Confirm passphrase=E2=80=99 boxes both contain exactly the same =
+passphrase, and will=20
+refuse to save the key otherwise. </P>
+<P>If you leave the passphrase fields blank, the key will be saved =
+unencrypted.=20
+You should <EM>not</EM> do this without good reason; if you do, your =
+private key=20
+file on disk will be all an attacker needs to gain access to any machine =
+
+configured to accept that key. If you want to be able to log in without =
+having=20
+to type a passphrase every time, you should consider using Pageant (<A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter9.html#C9=
+">chapter=20
+9</A>) so that your decrypted key is only held in memory rather than on =
+disk.=20
+</P>
+<P>Under special circumstances you may genuinely <EM>need</EM> to use a =
+key with=20
+no passphrase; for example, if you need to run an automated batch script =
+that=20
+needs to make an SSH connection, you can't be there to type the =
+passphrase. In=20
+this case we recommend you generate a special key for each specific =
+batch script=20
+(or whatever) that needs one, and on the server side you should arrange =
+that=20
+each key is <EM>restricted</EM> so that it can only be used for that =
+specific=20
+purpose. The documentation for your SSH server should explain how to do =
+this (it=20
+will probably vary between servers). </P>
+<P>Choosing a good passphrase is difficult. Just as you shouldn't use a=20
+dictionary word as a password because it's easy for an attacker to run =
+through a=20
+whole dictionary, you should not use a song lyric, quotation or other =
+well-known=20
+sentence as a passphrase. DiceWare (<A=20
+href=3D"http://www.diceware.com/"><CODE>www.diceware.com</CODE></A>) =
+recommends=20
+using at least five words each generated randomly by rolling five dice, =
+which=20
+gives over 2^64 possible passphrases and is probably not a bad scheme. =
+If you=20
+want your passphrase to make grammatical sense, this cuts down the =
+possibilities=20
+a lot and you should use a longer one as a result. </P>
+<P><EM>Do not forget your passphrase</EM>. There is no way to recover =
+it. </P>
+<H3><A name=3DS8.2.8></A>8.2.8 Saving your private key to a disk =
+file</H3>
+<P>Once you have generated a key, set a comment field and set a =
+passphrase, you=20
+are ready to save your private key to disk. </P>
+<P>Press the =E2=80=98Save private key=E2=80=99 button. PuTTYgen will =
+put up a dialog box asking=20
+you where to save the file. Select a directory, type in a file name, and =
+press=20
+=E2=80=98Save=E2=80=99. </P>
+<P>This file is in PuTTY's native format (<CODE>*.PPK</CODE>); it is the =
+one you=20
+will need to tell PuTTY to use for authentication (see <A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter4.html#S4=
+.18.5">section=20
+4.18.5</A>) or tell Pageant to load (see <A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter9.html#S9=
+.2.2">section=20
+9.2.2</A>). </P>
+<H3><A name=3DS8.2.9></A>8.2.9 Saving your public key to a disk =
+file</H3>
+<P>The SSH 2 protocol drafts specify a standard format for storing =
+public keys=20
+on disk. Some SSH servers (such as <CODE>ssh.com</CODE>'s) require a =
+public key=20
+in this format in order to accept authentication with the corresponding =
+private=20
+key. (Others, such as OpenSSH, use a different format; see <A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.10">section=20
+8.2.10</A>.) </P>
+<P>To save your public key in the SSH 2 standard format, press the =
+=E2=80=98Save public=20
+key=E2=80=99 button in PuTTYgen. PuTTYgen will put up a dialog box =
+asking you where to=20
+save the file. Select a directory, type in a file name, and press =
+=E2=80=98Save=E2=80=99. </P>
+<P>You will then probably want to copy the public key file to your SSH =
+server=20
+machine. See <A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.3">section=20
+8.3</A> for general instructions on configuring public-key =
+authentication once=20
+you have generated a key. </P>
+<P>If you use this option with an SSH 1 key, the file PuTTYgen saves =
+will=20
+contain exactly the same text that appears in the =E2=80=98Public key =
+for pasting=E2=80=99 box.=20
+This is the only existing standard for SSH 1 public keys. </P>
+<H3><A name=3DS8.2.10></A>8.2.10 =E2=80=98Public key for pasting into =
+authorized_keys=20
+file=E2=80=99</H3>
+<P>All SSH 1 servers require your public key to be given to it in a =
+one-line=20
+format before it will accept authentication with your private key. The =
+OpenSSH=20
+server also requires this for SSH 2. </P>
+<P>The =E2=80=98Public key for pasting into authorized_keys =
+file=E2=80=99 gives the public-key=20
+data in the correct one-line format. Typically you will want to select =
+the=20
+entire contents of the box using the mouse, press Ctrl+C to copy it to =
+the=20
+clipboard, and then paste the data into a PuTTY session which is already =
+
+connected to the server. </P>
+<P>See <A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.3">section=20
+8.3</A> for general instructions on configuring public-key =
+authentication once=20
+you have generated a key. </P>
+<H3><A name=3DS8.2.11></A>8.2.11 Reloading a private key</H3>
+<P>PuTTYgen allows you to load an existing private key file into memory. =
+If you=20
+do this, you can then change the passphrase and comment before saving it =
+again;=20
+you can also make extra copies of the public key. </P>
+<P>To load an existing key, press the =E2=80=98Load=E2=80=99 button. =
+PuTTYgen will put up a=20
+dialog box where you can browse around the file system and find your key =
+file.=20
+Once you select the file, PuTTYgen will ask you for a passphrase (if =
+necessary)=20
+and will then display the key details in the same way as if it had just=20
+generated the key. </P>
+<P>If you use the Load command to load a foreign key format, it will =
+work, but=20
+you will see a message box warning you that the key you have loaded is =
+not a=20
+PuTTY native key. See <A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.12">section=20
+8.2.12</A> for information about importing foreign key formats. </P>
+<H3><A name=3DS8.2.12></A>8.2.12 Dealing with private keys in other =
+formats</H3>
+<P>Most SSH1 clients use a standard format for storing private keys on =
+disk.=20
+PuTTY uses this format as well; so if you have generated an SSH1 private =
+key=20
+using OpenSSH or <CODE>ssh.com</CODE>'s client, you can use it with =
+PuTTY, and=20
+vice versa. </P>
+<P>However, SSH2 private keys have no standard format. OpenSSH and=20
+<CODE>ssh.com</CODE> have different formats, and PuTTY's is different =
+again. So=20
+a key generated with one client cannot immediately be used with another. =
+</P>
+<P>Using the =E2=80=98Import=E2=80=99 command from the =
+=E2=80=98Conversions=E2=80=99 menu, PuTTYgen can load=20
+SSH2 private keys in OpenSSH's format and <CODE>ssh.com</CODE>'s format. =
+Once=20
+you have loaded one of these key types, you can then save it back out as =
+a=20
+PuTTY-format key (<CODE>*.PPK</CODE>) so that you can use it with the =
+PuTTY=20
+suite. The passphrase will be unchanged by this process (unless you =
+deliberately=20
+change it). You may want to change the key comment before you save the =
+key,=20
+since OpenSSH's SSH2 key format contains no space for a comment and=20
+<CODE>ssh.com</CODE>'s default comment format is long and verbose. </P>
+<P>PuTTYgen can also export private keys in OpenSSH format and in=20
+<CODE>ssh.com</CODE> format. To do so, select one of the =
+=E2=80=98Export=E2=80=99 options from=20
+the =E2=80=98Conversions=E2=80=99 menu. Exporting a key works exactly =
+like saving it (see <A=20
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.8">section=20
+8.2.8</A>) - you need to have typed your passphrase in beforehand, and =
+you will=20
+be warned if you are about to save a key without a passphrase. </P>
+<P>Note that since only SSH2 keys come in different formats, the export =
+options=20
+are not available if you have generated an SSH1 key. </P>
+<H2><A name=3DS8.3></A>8.3 Getting ready for public key =
+authentication</H2>
+<P>Connect to your SSH server using PuTTY with the SSH protocol. When =
+the=20
+connection succeeds you will be prompted for your user name and password =
+to=20
+login. Once logged in, you must configure the server to accept your =
+public key=20
+for authentication: </P>
+<UL>
+  <LI>If your server is using the SSH 1 protocol, you should change into =
+the=20
+  <CODE>.ssh</CODE> directory and open the file =
+<CODE>authorized_keys</CODE>=20
+  with your favourite editor. (You may have to create this file if this =
+is the=20
+  first key you have put in it). Then switch to the PuTTYgen window, =
+select all=20
+  of the text in the =E2=80=98Public key for pasting into =
+authorized_keys file=E2=80=99 box (see=20
+  <A=20
+  =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.10">section=20
+  8.2.10</A>), and copy it to the clipboard (<CODE>Ctrl+C</CODE>). Then, =
+switch=20
+  back to the PuTTY window and insert the data into the open file, =
+making sure=20
+  it ends up all on one line. Save the file.=20
+  <LI>If your server is OpenSSH and is using the SSH 2 protocol, you =
+should=20
+  follow the same instructions, except that in earlier versions of =
+OpenSSH 2 the=20
+  file might be called <CODE>authorized_keys2</CODE>. (In modern =
+versions the=20
+  same <CODE>authorized_keys</CODE> file is used for both SSH 1 and SSH =
+2 keys.)=20
+
+  <LI>If your server is <CODE>ssh.com</CODE>'s SSH 2 product, you need =
+to save a=20
+  <EM>public</EM> key file from PuTTYgen (see <A=20
+  =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter8.html#S8=
+.2.9">section=20
+  8.2.9</A>), and copy that into the <CODE>.ssh2</CODE> directory on the =
+server.=20
+  Then you should go into that <CODE>.ssh2</CODE> directory, and edit =
+(or=20
+  create) a file called <CODE>authorization</CODE>. In this file you =
+should put=20
+  a line like <CODE>Key mykey.pub</CODE>, with <CODE>mykey.pub</CODE> =
+replaced=20
+  by the name of your key file.=20
+  <LI>For other SSH server software, you should refer to the manual for =
+that=20
+  server. </LI></UL>
+<P>You may also need to ensure that your home directory, your =
+<CODE>.ssh</CODE>=20
+directory, and any other files involved (such as =
+<CODE>authorized_keys</CODE>,=20
+<CODE>authorized_keys2</CODE> or <CODE>authorization</CODE>) are not=20
+group-writable or world-writable. You can typically do this by using a =
+command=20
+such as </P><PRE><CODE>chmod go-w $HOME $HOME/.ssh =
+$HOME/.ssh/authorized_keys
+</CODE></PRE>
+<P>Your server should now be configured to accept authentication using =
+your=20
+private key. Now you need to configure PuTTY to <EM>attempt</EM> =
+authentication=20
+using your private key. You can do this in any of three ways: </P>
+<UL>
+  <LI>Select the private key in PuTTY's configuration. See <A=20
+  =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter4.html#S4=
+.18.5">section=20
+  4.18.5</A> for details.=20
+  <LI>Specify the key file on the command line with the <CODE>-i</CODE> =
+option.=20
+  See <A=20
+  =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter3.html#S3=
+.7.3.14">section=20
+  3.7.3.14</A> for details.=20
+  <LI>Load the private key into Pageant (see <A=20
+  =
+href=3D"http://the.earth.li/~sgtatham/putty/0.55/htmldoc/Chapter9.html#C9=
+">chapter=20
+  9</A>). In this case PuTTY will automatically try to use it for =
+authentication=20
+  if it can. </LI></UL>
+<HR>
+Comments to <A=20
+href=3D"mailto:putty@projects.tartarus.org">putty@projects.tartarus.org</=
+A>
+<ADDRESS>[$Id: blurb.but,v 1.10 2004/04/01 17:34:18 simon Exp =
+$]<BR>[$Id:=20
+intro.but,v 1.6 2004/06/15 11:00:28 jacob Exp $]<BR>[$Id: gs.but,v 1.7=20
+2004/04/08 12:38:53 simon Exp $]<BR>[$Id: using.but,v 1.25.2.1 =
+2004/08/03=20
+12:08:23 jacob Exp $]<BR>[$Id: config.but,v 1.86.2.1 2004/07/29 17:56:50 =
+simon=20
+Exp $]<BR>[$Id: pscp.but,v 1.28.2.1 2004/08/03 12:07:37 jacob Exp =
+$]<BR>[$Id:=20
+psftp.but,v 1.5 2002/08/07 19:20:06 simon Exp $]<BR>[$Id: plink.but,v =
+1.23.2.1=20
+2004/08/03 12:07:37 jacob Exp $]<BR>[$Id: pubkey.but,v 1.22 2004/05/06 =
+11:27:58=20
+simon Exp $]<BR>[$Id: pageant.but,v 1.11 2004/05/22 11:09:31 simon Exp=20
+$]<BR>[$Id: errors.but,v 1.9 2004/07/22 12:38:37 jacob Exp $]<BR>[$Id: =
+faq.but,v=20
+1.73 2004/07/29 10:23:48 jacob Exp $]<BR>[$Id: feedback.but,v 1.17 =
+2004/03/31=20
+12:50:17 simon Exp $]<BR>[$Id: licence.but,v 1.6 2004/01/01 16:47:48 =
+simon Exp=20
+$]</ADDRESS></BODY></HTML>

@@ -1,0 +1,3399 @@
+From: <¥Ñ Windows Internet Explorer 7 Àx¦s>
+Subject: Dropbear Security - OpenWrt Wiki
+Date: Fri, 16 Mar 2012 16:13:04 +0800
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----=_NextPart_000_0007_01CD038F.AAB75280"
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6109
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0007_01CD038F.AAB75280
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://wiki.openwrt.org/inbox/howto/dropbear-security
+
+=EF=BB=BF<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" =
+"http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML lang=3Den dir=3Dltr xml:lang=3D"en"=20
+xmlns=3D"http://www.w3.org/1999/xhtml"><HEAD><TITLE>Dropbear Security - =
+OpenWrt Wiki</TITLE>
+<META http-equiv=3DContent-Type content=3D"text/html; charset=3Dutf-8">
+<META content=3D"MSHTML 6.00.6000.17102" name=3DGENERATOR>
+<META content=3Dindex,follow name=3Drobots>
+<META content=3D2010-06-18T09:27:00+0200 name=3Ddate>
+<META content=3Dinbox,howto,dropbear-security name=3Dkeywords><LINK=20
+title=3D"- OpenWrt Wiki" =
+href=3D"http://wiki.openwrt.org/lib/exe/opensearch.php"=20
+type=3Dapplication/opensearchdescription+xml rel=3Dsearch><LINK=20
+href=3D"http://wiki.openwrt.org/" rel=3Dstart><LINK title=3DIndex=20
+href=3D"http://wiki.openwrt.org/inbox/howto/dropbear-security?do=3Dindex"=
+=20
+rel=3Dcontents><LINK title=3D"Recent Changes"=20
+href=3D"http://wiki.openwrt.org/feed.php" type=3Dapplication/rss+xml=20
+rel=3Dalternate><LINK title=3D"Current Namespace"=20
+href=3D"http://wiki.openwrt.org/feed.php?mode=3Dlist&amp;ns=3Dinbox:howto=
+"=20
+type=3Dapplication/rss+xml rel=3Dalternate><LINK title=3D"Plain HTML"=20
+href=3D"http://wiki.openwrt.org/_export/xhtml/inbox/howto/dropbear-securi=
+ty"=20
+type=3Dtext/html rel=3Dalternate><LINK title=3D"Wiki Markup"=20
+href=3D"http://wiki.openwrt.org/_export/raw/inbox/howto/dropbear-security=
+"=20
+type=3Dtext/plain rel=3Dalternate><LINK media=3Dall=20
+href=3D"http://wiki.openwrt.org/lib/exe/css.php?s=3Dall&amp;t=3Dameoto" =
+type=3Dtext/css=20
+rel=3Dstylesheet><LINK media=3Dscreen=20
+href=3D"http://wiki.openwrt.org/lib/exe/css.php?t=3Dameoto" =
+type=3Dtext/css=20
+rel=3Dstylesheet><LINK media=3Dprint=20
+href=3D"http://wiki.openwrt.org/lib/exe/css.php?s=3Dprint&amp;t=3Dameoto"=
+=20
+type=3Dtext/css rel=3Dstylesheet>
+<SCRIPT =
+src=3D"http://wiki.openwrt.org/lib/exe/js.php?edit=3D0&amp;write=3D0"=20
+type=3Dtext/javascript charset=3Dutf-8></SCRIPT>
+
+<SCRIPT type=3Dtext/javascript charset=3Dutf-8><!--//--><![CDATA[//><!--=0A=
+addInitEvent(function(){=0A=
+	for ( i=3D0; i < document.forms.length; i++ ) {=0A=
+		if (document.forms[i].method =3D=3D 'post') {=0A=
+			var myElement =3D document.createElement('input');=0A=
+			myElement.setAttribute('type', 'hidden');=0A=
+			myElement.name =3D 'bb2_screener_';=0A=
+			myElement.value =3D '1331885582 114.36.41.17';=0A=
+			document.forms[i].appendChild(myElement);=0A=
+		}=0A=
+	}=0A=
+});=0A=
+//--><!]]></SCRIPT>
+<LINK href=3D"http://wiki.openwrt.org/lib/tpl/ameoto/images/favicon.ico" =
+
+rel=3D"shortcut icon"><!--[if IE 6]><link rel=3D"stylesheet" =
+href=3D"/lib/tpl/ameoto/ie6.css" type=3D"text/css" media=3D"all" =
+/><![endif]--><!--[if IE 7]><LINK=20
+media=3Dall href=3D"/lib/tpl/ameoto/ie7.css" type=3Dtext/css =
+rel=3Dstylesheet><![endif]--></HEAD>
+<BODY>
+<DIV class=3Dcontainer>
+<H1 class=3Dbannerhl><A id=3Dbanner href=3D"http://openwrt.org/"=20
+name=3Ddokuwiki__top>OpenWrt</A></H1>
+<DIV class=3Dwhoami></DIV>
+<UL id=3Dnavigation>
+  <LI><A href=3D"https://dev.openwrt.org/">Development</A>=20
+  <LI><A href=3D"http://wiki.openwrt.org/doc/start">Documentation</A>=20
+  <LI><A href=3D"http://downloads.openwrt.org/">Downloads</A>=20
+  <LI><A href=3D"http://wiki.openwrt.org/">Wiki</A>=20
+  <LI><A href=3D"http://forum.openwrt.org/">Forum</A> </LI></UL>
+<DIV id=3Dfeedback></DIV>
+<DIV class=3Dsidebar>
+<DIV>
+<H3>Wiki Search</H3>
+<FORM class=3Dsearch id=3Ddw__search accept-charset=3Dutf-8=20
+action=3Dhttp://wiki.openwrt.org/>
+<DIV class=3Dno><INPUT type=3Dhidden value=3Dsearch name=3Ddo><INPUT =
+class=3Dedit=20
+id=3Dqsearch__in title=3D[F] accessKey=3Df name=3Did><INPUT =
+class=3Dbutton title=3DSearch type=3Dsubmit value=3DSearch>
+<DIV class=3D"ajax_qsearch JSpopup" =
+id=3Dqsearch__out></DIV></DIV></FORM></DIV>
+<DIV>
+<H3>Actions</H3>
+<UL class=3Dactions>
+  <LI><A class=3D"action source" accessKey=3Dv=20
+  =
+href=3D"http://wiki.openwrt.org/inbox/howto/dropbear-security?do=3Dedit&a=
+mp;rev=3D"=20
+  rel=3Dnofollow>Show pagesource</A>=20
+  <LI><A class=3D"action revisions" accessKey=3Do=20
+  =
+href=3D"http://wiki.openwrt.org/inbox/howto/dropbear-security?do=3Drevisi=
+ons"=20
+  rel=3Dnofollow>Old revisions</A>=20
+  <LI class=3Dseparate><A class=3D"action index" accessKey=3Dx=20
+  =
+href=3D"http://wiki.openwrt.org/inbox/howto/dropbear-security?do=3Dindex"=
+=20
+  rel=3Dnofollow>Index</A>=20
+  <LI><A class=3D"action recent" accessKey=3Dr=20
+  =
+href=3D"http://wiki.openwrt.org/inbox/howto/dropbear-security?do=3Drecent=
+"=20
+  rel=3Dnofollow>Recent changes</A>=20
+  <LI class=3Dseparate>
+  <LI>
+  <LI><A class=3D"action login"=20
+  =
+href=3D"http://wiki.openwrt.org/inbox/howto/dropbear-security?do=3Dlogin&=
+amp;sectok=3D4cf2b378ff0d9633dd97d47a81253081"=20
+  rel=3Dnofollow>Login</A> </LI></UL></DIV>
+<DIV>
+<H3>Translations</H3>
+<UL class=3Dactions style=3D"PADDING-LEFT: 24px">
+  <LI=20
+  style=3D"LIST-STYLE-IMAGE: =
+url(/lib/plugins/multilingual/flags/en.gif)"><SPAN=20
+  class=3Dcurid><A class=3Dwikilink1 =
+title=3Dinbox:howto:dropbear-security=20
+  =
+href=3D"http://wiki.openwrt.org/inbox/howto/dropbear-security">Dropbear=20
+  Security</A></SPAN> </LI></UL></DIV></DIV>
+<DIV class=3Dcontent>
+<DIV class=3Dbreadcrumbs><SPAN class=3Dbchead>You are here: </SPAN><A =
+title=3Dstart=20
+href=3D"http://wiki.openwrt.org/start">OpenWrt Wiki</A> =C2=BB <A =
+title=3Dinbox:start=20
+href=3D"http://wiki.openwrt.org/inbox/start">INBOX</A> =C2=BB <A =
+class=3Dwikilink2=20
+title=3Dinbox:howto:start =
+href=3D"http://wiki.openwrt.org/inbox/howto/start"=20
+rel=3Dnofollow>howto</A> =C2=BB <A title=3Dinbox:howto:dropbear-security =
+
+href=3D"http://wiki.openwrt.org/inbox/howto/dropbear-security">Dropbear=20
+Security</A> </DIV><!-- wikipage start --><!-- TOC START -->
+<DIV class=3Dtoc>
+<DIV class=3D"tocheader toctoggle" id=3Dtoc__header>Table of =
+Contents</DIV>
+<DIV id=3Dtoc__inside>
+<UL class=3Dtoc>
+  <LI class=3Dclear>
+  <UL class=3Dtoc>
+    <LI class=3Dclear>
+    <UL class=3Dtoc>
+      <LI class=3Dlevel3>
+      <DIV class=3Dli><SPAN class=3Dli><A class=3Dtoc=20
+      =
+href=3D"http://wiki.openwrt.org/inbox/howto/dropbear-security#dropbear.se=
+curity">Dropbear=20
+      Security</A></SPAN></DIV></LI></UL>
+    <LI class=3Dlevel2>
+    <DIV class=3Dli><SPAN class=3Dli><A class=3Dtoc=20
+    =
+href=3D"http://wiki.openwrt.org/inbox/howto/dropbear-security#links">Link=
+s</A></SPAN></DIV></LI></UL></LI></UL></DIV></DIV><!-- TOC END -->
+<H4><A id=3Ddropbear.security name=3Ddropbear.security>Dropbear =
+Security</A></H4>
+<DIV class=3Dlevel4>
+<P>This howto is a (soon to be) detailed tutorial about securing your =
+dropbear=20
+ssh daemon for public access uses. </P>
+<P>Problems facing with a public sshd: </P>
+<UL>
+  <LI class=3Dlevel1>
+  <DIV class=3Dli>No normal group for users and no normal user</DIV>
+  <LI class=3Dlevel1>
+  <DIV class=3Dli>No facility to ban IPs with many failed login =
+attempts</DIV>
+  <LI class=3Dlevel1>
+  <DIV class=3Dli>File system permissions are very lax on default =
+OpenWrt</DIV>
+  <LI class=3Dlevel1>
+  <DIV class=3Dli>Preventing normal users from exploiting busybox to =
+gain access=20
+  to root only commands.<BR>(Problem linux has no permissions for=20
+  symlinks.)</DIV></LI></UL>
+<P>Ideas to be tested for security: </P>
+<UL>
+  <LI class=3Dlevel1>
+  <DIV class=3Dli>put "ln =E2=86=92 /bin/busybox" symlink in restricted =
+directory to=20
+  prevent users from creating other busybox symlinks</DIV></LI></UL>
+<P>=E2=87=92 goal: prevent users from accessing certain commands =
+</P></DIV>
+<H3><A id=3Dlinks name=3Dlinks>Links</A></H3>
+<DIV class=3Dlevel3>
+<P><A class=3Durlextern =
+title=3Dhttp://matt.ucc.asn.au/dropbear/dropbear.html=20
+href=3D"http://matt.ucc.asn.au/dropbear/dropbear.html" =
+rel=3Dnofollow>Dropbear=20
+Homepage</A><BR><A class=3Durlextern=20
+title=3Dhttps://forum.openwrt.org/viewtopic.php?id=3D10417=20
+href=3D"https://forum.openwrt.org/viewtopic.php?id=3D10417" =
+rel=3Dnofollow>Bruteforce=20
+SSH fix</A> </P></DIV><!-- wikipage stop -->
+<P class=3Dtop><A class=3D"action top" accessKey=3Dx=20
+href=3D"http://wiki.openwrt.org/inbox/howto/dropbear-security#dokuwiki__t=
+op">Back=20
+to top</A></P>
+<P class=3Dpageinfo>inbox/howto/dropbear-security.txt =C2=B7 Last =
+modified: 2010/06/18=20
+09:27 by joda</P></DIV><!--<div id=3D"tpl_simple_navi" =
+align=3D"right"></div>-->
+<STYLE type=3Dtext/css>.intfooter {
+	COLOR: #ffffff
+}
+</STYLE>
+</DIV>
+<DIV class=3Dhidden><IMG height=3D1 alt=3D""=20
+src=3D"http://wiki.openwrt.org/lib/exe/indexer.php?id=3Dinbox%3Ahowto%3Ad=
+ropbear-security&amp;1331885582"=20
+width=3D1></DIV>
+<DIV class=3Dfooter><IMG height=3D1 alt=3D""=20
+src=3D"http://wiki.openwrt.org/lib/exe/indexer.php?id=3Dinbox%3Ahowto%3Ad=
+ropbear-security&amp;1331885582"=20
+width=3D1></DIV></BODY></HTML>
+
+------=_NextPart_000_0007_01CD038F.AAB75280
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Location: http://wiki.openwrt.org/lib/exe/indexer.php?id=inbox%3Ahowto%3Adropbear-security&1331885582
+
+R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAIBTAA7
+
+------=_NextPart_000_0007_01CD038F.AAB75280
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://wiki.openwrt.org/lib/exe/css.php?s=all&t=ameoto
+
+A.interwiki {
+	PADDING-LEFT: 16px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/images/interwiki.png) no-repeat 0px 1px
+}
+A.iw_wp {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/wp.gif)
+}
+A.iw_wpde {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/wpde.gif)
+}
+A.iw_wpmeta {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/wpmeta.gif)
+}
+A.iw_doku {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/doku.gif)
+}
+A.iw_sb {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/sb.gif)
+}
+A.iw_amazon {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/amazon.gif)
+}
+A.iw_amazon_de {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/amazon.de.gif)
+}
+A.iw_amazon_uk {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/amazon.uk.gif)
+}
+A.iw_phpfn {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/phpfn.gif)
+}
+A.iw_dokubug {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/dokubug.gif)
+}
+A.iw_coral {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/coral.gif)
+}
+A.iw_google {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/google.gif)
+}
+A.iw_meatball {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/meatball.gif)
+}
+A.iw_wiki {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/wiki.gif)
+}
+A.mediafile {
+	PADDING-LEFT: 18px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/images/fileicons/file.png) no-repeat 0px =
+1px; PADDING-BOTTOM: 1px
+}
+A.mf_jpg {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/jpg.png)
+}
+A.mf_jpeg {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/jpeg.png)
+}
+A.mf_gif {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/gif.png)
+}
+A.mf_png {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/png.png)
+}
+A.mf_tgz {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/tgz.png)
+}
+A.mf_tar {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/tar.png)
+}
+A.mf_gz {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/gz.png)
+}
+A.mf_bz2 {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/bz2.png)
+}
+A.mf_zip {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/zip.png)
+}
+A.mf_rar {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/rar.png)
+}
+A.mf_pdf {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/pdf.png)
+}
+A.mf_ps {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/ps.png)
+}
+A.mf_doc {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/doc.png)
+}
+A.mf_xls {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/xls.png)
+}
+A.mf_ppt {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/ppt.png)
+}
+A.mf_rtf {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/rtf.png)
+}
+A.mf_swf {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/swf.png)
+}
+A.mf_rpm {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/rpm.png)
+}
+A.mf_deb {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/deb.png)
+}
+A.mf_sxw {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/sxw.png)
+}
+A.mf_sxc {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/sxc.png)
+}
+A.mf_sxi {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/sxi.png)
+}
+A.mf_sxd {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/sxd.png)
+}
+A.mf_odc {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/odc.png)
+}
+A.mf_odf {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/odf.png)
+}
+A.mf_odg {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/odg.png)
+}
+A.mf_odi {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/odi.png)
+}
+A.mf_odp {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/odp.png)
+}
+A.mf_ods {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/ods.png)
+}
+A.mf_odt {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/odt.png)
+}
+
+------=_NextPart_000_0007_01CD038F.AAB75280
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://wiki.openwrt.org/lib/exe/css.php?t=ameoto
+
+A.interwiki {
+	PADDING-LEFT: 16px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/images/interwiki.png) no-repeat 0px 1px
+}
+A.iw_wp {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/wp.gif)
+}
+A.iw_wpde {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/wpde.gif)
+}
+A.iw_wpmeta {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/wpmeta.gif)
+}
+A.iw_doku {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/doku.gif)
+}
+A.iw_sb {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/sb.gif)
+}
+A.iw_amazon {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/amazon.gif)
+}
+A.iw_amazon_de {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/amazon.de.gif)
+}
+A.iw_amazon_uk {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/amazon.uk.gif)
+}
+A.iw_phpfn {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/phpfn.gif)
+}
+A.iw_dokubug {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/dokubug.gif)
+}
+A.iw_coral {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/coral.gif)
+}
+A.iw_google {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/google.gif)
+}
+A.iw_meatball {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/meatball.gif)
+}
+A.iw_wiki {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/wiki.gif)
+}
+A.mediafile {
+	PADDING-LEFT: 18px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/images/fileicons/file.png) no-repeat 0px =
+1px; PADDING-BOTTOM: 1px
+}
+A.mf_jpg {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/jpg.png)
+}
+A.mf_jpeg {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/jpeg.png)
+}
+A.mf_gif {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/gif.png)
+}
+A.mf_png {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/png.png)
+}
+A.mf_tgz {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/tgz.png)
+}
+A.mf_tar {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/tar.png)
+}
+A.mf_gz {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/gz.png)
+}
+A.mf_bz2 {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/bz2.png)
+}
+A.mf_zip {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/zip.png)
+}
+A.mf_rar {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/rar.png)
+}
+A.mf_pdf {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/pdf.png)
+}
+A.mf_ps {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/ps.png)
+}
+A.mf_doc {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/doc.png)
+}
+A.mf_xls {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/xls.png)
+}
+A.mf_ppt {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/ppt.png)
+}
+A.mf_rtf {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/rtf.png)
+}
+A.mf_swf {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/swf.png)
+}
+A.mf_rpm {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/rpm.png)
+}
+A.mf_deb {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/deb.png)
+}
+A.mf_sxw {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/sxw.png)
+}
+A.mf_sxc {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/sxc.png)
+}
+A.mf_sxi {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/sxi.png)
+}
+A.mf_sxd {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/sxd.png)
+}
+A.mf_odc {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/odc.png)
+}
+A.mf_odf {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/odf.png)
+}
+A.mf_odg {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/odg.png)
+}
+A.mf_odi {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/odi.png)
+}
+A.mf_odp {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/odp.png)
+}
+A.mf_ods {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/ods.png)
+}
+A.mf_odt {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/odt.png)
+}
+DIV.clearer {
+	CLEAR: both; OVERFLOW: hidden; LINE-HEIGHT: 0px; HEIGHT: 0px
+}
+DIV.no {
+	PADDING-RIGHT: 0px; DISPLAY: inline; PADDING-LEFT: 0px; PADDING-BOTTOM: =
+0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+.hidden {
+	DISPLAY: none
+}
+DIV.error {
+	PADDING-LEFT: 3em; FONT-SIZE: 90%; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/styles/../images/error.png) #fcc =
+no-repeat 0.5em 0px; MARGIN: 0px; OVERFLOW: hidden; COLOR: #000; =
+BORDER-BOTTOM: #faa 1px solid
+}
+DIV.info {
+	PADDING-LEFT: 3em; FONT-SIZE: 90%; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/styles/../images/info.png) #ccf =
+no-repeat 0.5em 0px; MARGIN: 0px; OVERFLOW: hidden; COLOR: #000; =
+BORDER-BOTTOM: #aaf 1px solid
+}
+DIV.success {
+	PADDING-LEFT: 3em; FONT-SIZE: 90%; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/styles/../images/success.png) #cfc =
+no-repeat 0.5em 0px; MARGIN: 0px; OVERFLOW: hidden; COLOR: #000; =
+BORDER-BOTTOM: #afa 1px solid
+}
+DIV.notify {
+	PADDING-LEFT: 3em; FONT-SIZE: 90%; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/styles/../images/notify.png) #ffc =
+no-repeat 0.5em 0px; MARGIN: 0px; OVERFLOW: hidden; COLOR: #000; =
+BORDER-BOTTOM: #ffa 1px solid
+}
+.medialeft {
+	FLOAT: left
+}
+.mediaright {
+	FLOAT: right
+}
+.mediacenter {
+	DISPLAY: block; MARGIN-LEFT: auto; MARGIN-RIGHT: auto
+}
+.leftalign {
+	TEXT-ALIGN: left
+}
+.centeralign {
+	TEXT-ALIGN: center
+}
+.rightalign {
+	TEXT-ALIGN: right
+}
+EM.u {
+	FONT-STYLE: normal; TEXT-DECORATION: underline
+}
+EM EM.u {
+	FONT-STYLE: italic
+}
+.code .br0 {
+	COLOR: #6c6
+}
+.code .co1 {
+	COLOR: #808080; FONT-STYLE: italic
+}
+.code .co2 {
+	COLOR: #808080; FONT-STYLE: italic
+}
+.code .co3 {
+	COLOR: #808080
+}
+.code .coMULTI {
+	COLOR: #808080; FONT-STYLE: italic
+}
+.code .es0 {
+	FONT-WEIGHT: bold; COLOR: #009
+}
+.code .kw1 {
+	COLOR: #b1b100
+}
+.code .kw2 {
+	FONT-WEIGHT: bold; COLOR: #000
+}
+.code .kw3 {
+	COLOR: #006
+}
+.code .kw4 {
+	COLOR: #933
+}
+.code .kw5 {
+	COLOR: #00f
+}
+.code .me1 {
+	COLOR: #060
+}
+.code .me2 {
+	COLOR: #060
+}
+.code .nu0 {
+	COLOR: #c6c
+}
+.code .re0 {
+	COLOR: #00f
+}
+.code .re1 {
+	COLOR: #00f
+}
+.code .re2 {
+	COLOR: #00f
+}
+.code .re3 {
+	FONT-WEIGHT: bold; COLOR: #f33
+}
+.code .re4 {
+	COLOR: #099
+}
+.code .st0 {
+	COLOR: #f00
+}
+.code .sy0 {
+	COLOR: #6c6
+}
+#plugin__manager {
+=09
+}
+#plugin__manager H2 {
+	MARGIN-LEFT: 0px
+}
+#plugin__manager FORM {
+	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; PADDING-BOTTOM: =
+0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+#plugin__manager LEGEND {
+	DISPLAY: none
+}
+#plugin__manager FIELDSET {
+	WIDTH: auto
+}
+#plugin__manager .button {
+	MARGIN: 0px
+}
+#plugin__manager P {
+	TEXT-ALIGN: left
+}
+#plugin__manager LABEL {
+	TEXT-ALIGN: left
+}
+#plugin__manager .hidden {
+	DISPLAY: none
+}
+#plugin__manager .new {
+	BACKGROUND: #dee7ec
+}
+#plugin__manager INPUT[disabled] {
+	BORDER-LEFT-COLOR: #ccc; BORDER-BOTTOM-COLOR: #ccc; COLOR: #ccc; =
+BORDER-TOP-COLOR: #ccc; BORDER-RIGHT-COLOR: #ccc
+}
+#plugin__manager .pm_menu {
+	MARGIN-LEFT: 0px; TEXT-ALIGN: left
+}
+#plugin__manager .pm_info {
+	MARGIN-LEFT: 0px; TEXT-ALIGN: left
+}
+#plugin__manager .pm_menu {
+	FLOAT: left; WIDTH: 48%
+}
+#plugin__manager .pm_info {
+	FLOAT: right; WIDTH: 50%
+}
+#plugin__manager .common {
+=09
+}
+#plugin__manager .common FORM {
+=09
+}
+#plugin__manager .common FIELDSET {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 1em; MARGIN: =
+0px; BORDER-TOP-STYLE: none; PADDING-TOP: 0px; BORDER-RIGHT-STYLE: none; =
+BORDER-LEFT-STYLE: none; TEXT-ALIGN: left; BORDER-BOTTOM-STYLE: none
+}
+#plugin__manager .common LABEL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0.5em; =
+PADDING-TOP: 0px
+}
+#plugin__manager .common INPUT {
+=09
+}
+#plugin__manager .common INPUT.edit {
+	MARGIN: 0.5em; WIDTH: 24em
+}
+#plugin__manager .common .button {
+=09
+}
+#plugin__manager FORM.plugins {
+=09
+}
+#plugin__manager .plugins FIELDSET {
+	BACKGROUND: #fff; COLOR: #000; BORDER-TOP-STYLE: none; =
+BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; TEXT-ALIGN: right
+}
+#plugin__manager .plugins FIELDSET.protected {
+	BACKGROUND: #fdd; COLOR: #000
+}
+#plugin__manager .plugins FIELDSET.disabled {
+	BACKGROUND: #e0e0e0; COLOR: #a8a8a8
+}
+#plugin__manager .plugins .legend {
+	CLEAR: none; PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; =
+FONT-WEIGHT: normal; FONT-SIZE: 1em; FLOAT: left; PADDING-BOTTOM: 0px; =
+MARGIN: 0px; COLOR: #000; LINE-HEIGHT: 1.4em; PADDING-TOP: 0px; =
+TEXT-ALIGN: left
+}
+#plugin__manager .plugins .button {
+	FONT-SIZE: 95%
+}
+#plugin__manager .plugins FIELDSET.buttons {
+	BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: =
+none; BORDER-BOTTOM-STYLE: none
+}
+#plugin__manager .plugins FIELDSET.buttons .button {
+	FLOAT: left
+}
+#plugin__manager .pm_info H3 {
+	MARGIN-LEFT: 0px
+}
+#plugin__manager .pm_info DL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 1em =
+0px; PADDING-TOP: 0px
+}
+#plugin__manager .pm_info DT {
+	CLEAR: left; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: left; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; WIDTH: 6em; PADDING-TOP: 0px
+}
+#plugin__manager .pm_info DD {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BACKGROUND: none transparent =
+scroll repeat 0% 0%; PADDING-BOTTOM: 0px; MARGIN: 0px 0px 0px 7em; =
+PADDING-TOP: 0px
+}
+#plugin__manager .plugins .enable {
+	FLOAT: left; WIDTH: auto; MARGIN-RIGHT: 0.5em
+}
+DIV.dokuwiki DIV.include DIV.secedit {
+	MARGIN-TOP: -18px; FLOAT: right; MARGIN-LEFT: 1em
+}
+DIV.dokuwiki DIV.inclmeta {
+	BORDER-TOP: #c4c4c4 1px dotted; MARGIN-TOP: 0.5em; FONT-SIZE: 80%; =
+MARGIN-BOTTOM: 2em; COLOR: #666; LINE-HEIGHT: 1.25; PADDING-TOP: 0.2em
+}
+DIV.dokuwiki DIV.inclmeta A.permalink {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 16px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/plugins/include/images/link.gif) =
+no-repeat 0px 1px; PADDING-BOTTOM: 1px; PADDING-TOP: 1px
+}
+DIV.dokuwiki DIV.inclmeta ABBR.published {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 16px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/plugins/include/images/date.gif) =
+no-repeat 0px 1px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 1px; =
+PADDING-TOP: 1px
+}
+DIV.dokuwiki DIV.inclmeta SPAN.author {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 16px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/plugins/include/images/user.gif) =
+no-repeat 0px 1px; PADDING-BOTTOM: 1px; PADDING-TOP: 1px
+}
+DIV.dokuwiki DIV.inclmeta SPAN.comment {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 16px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/plugins/include/images/comment.gif) =
+no-repeat 0px 1px; PADDING-BOTTOM: 1px; PADDING-TOP: 1px
+}
+DIV.dokuwiki DIV.inclmeta DIV.tags {
+	BORDER-TOP-WIDTH: 0px; CLEAR: none; FONT-SIZE: 100%; FLOAT: right
+}
+.dokuwiki #plugin__captcha_wrapper IMG {
+	BORDER-RIGHT: #c4c4c4 1px solid; BORDER-TOP: #c4c4c4 1px solid; MARGIN: =
+1px; VERTICAL-ALIGN: bottom; BORDER-LEFT: #c4c4c4 1px solid; =
+BORDER-BOTTOM: #c4c4c4 1px solid
+}
+DIV.dokuwiki TABLE.columns-plugin {
+	BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: =
+0px; MARGIN: 0px; BORDER-COLLAPSE: collapse; BORDER-RIGHT-WIDTH: 0px; =
+border-spacing: 0
+}
+DIV.dokuwiki TABLE.columns-plugin TD {
+	PADDING-RIGHT: 0.5em; PADDING-LEFT: 0.5em; PADDING-BOTTOM: 0px; =
+VERTICAL-ALIGN: top; PADDING-TOP: 0px
+}
+DIV.dokuwiki TABLE.columns-plugin TD.first {
+	PADDING-LEFT: 0px
+}
+DIV.dokuwiki TABLE.columns-plugin TD.last {
+	PADDING-RIGHT: 0px
+}
+DIV.dokuwiki TABLE.columns-plugin TD.left {
+	TEXT-ALIGN: left
+}
+DIV.dokuwiki TABLE.columns-plugin TD.center {
+	TEXT-ALIGN: center
+}
+DIV.dokuwiki TABLE.columns-plugin TD.right {
+	TEXT-ALIGN: right
+}
+DIV.dokuwiki TABLE.columns-plugin TD.center TABLE {
+	MARGIN-LEFT: auto; MARGIN-RIGHT: auto
+}
+DIV.dokuwiki TABLE.columns-plugin TD.right TABLE {
+	MARGIN-LEFT: auto; MARGIN-RIGHT: 0px
+}
+#user__manager TR.disabled {
+	BACKGROUND: #e4e4e4; COLOR: #6f6f6f
+}
+#user__manager TR.user_info {
+	VERTICAL-ALIGN: top
+}
+#user__manager DIV.edit_user {
+	FLOAT: left; WIDTH: 46%
+}
+#user__manager TABLE {
+	MARGIN-BOTTOM: 1em
+}
+#user__manager INPUT[disabled].button {
+	BORDER-LEFT-COLOR: #ccc! important; BORDER-BOTTOM-COLOR: #ccc! =
+important; COLOR: #ccc! important; BORDER-TOP-COLOR: #ccc! important; =
+BORDER-RIGHT-COLOR: #ccc! important
+}
+DIV.dataplugin_entry DL {
+	BORDER-RIGHT: #c4c4c4 1px solid; PADDING-RIGHT: 1em; BORDER-TOP: =
+#c4c4c4 1px solid; PADDING-LEFT: 1em; FONT-SIZE: 90%; PADDING-BOTTOM: =
+1em; MARGIN: 1em; OVERFLOW: auto; BORDER-LEFT: #c4c4c4 1px solid; WIDTH: =
+50%; PADDING-TOP: 1em; BORDER-BOTTOM: #c4c4c4 1px solid
+}
+DIV.dataplugin_entry DL DT {
+	CLEAR: left; FONT-WEIGHT: bold; FLOAT: left; WIDTH: 10em; TEXT-ALIGN: =
+right
+}
+DIV.dataplugin_entry DL DD {
+	FLOAT: left; MARGIN-LEFT: 0.5em
+}
+DIV.hidden.dataplugin_entry {
+	DISPLAY: none
+}
+UL.dataplugin_cloud {
+	OVERFLOW: auto
+}
+UL.dataplugin_cloud LI {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: left; LIST-STYLE-IMAGE: =
+none; PADDING-BOTTOM: 0px; MARGIN: 0px 1em 0px 0px; PADDING-TOP: 0px; =
+LIST-STYLE-TYPE: none
+}
+UL.dataplugin_cloud LI.cl0 {
+	FONT-SIZE: 70%
+}
+UL.dataplugin_cloud LI.cl1 {
+	FONT-SIZE: 90%
+}
+UL.dataplugin_cloud LI.cl2 {
+	FONT-SIZE: 110%
+}
+UL.dataplugin_cloud LI.cl3 {
+	FONT-SIZE: 130%
+}
+UL.dataplugin_cloud LI.cl4 {
+	FONT-SIZE: 150%
+}
+DL.datarelated {
+	MARGIN-LEFT: 1em
+}
+DL.datarelated DD {
+	MARGIN-LEFT: 1em
+}
+DL.datarelated DT {
+	FONT-WEIGHT: bold
+}
+DIV.divalign-left {
+	TEXT-ALIGN: left
+}
+DIV.divalign-center {
+	TEXT-ALIGN: center
+}
+DIV.divalign-right {
+	TEXT-ALIGN: right
+}
+DIV.divalign-justify {
+	TEXT-ALIGN: justify
+}
+DIV#acl_manager DIV#acl__tree {
+	BORDER-RIGHT: #c4c4c4 1px solid; BORDER-TOP: #c4c4c4 1px solid; =
+FONT-SIZE: 90%; FLOAT: left; OVERFLOW: auto; BORDER-LEFT: #c4c4c4 1px =
+solid; WIDTH: 25%; BORDER-BOTTOM: #c4c4c4 1px solid; HEIGHT: 300px; =
+TEXT-ALIGN: left
+}
+DIV#acl_manager DIV#acl__tree A.cur {
+	FONT-WEIGHT: bold; BACKGROUND-COLOR: #ff9
+}
+DIV#acl_manager DIV#acl__tree UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: none
+}
+DIV#acl_manager DIV#acl__tree LI {
+	PADDING-LEFT: 1em
+}
+DIV#acl_manager DIV#acl__tree UL IMG {
+	CURSOR: pointer; MARGIN-RIGHT: 0.25em
+}
+DIV#acl_manager DIV#acl__detail {
+	FLOAT: right; OVERFLOW: auto; WIDTH: 73%; HEIGHT: 300px
+}
+DIV#acl_manager DIV#acl__detail FIELDSET {
+	WIDTH: 90%
+}
+DIV#acl_manager DIV#acl__detail DIV#acl__user {
+	BORDER-RIGHT: #c4c4c4 1px solid; PADDING-RIGHT: 0.5em; BORDER-TOP: =
+#c4c4c4 1px solid; PADDING-LEFT: 0.5em; MARGIN-BOTTOM: 0.6em; =
+PADDING-BOTTOM: 0.5em; BORDER-LEFT: #c4c4c4 1px solid; PADDING-TOP: =
+0.5em; BORDER-BOTTOM: #c4c4c4 1px solid
+}
+DIV#acl_manager TABLE.inline {
+	MARGIN: 0px; WIDTH: 100%
+}
+DIV#acl_manager .aclgroup {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 18px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/plugins/acl/pix/group.png) no-repeat 0px =
+1px; PADDING-BOTTOM: 1px; PADDING-TOP: 1px
+}
+DIV#acl_manager .acluser {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 18px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/plugins/acl/pix/user.png) no-repeat 0px =
+1px; PADDING-BOTTOM: 1px; PADDING-TOP: 1px
+}
+DIV#acl_manager .aclpage {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 18px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/plugins/acl/pix/page.png) no-repeat 0px =
+1px; PADDING-BOTTOM: 1px; PADDING-TOP: 1px
+}
+DIV#acl_manager .aclns {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 18px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/plugins/acl/pix/ns.png) no-repeat 0px =
+1px; PADDING-BOTTOM: 1px; PADDING-TOP: 1px
+}
+DIV#acl_manager LABEL.disabled {
+	COLOR: #666! important
+}
+#acl_manager LABEL {
+	DISPLAY: inline; FONT-WEIGHT: normal; TEXT-ALIGN: left
+}
+#acl_manager TABLE {
+	MARGIN-LEFT: 10%; WIDTH: 80%
+}
+#acl_manager TABLE TR {
+=09
+}
+#acl_manager TABLE TR:hover {
+	BACKGROUND-COLOR: #f8f8f8
+}
+.dokuwiki DIV.plugin_multilingual {
+	PADDING-RIGHT: 0.1em; FONT-SIZE: 95%; FLOAT: right; MARGIN: 0em 0px =
+0.3em
+}
+.dokuwiki DIV.plugin_multilingual UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+.dokuwiki DIV.plugin_multilingual UL LI {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: =
+0px; MARGIN: 0.2em 0px 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: none
+}
+.dokuwiki DIV.plugin_multilingual UL LI A.wikilink1:link {
+	PADDING-RIGHT: 0.2em; PADDING-LEFT: 0.2em; PADDING-BOTTOM: 0px; MARGIN: =
+0.1em 0.2em; COLOR: #fff! important; BORDER-TOP-STYLE: none! important; =
+PADDING-TOP: 0px; BORDER-RIGHT-STYLE: none! important; =
+BORDER-LEFT-STYLE: none! important; BACKGROUND-COLOR: #000080; =
+TEXT-DECORATION: none; BORDER-BOTTOM-STYLE: none! important
+}
+.dokuwiki DIV.plugin_multilingual UL LI A.wikilink1:hover {
+	PADDING-RIGHT: 0.2em; PADDING-LEFT: 0.2em; PADDING-BOTTOM: 0px; MARGIN: =
+0.1em 0.2em; COLOR: #fff! important; BORDER-TOP-STYLE: none! important; =
+PADDING-TOP: 0px; BORDER-RIGHT-STYLE: none! important; =
+BORDER-LEFT-STYLE: none! important; BACKGROUND-COLOR: #000080; =
+TEXT-DECORATION: none; BORDER-BOTTOM-STYLE: none! important
+}
+.dokuwiki DIV.plugin_multilingual UL LI A.wikilink1:active {
+	PADDING-RIGHT: 0.2em; PADDING-LEFT: 0.2em; PADDING-BOTTOM: 0px; MARGIN: =
+0.1em 0.2em; COLOR: #fff! important; BORDER-TOP-STYLE: none! important; =
+PADDING-TOP: 0px; BORDER-RIGHT-STYLE: none! important; =
+BORDER-LEFT-STYLE: none! important; BACKGROUND-COLOR: #000080; =
+TEXT-DECORATION: none; BORDER-BOTTOM-STYLE: none! important
+}
+.dokuwiki DIV.plugin_multilingual UL LI A.wikilink1:visited {
+	PADDING-RIGHT: 0.2em; PADDING-LEFT: 0.2em; PADDING-BOTTOM: 0px; MARGIN: =
+0.1em 0.2em; COLOR: #fff! important; BORDER-TOP-STYLE: none! important; =
+PADDING-TOP: 0px; BORDER-RIGHT-STYLE: none! important; =
+BORDER-LEFT-STYLE: none! important; BACKGROUND-COLOR: #000080; =
+TEXT-DECORATION: none; BORDER-BOTTOM-STYLE: none! important
+}
+.dokuwiki DIV.plugin_multilingual UL LI A.wikilink2:link {
+	PADDING-RIGHT: 0.2em; PADDING-LEFT: 0.2em; PADDING-BOTTOM: 0px; MARGIN: =
+0.1em 0.2em; COLOR: #fff! important; BORDER-TOP-STYLE: none! important; =
+PADDING-TOP: 0px; BORDER-RIGHT-STYLE: none! important; =
+BORDER-LEFT-STYLE: none! important; BACKGROUND-COLOR: #808080; =
+TEXT-DECORATION: none; BORDER-BOTTOM-STYLE: none! important
+}
+.dokuwiki DIV.plugin_multilingual UL LI A.wikilink2:hover {
+	PADDING-RIGHT: 0.2em; PADDING-LEFT: 0.2em; PADDING-BOTTOM: 0px; MARGIN: =
+0.1em 0.2em; COLOR: #fff! important; BORDER-TOP-STYLE: none! important; =
+PADDING-TOP: 0px; BORDER-RIGHT-STYLE: none! important; =
+BORDER-LEFT-STYLE: none! important; BACKGROUND-COLOR: #808080; =
+TEXT-DECORATION: none; BORDER-BOTTOM-STYLE: none! important
+}
+.dokuwiki DIV.plugin_multilingual UL LI A.wikilink2:active {
+	PADDING-RIGHT: 0.2em; PADDING-LEFT: 0.2em; PADDING-BOTTOM: 0px; MARGIN: =
+0.1em 0.2em; COLOR: #fff! important; BORDER-TOP-STYLE: none! important; =
+PADDING-TOP: 0px; BORDER-RIGHT-STYLE: none! important; =
+BORDER-LEFT-STYLE: none! important; BACKGROUND-COLOR: #808080; =
+TEXT-DECORATION: none; BORDER-BOTTOM-STYLE: none! important
+}
+.dokuwiki DIV.plugin_multilingual UL LI A.wikilink2:visited {
+	PADDING-RIGHT: 0.2em; PADDING-LEFT: 0.2em; PADDING-BOTTOM: 0px; MARGIN: =
+0.1em 0.2em; COLOR: #fff! important; BORDER-TOP-STYLE: none! important; =
+PADDING-TOP: 0px; BORDER-RIGHT-STYLE: none! important; =
+BORDER-LEFT-STYLE: none! important; BACKGROUND-COLOR: #808080; =
+TEXT-DECORATION: none; BORDER-BOTTOM-STYLE: none! important
+}
+.dokuwiki DIV.plugin_multilingual OPTION.wikilink1 {
+	COLOR: #000080; TEXT-ALIGN: center
+}
+.dokuwiki DIV.plugin_multilingual OPTION.wikilink2 {
+	COLOR: #808080; TEXT-ALIGN: center
+}
+.dokuwiki DIV.plugin_multilingual UL LI A IMG {
+	BORDER-RIGHT: #888 1px solid; BORDER-TOP: #888 1px solid; MARGIN-TOP: =
+0em; BORDER-LEFT: #888 1px solid; BORDER-BOTTOM: #888 1px solid; =
+opacity: 0.80
+}
+.dokuwiki DIV.plugin_multilingual UL LI DIV.flag_not_exists A IMG {
+	BORDER-RIGHT: #666 1px solid; BORDER-TOP: #666 1px solid; BORDER-LEFT: =
+#666 1px solid; BORDER-BOTTOM: #666 1px solid; opacity: 0.25
+}
+.dokuwiki DIV.plugin_multilingual UL LI A.wikilink2 IMG {
+=09
+}
+.dokuwiki DIV.plugin_multilingual SPAN.curid A IMG {
+	BORDER-RIGHT: #666 1px solid; BORDER-TOP: #666 1px solid; BORDER-LEFT: =
+#666 1px solid; BORDER-BOTTOM: #666 1px solid; opacity: 1.0
+}
+.dokuwiki DIV.plugin_multilingual UL LI A:hover IMG {
+	BORDER-RIGHT: #444 1px solid; BORDER-TOP: #444 1px solid; BORDER-LEFT: =
+#444 1px solid; BORDER-BOTTOM: #444 1px solid; opacity: 1.0
+}
+.dokuwiki DIV.plugin_multilingual UL LI DIV.flag_not_exists A:hover IMG =
+{
+	BORDER-RIGHT: #444 1px solid; BORDER-TOP: #444 1px solid; BORDER-LEFT: =
+#444 1px solid; BORDER-BOTTOM: #444 1px solid; opacity: 0.5
+}
+DIV.dokuwiki TABLE.pagelist {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; =
+BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; MARGIN-BOTTOM: 1em; =
+PADDING-BOTTOM: 0px; PADDING-TOP: 0px; BORDER-COLLAPSE: collapse; =
+BORDER-RIGHT-WIDTH: 0px; border-spacing: 0
+}
+DIV.dokuwiki TABLE.ul {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; =
+BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; MARGIN-BOTTOM: 1em; =
+PADDING-BOTTOM: 0px; PADDING-TOP: 0px; BORDER-COLLAPSE: collapse; =
+BORDER-RIGHT-WIDTH: 0px; border-spacing: 0
+}
+DIV.dokuwiki TABLE.pagelist TR {
+	BORDER-TOP: #c4c4c4 1px solid; BORDER-BOTTOM: #c4c4c4 1px solid
+}
+DIV.dokuwiki TABLE.pagelist TH {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 0px; PADDING-BOTTOM: 1px; =
+PADDING-TOP: 1px
+}
+DIV.dokuwiki TABLE.pagelist TD {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 0px; PADDING-BOTTOM: 1px; =
+PADDING-TOP: 1px
+}
+DIV.dokuwiki TABLE.ul TH {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 0px
+}
+DIV.dokuwiki TABLE.ul TD {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 0px
+}
+DIV.dokuwiki TABLE.ul UL {
+	MARGIN: 0px 0px 0px 1.5em
+}
+DIV.dokuwiki TABLE.pagelist TH {
+	BACKGROUND-COLOR: #f8f8f8
+}
+DIV.dokuwiki TABLE.ul TH {
+	BACKGROUND-COLOR: #f8f8f8
+}
+DIV.dokuwiki TH.page {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TH.date {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TH.user {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TH.desc {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TH.comments {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TH.linkbacks {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TH.tags {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TD.date {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TD.user {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TD.desc {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TD.comments {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TD.linkbacks {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TD.tags {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TD.date {
+	TEXT-ALIGN: right
+}
+DIV.dokuwiki DIV.tags {
+	CLEAR: both; BORDER-TOP: #c4c4c4 2px dotted; FONT-SIZE: 95%; =
+TEXT-ALIGN: right
+}
+DIV.dokuwiki DIV.tags SPAN {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 16px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/plugins/tag/images/tag.gif) no-repeat =
+0px 1px; PADDING-BOTTOM: 1px; PADDING-TOP: 1px
+}
+#config__manager DIV.success {
+	PADDING-RIGHT: 0.5em; BACKGROUND-POSITION: 0.5em 50%; PADDING-LEFT: =
+0.5em; PADDING-BOTTOM: 0.5em; PADDING-TOP: 0.5em; TEXT-ALIGN: center
+}
+#config__manager DIV.error {
+	PADDING-RIGHT: 0.5em; BACKGROUND-POSITION: 0.5em 50%; PADDING-LEFT: =
+0.5em; PADDING-BOTTOM: 0.5em; PADDING-TOP: 0.5em; TEXT-ALIGN: center
+}
+#config__manager DIV.info {
+	PADDING-RIGHT: 0.5em; BACKGROUND-POSITION: 0.5em 50%; PADDING-LEFT: =
+0.5em; PADDING-BOTTOM: 0.5em; PADDING-TOP: 0.5em; TEXT-ALIGN: center
+}
+#config__manager FIELDSET {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 1em; PADDING-BOTTOM: 0px; MARGIN: 1em =
+1em 2em; WIDTH: auto; COLOR: #666; PADDING-TOP: 0px; BACKGROUND-COLOR: =
+#f8f8f8
+}
+#config__manager LEGEND {
+	FONT-SIZE: 1.25em
+}
+#config__manager FORM {
+=09
+}
+#config__manager TABLE {
+	MARGIN: 1em 0px; WIDTH: 100%
+}
+#config__manager FIELDSET TD {
+	TEXT-ALIGN: left
+}
+#config__manager FIELDSET TD.value {
+	WIDTH: 30em
+}
+#config__manager TD.label {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 1em; PADDING-BOTTOM: 0.6em; =
+VERTICAL-ALIGN: top; PADDING-TOP: 0.8em
+}
+#config__manager TD.label LABEL {
+	CLEAR: both; DISPLAY: block
+}
+#config__manager TD.label SPAN.outkey {
+	PADDING-RIGHT: 0.1em; MARGIN-TOP: -1.7em; DISPLAY: block; PADDING-LEFT: =
+0.1em; FONT-SIZE: 70%; Z-INDEX: 1; FLOAT: left; PADDING-BOTTOM: 0px; =
+MARGIN-LEFT: -1em; COLOR: #666; PADDING-TOP: 0px; POSITION: relative; =
+BACKGROUND-COLOR: #fff
+}
+#config__manager TD INPUT.edit {
+	WIDTH: 30em
+}
+#config__manager TD SELECT.edit {
+=09
+}
+#config__manager TD TEXTAREA.edit {
+	WIDTH: 27.5em; HEIGHT: 4em
+}
+#config__manager TR .input {
+	COLOR: #000; BACKGROUND-COLOR: #fff
+}
+#config__manager TR INPUT {
+	COLOR: #000; BACKGROUND-COLOR: #fff
+}
+#config__manager TR TEXTAREA {
+	COLOR: #000; BACKGROUND-COLOR: #fff
+}
+#config__manager TR SELECT {
+	COLOR: #000; BACKGROUND-COLOR: #fff
+}
+#config__manager TR.default .input {
+	COLOR: #000; BACKGROUND-COLOR: #cdf
+}
+#config__manager TR.default INPUT {
+	COLOR: #000; BACKGROUND-COLOR: #cdf
+}
+#config__manager TR.default TEXTAREA {
+	COLOR: #000; BACKGROUND-COLOR: #cdf
+}
+#config__manager TR.default SELECT {
+	COLOR: #000; BACKGROUND-COLOR: #cdf
+}
+#config__manager .selectiondefault {
+	COLOR: #000; BACKGROUND-COLOR: #cdf
+}
+#config__manager TR.protected .input {
+	COLOR: #000! important; BACKGROUND-COLOR: #fcc! important
+}
+#config__manager TR.protected INPUT {
+	COLOR: #000! important; BACKGROUND-COLOR: #fcc! important
+}
+#config__manager TR.protected TEXTAREA {
+	COLOR: #000! important; BACKGROUND-COLOR: #fcc! important
+}
+#config__manager TR.protected SELECT {
+	COLOR: #000! important; BACKGROUND-COLOR: #fcc! important
+}
+#config__manager TR.protected .selection {
+	COLOR: #000! important; BACKGROUND-COLOR: #fcc! important
+}
+#config__manager TD.error {
+	COLOR: #000; BACKGROUND-COLOR: red
+}
+#config__manager .selection {
+	FLOAT: left; MARGIN: 0px 0.3em 2px 0px; WIDTH: 14.8em
+}
+#config__manager .selection LABEL {
+	FONT-SIZE: 90%; FLOAT: right; WIDTH: 14em
+}
+* HTML #config__manager .selection LABEL {
+	PADDING-TOP: 2px
+}
+#config__manager .selection INPUT.checkbox {
+	PADDING-LEFT: 0.7em
+}
+#config__manager .other {
+	CLEAR: both; PADDING-TOP: 0.5em
+}
+#config__manager .other LABEL {
+	PADDING-LEFT: 2px; FONT-SIZE: 90%
+}
+DIV.dokuwiki TABLE.pagelist {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; =
+BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; MARGIN-BOTTOM: 1em; =
+PADDING-BOTTOM: 0px; PADDING-TOP: 0px; BORDER-COLLAPSE: collapse; =
+BORDER-RIGHT-WIDTH: 0px; border-spacing: 0
+}
+DIV.dokuwiki TABLE.ul {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; =
+BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; MARGIN-BOTTOM: 1em; =
+PADDING-BOTTOM: 0px; PADDING-TOP: 0px; BORDER-COLLAPSE: collapse; =
+BORDER-RIGHT-WIDTH: 0px; border-spacing: 0
+}
+DIV.dokuwiki TABLE.pagelist TR {
+	BORDER-TOP: #c4c4c4 1px solid; BORDER-BOTTOM: #c4c4c4 1px solid
+}
+DIV.dokuwiki TABLE.pagelist TH {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 0px; PADDING-BOTTOM: 1px; =
+PADDING-TOP: 1px
+}
+DIV.dokuwiki TABLE.pagelist TD {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 0px; PADDING-BOTTOM: 1px; =
+PADDING-TOP: 1px
+}
+DIV.dokuwiki TABLE.ul TH {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 0px
+}
+DIV.dokuwiki TABLE.ul TD {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 0px
+}
+DIV.dokuwiki TABLE.ul UL {
+	MARGIN: 0px 0px 0px 1.5em
+}
+DIV.dokuwiki TABLE.pagelist TH {
+	BACKGROUND-COLOR: #f8f8f8
+}
+DIV.dokuwiki TABLE.ul TH {
+	BACKGROUND-COLOR: #f8f8f8
+}
+DIV.dokuwiki TH.dpage {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TH.page {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TH.date {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TH.user {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TH.desc {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TH.comments {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TH.tags {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TD.date {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TD.user {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TD.desc {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TD.comments {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TD.tags {
+	FONT-SIZE: 80%; COLOR: #666
+}
+DIV.dokuwiki TH.date {
+	TEXT-ALIGN: right
+}
+DIV.dokuwiki TD.date {
+	TEXT-ALIGN: right
+}
+DIV.dokuwiki TD.dpage {
+	VERTICAL-ALIGN: top; TEXT-ALIGN: left
+}
+DIV.dokuwiki TH.rowno {
+	FONT-SIZE: 80%; WIDTH: 5px; COLOR: #666; TEXT-ALIGN: right
+}
+DIV.dokuwiki TD.rowno {
+	FONT-SIZE: 80%; WIDTH: 5px; COLOR: #666; TEXT-ALIGN: right
+}
+DIV.code {
+	BORDER-RIGHT: 1px solid; PADDING-RIGHT: 4px; BORDER-TOP: 1px solid; =
+PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; MARGIN: 1em auto; BORDER-LEFT: =
+1px solid; WIDTH: 92%; PADDING-TOP: 4px; BORDER-BOTTOM: 1px solid
+}
+DIV.file {
+	BORDER-RIGHT: 1px solid; PADDING-RIGHT: 4px; BORDER-TOP: 1px solid; =
+PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; MARGIN: 1em auto; BORDER-LEFT: =
+1px solid; WIDTH: 92%; PADDING-TOP: 4px; BORDER-BOTTOM: 1px solid
+}
+DIV.code P {
+	PADDING-RIGHT: 2px; PADDING-LEFT: 2px; FONT-SIZE: 90%; PADDING-BOTTOM: =
+2px; MARGIN: 0px; PADDING-TOP: 2px
+}
+DIV.file P {
+	PADDING-RIGHT: 2px; PADDING-LEFT: 2px; FONT-SIZE: 90%; PADDING-BOTTOM: =
+2px; MARGIN: 0px; PADDING-TOP: 2px
+}
+DIV.dokuwiki DIV.code PRE.code {
+	MARGIN: 4px 0px 0px
+}
+DIV.dokuwiki DIV.file PRE.file {
+	MARGIN: 4px 0px 0px
+}
+DIV.code {
+	BORDER-LEFT-COLOR: #bbd; BACKGROUND: #e4ecf8; BORDER-BOTTOM-COLOR: =
+#bbd; BORDER-TOP-COLOR: #bbd; BORDER-RIGHT-COLOR: #bbd
+}
+DIV.code P {
+	BACKGROUND: #cad0ee
+}
+DIV.file {
+	BORDER-LEFT-COLOR: #dbb; BACKGROUND: #f8ece4; BORDER-BOTTOM-COLOR: =
+#dbb; BORDER-TOP-COLOR: #dbb; BORDER-RIGHT-COLOR: #dbb
+}
+DIV.file P {
+	BACKGROUND: #eed0ca
+}
+DIV.dokuwiki DIV.file PRE.file {
+	BORDER-LEFT-COLOR: #dbb; BACKGROUND: #fdf4ec; BORDER-BOTTOM-COLOR: =
+#dbb; BORDER-TOP-COLOR: #dbb; BORDER-RIGHT-COLOR: #dbb
+}
+DIV.dokuwiki DIV.comment_wrapper {
+	CLEAR: both; PADDING-RIGHT: 1em; PADDING-LEFT: 0px; PADDING-BOTTOM: =
+1.5em; MARGIN: 1em; PADDING-TOP: 0.5em; BACKGROUND-COLOR: #f8f8f8
+}
+DIV.dokuwiki DIV.comment_text {
+	PADDING-TOP: 0.5em
+}
+DIV.dokuwiki DIV#discussion__comment_preview {
+	PADDING-RIGHT: 1em; MARGIN-TOP: 1em; PADDING-LEFT: 1em; VISIBILITY: =
+hidden; PADDING-BOTTOM: 1em; PADDING-TOP: 1em
+}
+DIV.dokuwiki DIV.comment_preview {
+	BORDER-RIGHT: #c4c4c4 1px dashed; PADDING-RIGHT: 1em; BORDER-TOP: =
+#c4c4c4 1px dashed; PADDING-LEFT: 1em; PADDING-BOTTOM: 1em; BORDER-LEFT: =
+#c4c4c4 1px dashed; PADDING-TOP: 1em; BORDER-BOTTOM: #c4c4c4 1px dashed
+}
+DIV.dokuwiki DIV.comment_form {
+	CLEAR: both; MARGIN-TOP: 2em; MARGIN-RIGHT: 1em
+}
+DIV.dokuwiki DIV.comment_form .error {
+	BACKGROUND: #fcc
+}
+DIV.dokuwiki #discussion__comment_form LABEL INPUT.edit {
+	WIDTH: 75%
+}
+DIV.dokuwiki .comment_head {
+	CLEAR: both; MARGIN-TOP: 1em; FONT-SIZE: 80%; COLOR: #666; PADDING-TOP: =
+0.5em
+}
+DIV.dokuwiki .comment_head ABBR {
+	BORDER-BOTTOM-WIDTH: 0px
+}
+DIV.dokuwiki .comment_head SPAN.author {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 16px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/plugins/discussion/images/user.gif) =
+no-repeat 0px 1px; PADDING-BOTTOM: 1px; PADDING-TOP: 1px
+}
+DIV.dokuwiki .comment_head ABBR.published {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 16px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/plugins/discussion/images/date.gif) =
+no-repeat 0px 1px; PADDING-BOTTOM: 1px; PADDING-TOP: 1px
+}
+DIV.dokuwiki .comment_body {
+	PADDING-BOTTOM: 0.5em; PADDING-TOP: 0.5em; BORDER-BOTTOM: #c4c4c4 1px =
+dotted
+}
+DIV.dokuwiki DIV.comment_replies {
+=09
+}
+DIV.dokuwiki DIV.comment_subscribe {
+	PADDING-RIGHT: 0.6em; DISPLAY: inline; PADDING-LEFT: 0.6em; FLOAT: =
+left; PADDING-BOTTOM: 0.6em; PADDING-TOP: 0.6em
+}
+DIV.dokuwiki DIV.comment_subscribe INPUT {
+	DISPLAY: inline; FLOAT: left
+}
+DIV.dokuwiki DIV.comment_subscribe LABEL {
+	PADDING-LEFT: 0.8em; FLOAT: left
+}
+DIV.dokuwiki INPUT.comment_submit {
+	DISPLAY: inline; FLOAT: left
+}
+DIV.dokuwiki DIV.comment_hidden {
+	opacity: 0.5
+}
+DIV.dokuwiki DIV.comment_buttons {
+	MARGIN-TOP: -21px; FONT-SIZE: 10px; FLOAT: right; PADDING-BOTTOM: 1em; =
+CURSOR: pointer
+}
+DIV.dokuwiki DIV.comment_buttons INPUT.button {
+	BORDER-RIGHT: #c4c4c4 1px solid; PADDING-RIGHT: 0px; BORDER-TOP: =
+#c4c4c4 1px solid; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px =
+0px 0px 0.5em; VERTICAL-ALIGN: middle; BORDER-LEFT: #c4c4c4 1px solid; =
+COLOR: #666; PADDING-TOP: 0px; BORDER-BOTTOM: #c4c4c4 1px solid; =
+BACKGROUND-COLOR: #fff; TEXT-DECORATION: none
+}
+DIV.dokuwiki DIV.newthread_form {
+	CLEAR: both; MARGIN-BOTTOM: 1em; TEXT-ALIGN: center
+}
+DIV.dokuwiki #discussion__newthread_form INPUT.edit {
+	WIDTH: 95%
+}
+DIV.dokuwiki UL.admin_discussion LI.hidden {
+	DISPLAY: list-item; opacity: 0.5
+}
+DIV.dokuwiki UL.admin_discussion SPAN.abstract {
+	COLOR: #666
+}
+DIV.dokuwiki TABLE.pagelist TR.discussion_status2 A {
+	COLOR: #666! important
+}
+DIV.page FORM FIELDSET FIELDSET {
+	TEXT-ALIGN: left
+}
+FIELDSET.clearhistory {
+	FLOAT: right; MARGIN-LEFT: 20px; WIDTH: 315px; MARGIN-RIGHT: 10px
+}
+DIV.dokuwiki DIV.page P.clearhistory {
+	MARGIN-LEFT: 30px; MARGIN-RIGHT: 350px
+}
+* {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+HTML {
+	MIN-HEIGHT: 100%
+}
+BODY {
+	FONT-SIZE: 90%; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/footer.png) #578 =
+repeat-x center bottom; MARGIN: 0px; COLOR: #000; LINE-HEIGHT: 1.5em; =
+FONT-FAMILY: sans-serif; HEIGHT: 100%
+}
+.hidden {
+	DISPLAY: none
+}
+.container {
+	MIN-WIDTH: 100%; MIN-HEIGHT: 554px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/bg.png) no-repeat 0px =
+0px; HEIGHT: 100%
+}
+#banner {
+	DISPLAY: block; FONT-SIZE: 0px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/openwrt-logo.png) 0px =
+0px; WIDTH: 386px; HEIGHT: 98px
+}
+.whoami {
+	PADDING-RIGHT: 0.25em; PADDING-LEFT: 0.25em; FONT-WEIGHT: bold; =
+FONT-SIZE: 110%; RIGHT: 0px; PADDING-BOTTOM: 0.25em; PADDING-TOP: =
+0.25em; POSITION: absolute; TOP: 0px
+}
+#navigation {
+	BACKGROUND: #000; COLOR: #fff
+}
+#navigation {
+	CLEAR: both; FONT-SIZE: 1.3em
+}
+#navigation LI {
+	PADDING-RIGHT: 1em; DISPLAY: inline; PADDING-LEFT: 1em; PADDING-BOTTOM: =
+1em; PADDING-TOP: 1em
+}
+#navigation A {
+	COLOR: #fff; TEXT-DECORATION: none
+}
+.breadcrumbs {
+=09
+}
+#feedback {
+	CLEAR: both
+}
+#feedback DIV {
+	PADDING-RIGHT: 0.5em; BACKGROUND-POSITION: 4px center; PADDING-LEFT: =
+24px; FONT-SIZE: 100%; PADDING-BOTTOM: 0.25em; MARGIN: 0.5em 0.5em 0px; =
+LINE-HEIGHT: 1.5em; PADDING-TOP: 0.5em
+}
+.sidebar {
+	CLEAR: both; FLOAT: right; MARGIN: 0.5em; WIDTH: 17em
+}
+.sidebar DIV {
+	MARGIN-BOTTOM: 0.5em
+}
+.sidebar DIV H3 {
+	PADDING-RIGHT: 1.5em; PADDING-LEFT: 1.5em; BACKGROUND: #000; =
+PADDING-BOTTOM: 0px; MARGIN: -1em -1em 1em; COLOR: #fff; PADDING-TOP: =
+0.12em
+}
+.sidebar DIV {
+	BORDER-RIGHT: #000 3px solid; PADDING-RIGHT: 1em; BORDER-TOP: #000 3px =
+solid; PADDING-LEFT: 1em; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/bg-2.png); =
+PADDING-BOTTOM: 1em; BORDER-LEFT: #000 3px solid; PADDING-TOP: 1em; =
+BORDER-BOTTOM: #000 3px solid
+}
+.content {
+	BORDER-RIGHT: #000 3px solid; PADDING-RIGHT: 1em; BORDER-TOP: #000 3px =
+solid; PADDING-LEFT: 1em; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/bg-2.png); =
+PADDING-BOTTOM: 1em; BORDER-LEFT: #000 3px solid; PADDING-TOP: 1em; =
+BORDER-BOTTOM: #000 3px solid
+}
+.sidebar DIV DIV {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BACKGROUND: none transparent =
+scroll repeat 0% 0%; PADDING-BOTTOM: 0px; BORDER-TOP-STYLE: none; =
+PADDING-TOP: 0px; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; =
+BORDER-BOTTOM-STYLE: none
+}
+.sidebar UL {
+	MARGIN-LEFT: 1em
+}
+.sidebar #qsearch__in {
+	WIDTH: 9.5em
+}
+.sidebar .actions {
+	LIST-STYLE-TYPE: none
+}
+.sidebar .actions LI {
+	MARGIN: 0.25em 0px 0.5em
+}
+.sidebar A.action {
+	BACKGROUND-POSITION: left center; DISPLAY: block; PADDING-LEFT: 24px; =
+MIN-HEIGHT: 16px; BACKGROUND-REPEAT: no-repeat
+}
+.sidebar A.edit {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/tool-edit.png)
+}
+.sidebar A.source {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/tool-source.png)
+}
+.sidebar A.show {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/tool-source.png)
+}
+.sidebar A.admin {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/tool-admin.png)
+}
+.sidebar A.login {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/tool-login.png)
+}
+.sidebar A.logout {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/tool-logout.png)
+}
+.sidebar A.profile {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/tool-profile.png)
+}
+.sidebar A.revisions {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/tool-revisions.png)
+}
+.sidebar A.index {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/urlextern.png)
+}
+.sidebar A.recent {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/history.png)
+}
+.sidebar LI.separate {
+	MARGIN: 1.5em 0px 0.5em
+}
+.content {
+	MARGIN: 0.5em 18.5em 2.5em 0.5em
+}
+.content .breadcrumbs {
+	PADDING-RIGHT: 1.5em; PADDING-LEFT: 1.5em; FONT-WEIGHT: bold; =
+FONT-SIZE: 115%; BACKGROUND: #000; PADDING-BOTTOM: 0px; MARGIN: -1em =
+-1em 1em; COLOR: #fff; PADDING-TOP: 0.12em
+}
+.content .breadcrumbs A {
+	COLOR: #fff; TEXT-DECORATION: none
+}
+.content DIV.toc {
+	BORDER-RIGHT: #000 1px solid; BORDER-TOP: #000 1px solid; FLOAT: right; =
+BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/bg-3.png); =
+MARGIN-BOTTOM: 1em; MARGIN-LEFT: 1em; BORDER-LEFT: #000 1px solid; =
+BORDER-BOTTOM: #000 1px solid; BACKGROUND-REPEAT: repeat
+}
+.content A.urlextern {
+	PADDING-LEFT: 18px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/urlextern.png) =
+no-repeat left center
+}
+.content HR {
+	MARGIN-BOTTOM: 1em
+}
+.content H1 {
+	MARGIN-TOP: 1em; MARGIN-BOTTOM: 0.5em
+}
+.content H2 {
+	MARGIN-TOP: 1em; MARGIN-BOTTOM: 0.5em
+}
+.content H3 {
+	MARGIN-TOP: 1em; MARGIN-BOTTOM: 0.5em
+}
+.content H4 {
+	MARGIN-TOP: 1em; MARGIN-BOTTOM: 0.5em
+}
+.content H5 {
+	MARGIN-TOP: 1em; MARGIN-BOTTOM: 0.5em
+}
+.content UL {
+	MARGIN-BOTTOM: 0.75em
+}
+.content OL {
+	MARGIN-BOTTOM: 0.75em
+}
+.content DL {
+	MARGIN-BOTTOM: 0.75em
+}
+.content PRE {
+	MARGIN-BOTTOM: 0.75em
+}
+.content CODE {
+	MARGIN-BOTTOM: 0.75em
+}
+.content TABLE {
+	MARGIN-BOTTOM: 0.75em
+}
+.content P {
+	MARGIN-BOTTOM: 0.75em
+}
+.content .inclmeta {
+	MARGIN-BOTTOM: 0.75em
+}
+.content PRE {
+	FONT-SIZE: 120%; FONT-FAMILY: monospace; WHITE-SPACE: pre
+}
+.content CODE {
+	FONT-SIZE: 120%; FONT-FAMILY: monospace; WHITE-SPACE: pre
+}
+.content DL {
+	MARGIN-LEFT: 2em
+}
+.content OL {
+	MARGIN-LEFT: 2em
+}
+.content UL {
+	MARGIN-LEFT: 2em
+}
+.content DL DL {
+	MARGIN-LEFT: 1em
+}
+.content OL OL {
+	MARGIN-LEFT: 1em
+}
+.content UL UL {
+	MARGIN-LEFT: 1em
+}
+.content UL OL {
+	MARGIN-LEFT: 1em
+}
+.content OL UL {
+	MARGIN-LEFT: 1em
+}
+.content #toc__header {
+	PADDING-RIGHT: 1.5em; PADDING-LEFT: 1.5em; PADDING-BOTTOM: 0px; COLOR: =
+#fff; PADDING-TOP: 0px; BACKGROUND-COLOR: #000
+}
+.content #toc__inside {
+	MARGIN: 0.5em 1.5em 0.5em 0px
+}
+.content UL.toc UL.toc {
+	MARGIN-BOTTOM: 0px; MARGIN-LEFT: 1em
+}
+FORM.btn_secedit {
+	MARGIN-TOP: -1em; TEXT-ALIGN: right
+}
+.content P.pageinfo {
+	MARGIN: 0px 0px -2em; WIDTH: 80%; POSITION: relative; TOP: -2em; =
+HEIGHT: 1.5em
+}
+.content P.top {
+	FONT-WEIGHT: bold
+}
+.content P.pageinfo {
+	FONT-WEIGHT: bold
+}
+.content P.top {
+	CLEAR: left; PADDING-RIGHT: 0px; BORDER-TOP: #aaa 2px dotted; =
+PADDING-LEFT: 0px; PADDING-BOTTOM: 0.5em; MARGIN: 2em 0px 0px; =
+PADDING-TOP: 0.5em; TEXT-ALIGN: right
+}
+.content P.top A {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 24px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/tool-top.png) =
+no-repeat left center; PADDING-BOTTOM: 12px; COLOR: #000; PADDING-TOP: =
+12px
+}
+.content TABLE {
+=09
+}
+.content TH {
+	BORDER-RIGHT: #000 1px solid; BORDER-TOP: #000 1px solid; BACKGROUND: =
+#000; BORDER-LEFT: #000 1px solid; COLOR: #fff; BORDER-BOTTOM: #000 1px =
+solid
+}
+.content TD {
+	PADDING-RIGHT: 0.5em; MARGIN-TOP: -3px; PADDING-LEFT: 0.5em; =
+BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/bg-3.png); =
+PADDING-BOTTOM: 0.25em; PADDING-TOP: 0.25em; BORDER-BOTTOM: #aaa 1px =
+solid; BACKGROUND-REPEAT: repeat
+}
+.content DIV.license {
+	MARGIN-TOP: 1em
+}
+.content A.wikilink2 {
+	COLOR: #d00
+}
+DIV.spacer {
+	CLEAR: both; HEIGHT: 160px
+}
+DIV.footer {
+	CLEAR: both
+}
+#wiki__text {
+	MIN-HEIGHT: 20em; WIDTH: 100%
+}
+#edit__summary {
+	MAX-WIDTH: 100%
+}
+#page__revisions UL {
+	MARGIN: 0.5em 1em; LIST-STYLE-TYPE: none
+}
+#dw__recent UL {
+	MARGIN: 0.5em 1em; LIST-STYLE-TYPE: none
+}
+#page__revisions LI {
+	CLEAR: left; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: =
+0.5em; PADDING-TOP: 0.5em
+}
+#dw__recent LI {
+	CLEAR: left; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: =
+0.5em; PADDING-TOP: 0.5em
+}
+#page__revisions .wikilink1 {
+	FLOAT: left
+}
+#page__revisions .wikilink2 {
+	FLOAT: left
+}
+#page__revisions DIV.li SPAN {
+	FLOAT: left
+}
+#dw__recent .wikilink1 {
+	FLOAT: left
+}
+#dw__recent .wikilink2 {
+	FLOAT: left
+}
+#dw__recent DIV.li SPAN {
+	FLOAT: left
+}
+#page__revisions DIV.li INPUT {
+	FLOAT: left; MARGIN: 0.25em 0.5em 0.25em 0.25em
+}
+#dw__recent DIV.li INPUT {
+	FLOAT: left; MARGIN: 0.25em 0.5em 0.25em 0.25em
+}
+#page__revisions INPUT.button {
+	CLEAR: left; MARGIN-TOP: 0.5em
+}
+#page__revisions .minor SPAN {
+	COLOR: #888
+}
+#dw__recent .minor SPAN {
+	COLOR: #888
+}
+#page__revisions .wikilink1 {
+	MARGIN-LEFT: 0.25em; MARGIN-RIGHT: 0.5em
+}
+#page__revisions DIV.li IMG {
+	DISPLAY: none
+}
+.diff_link IMG {
+	DISPLAY: none
+}
+.revisions_link IMG {
+	DISPLAY: none
+}
+.diff_link {
+	DISPLAY: block; BACKGROUND: no-repeat center center; FLOAT: left; =
+WIDTH: 16px; HEIGHT: 16px
+}
+.revisions_link {
+	DISPLAY: block; BACKGROUND: no-repeat center center; FLOAT: left; =
+WIDTH: 16px; HEIGHT: 16px
+}
+.diff_link {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/diff.png); MARGIN: 2px =
+2px 0px 4px
+}
+.revisions_link {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/history.png); MARGIN: =
+2px 4px 0px 2px
+}
+#page__revisions .user:unknown {
+	content: "by "
+}
+#dw__recent .user:unknown {
+	content: "by "
+}
+#page__revisions .sum {
+	MARGIN-RIGHT: 0.25em
+}
+#dw__recent .sum {
+	MARGIN-RIGHT: 0.25em
+}
+#page__revisions .user {
+	MARGIN-RIGHT: 0.25em
+}
+#dw__recent .user {
+	MARGIN-RIGHT: 0.25em
+}
+.diff-addedline {
+	BACKGROUND-COLOR: #dfd
+}
+.diff-deletedline {
+	BACKGROUND-COLOR: #fdd
+}
+.diff-addedline STRONG {
+	COLOR: green
+}
+.diff-deletedline STRONG {
+	COLOR: red
+}
+DIV.centeralign {
+	TEXT-ALIGN: center
+}
+#dw__register {
+	MARGIN: auto; WIDTH: 50%
+}
+#dw__resendpwd {
+	MARGIN: auto; WIDTH: 50%
+}
+#dw__login {
+	MARGIN: auto; WIDTH: 50%
+}
+#dw__login LABEL.simple {
+	PADDING-LEFT: 1em; MARGIN-LEFT: 20%; MARGIN-RIGHT: 1em
+}
+#dw__login BR {
+	CLEAR: left
+}
+#dw__login {
+	TEXT-ALIGN: left
+}
+#dw__register {
+	TEXT-ALIGN: left
+}
+FIELDSET {
+	PADDING-RIGHT: 0.5em; PADDING-LEFT: 0.5em; MARGIN-BOTTOM: 1em; =
+PADDING-BOTTOM: 0.5em; PADDING-TOP: 0.5em
+}
+FIELDSET LEGEND {
+	PADDING-RIGHT: 0.5em; PADDING-LEFT: 0.5em; PADDING-BOTTOM: 0px; =
+MARGIN-LEFT: 1em; PADDING-TOP: 0px
+}
+FIELDSET LABEL.block {
+	CLEAR: left; DISPLAY: block; TEXT-ALIGN: right
+}
+FIELDSET LABEL.block SPAN {
+	CLEAR: left; DISPLAY: block; FLOAT: left; MARGIN: 0.5em; WIDTH: 20%
+}
+FIELDSET LABEL.block INPUT {
+	FLOAT: left; MARGIN: 0.25em 0px; WIDTH: 50%
+}
+#plugin__captcha_wrapper {
+	CLEAR: left; PADDING-RIGHT: 1em; PADDING-LEFT: 1em; PADDING-BOTTOM: =
+0px; MARGIN-LEFT: 20%; PADDING-TOP: 0px
+}
+#plugin__captcha_wrapper LABEL {
+	DISPLAY: block
+}
+#plugin__captcha_wrapper IMG {
+	BORDER-RIGHT: #000 1px solid; BORDER-TOP: #000 1px solid; MARGIN: 0px =
+0.25em; BORDER-LEFT: #000 1px solid; BORDER-BOTTOM: #000 1px solid; =
+POSITION: relative; TOP: 0.5em
+}
+#plugin__captcha_wrapper A IMG {
+	BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: =
+none; TOP: 0px; BORDER-BOTTOM-STYLE: none
+}
+#dw__register INPUT.button {
+	MARGIN-TOP: 0.5em; MARGIN-BOTTOM: 0.5em; MARGIN-LEFT: 22%
+}
+UL.idx {
+	MARGIN-LEFT: 1em
+}
+UL.idx UL.idx {
+	MARGIN-LEFT: 1em
+}
+DIV.search_result {
+	CLEAR: left; MARGIN-BOTTOM: 1em
+}
+DIV.search_result A.wikilink1 {
+	DISPLAY: block; FLOAT: left
+}
+DIV.search_snippet {
+	MARGIN: 0.5em 2em 2em
+}
+DIV.search_result SPAN.search_cnt {
+	FONT-WEIGHT: bold
+}
+STRONG.search_hit {
+	COLOR: red; BACKGROUND-COLOR: #ffa
+}
+.search_quickresult {
+	MARGIN-BOTTOM: 1em
+}
+.search_quickresult .clearer {
+	CLEAR: none
+}
+* HTML BODY {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/footer.jpg)
+}
+* HTML #banner {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/openwrt-logo.gif)
+}
+* HTML .container {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/tpl/ameoto/images/bg.jpg)
+}
+* HTML .content {
+	BACKGROUND-IMAGE: none; BACKGROUND-COLOR: #eef
+}
+* HTML .sidebar DIV {
+	BACKGROUND-IMAGE: none; BACKGROUND-COLOR: #eef
+}
+DIV.plugin_multilingual {
+=09
+}
+DIV.plugin_multilingual IMG {
+	BORDER-RIGHT: #fff 1px solid; BORDER-TOP: #fff 1px solid; BORDER-LEFT: =
+#fff 1px solid; BORDER-BOTTOM: #fff 1px solid
+}
+DIV.sortable {
+	OVERFLOW: auto; WIDTH: 100%
+}
+PRE.code {
+	BORDER-RIGHT: #aaa 1px solid; PADDING-RIGHT: 0.25em; BORDER-TOP: #aaa =
+1px solid; PADDING-LEFT: 0.25em; BACKGROUND-IMAGE: =
+url(/lib/tpl/ameoto/images/bg-3.png); MAX-WIDTH: 100%; PADDING-BOTTOM: =
+0.25em; OVERFLOW: auto; BORDER-LEFT: #aaa 1px solid; PADDING-TOP: =
+0.25em; BORDER-BOTTOM: #aaa 1px solid
+}
+DIV.content P IMG {
+	MAX-WIDTH: 100%
+}
+.inline {
+	DISPLAY: inline-block; MAX-WIDTH: 100%
+}
+#media__manager {
+	OVERFLOW: hidden; HEIGHT: 100%
+}
+#media__left {
+	BORDER-RIGHT: #c4c4c4 1px solid; LEFT: 0px; OVERFLOW: auto; WIDTH: 30%; =
+POSITION: absolute; HEIGHT: 100%
+}
+#media__right {
+	RIGHT: 0px; OVERFLOW: auto; WIDTH: 69.7%; POSITION: absolute; HEIGHT: =
+100%
+}
+#media__manager H1 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px =
+0px 0.5em; PADDING-TOP: 0px
+}
+#media__tree IMG {
+	PADDING-RIGHT: 0.3em; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: =
+0px; PADDING-TOP: 0.5em
+}
+#media__tree UL {
+	LIST-STYLE-IMAGE: none; LIST-STYLE-TYPE: none
+}
+#media__tree LI {
+	CLEAR: left; LIST-STYLE-IMAGE: none; LIST-STYLE-TYPE: none
+}
+* + HTML #media__tree LI {
+	BORDER-RIGHT: #fff 1px solid; BORDER-TOP: #fff 1px solid; BORDER-LEFT: =
+#fff 1px solid; BORDER-BOTTOM: #fff 1px solid
+}
+* HTML #media__tree LI {
+	BORDER-RIGHT: #fff 1px solid; BORDER-TOP: #fff 1px solid; BORDER-LEFT: =
+#fff 1px solid; BORDER-BOTTOM: #fff 1px solid
+}
+#media__opts {
+	PADDING-LEFT: 1em; MARGIN-BOTTOM: 0.5em
+}
+#media__opts INPUT {
+	FLOAT: left; POSITION: absolute
+}
+* + HTML #media__opts INPUT {
+	POSITION: static
+}
+* HTML #media__opts INPUT {
+	POSITION: static
+}
+#media__opts LABEL {
+	DISPLAY: block; FLOAT: left; MARGIN-LEFT: 30px
+}
+* + HTML #media__opts LABEL {
+	MARGIN-LEFT: 10px
+}
+* HTML #media__opts LABEL {
+	MARGIN-LEFT: 10px
+}
+#media__opts BR {
+	CLEAR: left
+}
+#media__content IMG.load {
+	MARGIN: 1em auto
+}
+#media__content #scroll__here {
+	BORDER-RIGHT: #c4c4c4 1px dashed; BORDER-TOP: #c4c4c4 1px dashed; =
+BORDER-LEFT: #c4c4c4 1px dashed; BORDER-BOTTOM: #c4c4c4 1px dashed
+}
+#media__content .odd {
+	PADDING-RIGHT: 0.4em; PADDING-LEFT: 0.4em; PADDING-BOTTOM: 0.4em; =
+PADDING-TOP: 0.4em; BACKGROUND-COLOR: #f7f9fa
+}
+#media__content .even {
+	PADDING-RIGHT: 0.4em; PADDING-LEFT: 0.4em; PADDING-BOTTOM: 0.4em; =
+PADDING-TOP: 0.4em
+}
+#media__content A.mediafile {
+	FONT-WEIGHT: bold; MARGIN-RIGHT: 1.5em
+}
+#media__content DIV.detail {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 2em; PADDING-BOTTOM: 0.3em; =
+PADDING-TOP: 0.3em
+}
+#media__content DIV.detail DIV.thumb {
+	FLOAT: left; WIDTH: 130px; MARGIN-RIGHT: 0.4em; TEXT-ALIGN: center
+}
+#media__content IMG.btn {
+	VERTICAL-ALIGN: text-bottom
+}
+#media__content DIV.example {
+	MARGIN-LEFT: 1em; COLOR: #666
+}
+#media__content DIV.upload {
+	PADDING-RIGHT: 0.5em; PADDING-LEFT: 0.5em; FONT-SIZE: 90%; =
+PADDING-BOTTOM: 0.5em; PADDING-TOP: 0px
+}
+#media__content FORM#dw__upload {
+	PADDING-RIGHT: 0.5em; DISPLAY: block; PADDING-LEFT: 0.5em; =
+PADDING-BOTTOM: 1em; PADDING-TOP: 0px; BORDER-BOTTOM: #c4c4c4 1px solid
+}
+#media__content FORM#dw__upload FIELDSET {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; WIDTH: auto; BORDER-TOP-STYLE: none; PADDING-TOP: 0px; =
+BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: =
+none
+}
+#media__content FORM#dw__upload P {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0.25em; MARGIN: =
+0px; LINE-HEIGHT: 1em; PADDING-TOP: 0.25em; TEXT-ALIGN: left
+}
+#media__content FORM#dw__upload LABEL.check {
+	FLOAT: none; MARGIN-LEFT: 11.5em; WIDTH: auto
+}
+#media__content FORM.meta {
+	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; PADDING-BOTTOM: =
+1em; PADDING-TOP: 0px
+}
+#media__content FORM.meta LABEL {
+	CLEAR: left; DISPLAY: block; FONT-WEIGHT: bold; FLOAT: left; =
+MARGIN-LEFT: 1em; WIDTH: 25%
+}
+#media__content FORM.meta .edit {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0.2em; FLOAT: left; MARGIN: 2px; =
+FONT: 100% "Lucida Grande",Verdana,Lucida,Helvetica,Arial,sans-serif; =
+WIDTH: 70%
+}
+#media__content FORM.meta TEXTAREA.edit {
+	HEIGHT: 8em
+}
+#media__content FORM.meta DIV.metafield {
+	CLEAR: left
+}
+#media__content FORM.meta DIV.buttons {
+	CLEAR: left; PADDING-LEFT: 1em; MARGIN-LEFT: 20%
+}
+
+------=_NextPart_000_0007_01CD038F.AAB75280
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://wiki.openwrt.org/lib/exe/css.php?s=print&t=ameoto
+
+A.interwiki {
+	PADDING-LEFT: 16px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/images/interwiki.png) no-repeat 0px 1px
+}
+A.iw_wp {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/wp.gif)
+}
+A.iw_wpde {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/wpde.gif)
+}
+A.iw_wpmeta {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/wpmeta.gif)
+}
+A.iw_doku {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/doku.gif)
+}
+A.iw_sb {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/sb.gif)
+}
+A.iw_amazon {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/amazon.gif)
+}
+A.iw_amazon_de {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/amazon.de.gif)
+}
+A.iw_amazon_uk {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/amazon.uk.gif)
+}
+A.iw_phpfn {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/phpfn.gif)
+}
+A.iw_dokubug {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/dokubug.gif)
+}
+A.iw_coral {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/coral.gif)
+}
+A.iw_google {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/google.gif)
+}
+A.iw_meatball {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/meatball.gif)
+}
+A.iw_wiki {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/interwiki/wiki.gif)
+}
+A.mediafile {
+	PADDING-LEFT: 18px; BACKGROUND: =
+url(http://wiki.openwrt.org/lib/images/fileicons/file.png) no-repeat 0px =
+1px; PADDING-BOTTOM: 1px
+}
+A.mf_jpg {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/jpg.png)
+}
+A.mf_jpeg {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/jpeg.png)
+}
+A.mf_gif {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/gif.png)
+}
+A.mf_png {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/png.png)
+}
+A.mf_tgz {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/tgz.png)
+}
+A.mf_tar {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/tar.png)
+}
+A.mf_gz {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/gz.png)
+}
+A.mf_bz2 {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/bz2.png)
+}
+A.mf_zip {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/zip.png)
+}
+A.mf_rar {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/rar.png)
+}
+A.mf_pdf {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/pdf.png)
+}
+A.mf_ps {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/ps.png)
+}
+A.mf_doc {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/doc.png)
+}
+A.mf_xls {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/xls.png)
+}
+A.mf_ppt {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/ppt.png)
+}
+A.mf_rtf {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/rtf.png)
+}
+A.mf_swf {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/swf.png)
+}
+A.mf_rpm {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/rpm.png)
+}
+A.mf_deb {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/deb.png)
+}
+A.mf_sxw {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/sxw.png)
+}
+A.mf_sxc {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/sxc.png)
+}
+A.mf_sxi {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/sxi.png)
+}
+A.mf_sxd {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/sxd.png)
+}
+A.mf_odc {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/odc.png)
+}
+A.mf_odf {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/odf.png)
+}
+A.mf_odg {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/odg.png)
+}
+A.mf_odi {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/odi.png)
+}
+A.mf_odp {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/odp.png)
+}
+A.mf_ods {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/ods.png)
+}
+A.mf_odt {
+	BACKGROUND-IMAGE: =
+url(http://wiki.openwrt.org/lib/images/fileicons/odt.png)
+}
+.dokuwiki DIV.plugin_multilingual {
+	DISPLAY: none
+}
+DIV.dokuwiki #discussion__comment_form {
+	DISPLAY: none
+}
+DIV.dokuwiki #discussion__newthread_form {
+	DISPLAY: none
+}
+DIV.dokuwiki DIV.comment_buttons {
+	DISPLAY: none
+}
+DIV.dokuwiki DIV.comment_hidden {
+	DISPLAY: none
+}
+BODY {
+	FONT: 10pt "Lucida Grande",Verdana,Lucida,Helvetica,Arial,sans-serif; =
+COLOR: black; BACKGROUND-COLOR: white
+}
+TABLE {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 100%; PADDING-BOTTOM: =
+0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+TR {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+TD {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+TH {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+IMG {
+	BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: =
+0px; BORDER-RIGHT-WIDTH: 0px
+}
+A {
+	BACKGROUND: none transparent scroll repeat 0% 0%; COLOR: #000; =
+TEXT-DECORATION: none
+}
+DIV.meta {
+	CLEAR: both; MARGIN-TOP: 1em; FONT-SIZE: 70%; TEXT-ALIGN: right
+}
+UL#navigation {
+	DISPLAY: none
+}
+H1.bannerhl {
+	DISPLAY: none
+}
+DIV.notify {
+	DISPLAY: none
+}
+DIV.info {
+	DISPLAY: none
+}
+DIV.success {
+	DISPLAY: none
+}
+DIV.error {
+	DISPLAY: none
+}
+DIV.breadcrumbs {
+	DISPLAY: none
+}
+DIV.secedit {
+	DISPLAY: none
+}
+DIV.sidebar {
+	DISPLAY: none
+}
+DIV.whoami {
+	DISPLAY: none
+}
+A.urlextern:unknown {
+	FONT-SIZE: 90%; content: " [" attr(href) "]"
+}
+A.interwiki:unknown {
+	FONT-SIZE: 90%; content: " [" attr(href) "]"
+}
+A.mail:unknown {
+	FONT-SIZE: 90%; content: " [" attr(href) "]"
+}
+A.wikilink1 {
+	TEXT-DECORATION: underline
+}
+DIV.page {
+	TEXT-ALIGN: justify
+}
+H1 {
+	CLEAR: left; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: =
+normal; FONT-SIZE: 100%; PADDING-BOTTOM: 0px; MARGIN: 0px 0px 1em; =
+COLOR: black; PADDING-TOP: 0.5em; BORDER-BOTTOM: #000 1px solid; =
+FONT-FAMILY: "Lucida Grande",Verdana,Lucida,Helvetica,Arial,sans-serif; =
+BACKGROUND-COLOR: transparent
+}
+H2 {
+	CLEAR: left; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: =
+normal; FONT-SIZE: 100%; PADDING-BOTTOM: 0px; MARGIN: 0px 0px 1em; =
+COLOR: black; PADDING-TOP: 0.5em; BORDER-BOTTOM: #000 1px solid; =
+FONT-FAMILY: "Lucida Grande",Verdana,Lucida,Helvetica,Arial,sans-serif; =
+BACKGROUND-COLOR: transparent
+}
+H3 {
+	CLEAR: left; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: =
+normal; FONT-SIZE: 100%; PADDING-BOTTOM: 0px; MARGIN: 0px 0px 1em; =
+COLOR: black; PADDING-TOP: 0.5em; BORDER-BOTTOM: #000 1px solid; =
+FONT-FAMILY: "Lucida Grande",Verdana,Lucida,Helvetica,Arial,sans-serif; =
+BACKGROUND-COLOR: transparent
+}
+H4 {
+	CLEAR: left; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: =
+normal; FONT-SIZE: 100%; PADDING-BOTTOM: 0px; MARGIN: 0px 0px 1em; =
+COLOR: black; PADDING-TOP: 0.5em; BORDER-BOTTOM: #000 1px solid; =
+FONT-FAMILY: "Lucida Grande",Verdana,Lucida,Helvetica,Arial,sans-serif; =
+BACKGROUND-COLOR: transparent
+}
+H5 {
+	CLEAR: left; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: =
+normal; FONT-SIZE: 100%; PADDING-BOTTOM: 0px; MARGIN: 0px 0px 1em; =
+COLOR: black; PADDING-TOP: 0.5em; BORDER-BOTTOM: #000 1px solid; =
+FONT-FAMILY: "Lucida Grande",Verdana,Lucida,Helvetica,Arial,sans-serif; =
+BACKGROUND-COLOR: transparent
+}
+H1 {
+	FONT-WEIGHT: bold; FONT-SIZE: 160%
+}
+H2 {
+	FONT-SIZE: 150%
+}
+H3 {
+	FONT-SIZE: 140%; BORDER-BOTTOM-STYLE: none
+}
+H4 {
+	FONT-SIZE: 120%; BORDER-BOTTOM-STYLE: none
+}
+H5 {
+	FONT-SIZE: 100%; BORDER-BOTTOM-STYLE: none
+}
+IMG.media {
+	MARGIN: 3px
+}
+IMG.medialeft {
+	BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; FLOAT: left; =
+BORDER-BOTTOM-WIDTH: 0px; MARGIN: 0px 1.5em 0px 0px; BORDER-RIGHT-WIDTH: =
+0px
+}
+IMG.mediaright {
+	BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; FLOAT: right; =
+BORDER-BOTTOM-WIDTH: 0px; MARGIN: 0px 0px 0px 1.5em; BORDER-RIGHT-WIDTH: =
+0px
+}
+UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px =
+0px 0.5em 1.5em; LINE-HEIGHT: 1.5em; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+square
+}
+OL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px 0px 0.5em 2.5em; LINE-HEIGHT: 1.5em; =
+PADDING-TOP: 0px
+}
+OL OL {
+	MARGIN: 0px 0px 0.5em 1.5em
+}
+DIV.dokuwiki OL {
+	LIST-STYLE-TYPE: decimal
+}
+DIV.dokuwiki OL OL {
+	LIST-STYLE-TYPE: upper-roman
+}
+DIV.dokuwiki OL OL OL {
+	LIST-STYLE-TYPE: lower-alpha
+}
+DIV.dokuwiki OL OL OL OL {
+=09
+}
+SPAN.li {
+	FONT-WEIGHT: normal
+}
+PRE.pre {
+	BORDER-RIGHT: #000 1px dashed; PADDING-RIGHT: 0.5em; BORDER-TOP: #000 =
+1px dashed; PADDING-LEFT: 0.5em; FONT-SIZE: 8pt; PADDING-BOTTOM: 0.5em; =
+OVERFLOW: visible; BORDER-LEFT: #000 1px dashed; COLOR: black; =
+PADDING-TOP: 0.5em; BORDER-BOTTOM: #000 1px dashed
+}
+PRE.code {
+	BORDER-RIGHT: #000 1px dashed; PADDING-RIGHT: 0.5em; BORDER-TOP: #000 =
+1px dashed; PADDING-LEFT: 0.5em; FONT-SIZE: 8pt; PADDING-BOTTOM: 0.5em; =
+OVERFLOW: visible; BORDER-LEFT: #000 1px dashed; COLOR: black; =
+PADDING-TOP: 0.5em; BORDER-BOTTOM: #000 1px dashed
+}
+CODE {
+	FONT-SIZE: 120%; OVERFLOW: visible; WHITE-SPACE: pre
+}
+PRE.file {
+	BORDER-RIGHT: #000 1px dotted; PADDING-RIGHT: 0.5em; BORDER-TOP: #000 =
+1px dotted; PADDING-LEFT: 0.5em; FONT-SIZE: 8pt; PADDING-BOTTOM: 0.5em; =
+OVERFLOW: visible; BORDER-LEFT: #000 1px dotted; COLOR: black; =
+PADDING-TOP: 0.5em; BORDER-BOTTOM: #000 1px dotted
+}
+DIV.footnotes {
+	CLEAR: both; BORDER-TOP: #000 1px solid; MARGIN-TOP: 1em; PADDING-LEFT: =
+1em
+}
+DIV.fn {
+	FONT-SIZE: 90%
+}
+A.fn_top {
+	FONT-SIZE: 80%; VERTICAL-ALIGN: super
+}
+A.fn_bot {
+	FONT-WEIGHT: bold; FONT-SIZE: 80%; VERTICAL-ALIGN: super
+}
+ACRONYM {
+	BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: =
+0px; BORDER-RIGHT-WIDTH: 0px
+}
+TABLE.inline {
+	FONT-SIZE: 80%; BORDER-COLLAPSE: collapse; BACKGROUND-COLOR: #fff; =
+border-spacing: 0px
+}
+TABLE.inline TH {
+	BORDER-RIGHT: #000 1px solid; PADDING-RIGHT: 3px; BORDER-TOP: #000 1px =
+solid; PADDING-LEFT: 3px; PADDING-BOTTOM: 3px; BORDER-LEFT: #000 1px =
+solid; PADDING-TOP: 3px; BORDER-BOTTOM: #000 2px solid
+}
+TABLE.inline TD {
+	BORDER-RIGHT: #000 1px solid; PADDING-RIGHT: 3px; BORDER-TOP: #000 1px =
+solid; PADDING-LEFT: 3px; PADDING-BOTTOM: 3px; BORDER-LEFT: #000 1px =
+solid; PADDING-TOP: 3px; BORDER-BOTTOM: #000 1px solid
+}
+.leftalign {
+	TEXT-ALIGN: left
+}
+.centeralign {
+	TEXT-ALIGN: center
+}
+.rightalign {
+	TEXT-ALIGN: right
+}
+.toc {
+	DISPLAY: none
+}
+.footerinc {
+	DISPLAY: none
+}
+.header {
+	DISPLAY: none
+}
+.bar {
+	DISPLAY: none
+}
+.user {
+	DISPLAY: none
+}
+DIV.plugin_multilingual UL {
+	LIST-STYLE-TYPE: none
+}
+DIV.plugin_multilingual UL LI {
+	DISPLAY: inline
+}
+DIV.content P IMG {
+	MAX-WIDTH: 100%
+}
+DIV.dokuwiki FORM#dw__search {
+	DISPLAY: none
+}
+DIV.dokuwiki DIV#tpl_simple_navi {
+	DISPLAY: none
+}
+DIV.dokuwiki A.action {
+	DISPLAY: none
+}
+
+------=_NextPart_000_0007_01CD038F.AAB75280
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://wiki.openwrt.org/lib/exe/js.php?edit=0&write=0
+
+var DOKU_BASE=3D'http://wiki.openwrt.org/';var =
+DOKU_TPL=3D'http://wiki.openwrt.org/lib/tpl/ameoto/';var =
+alertText=3D'Please enter the text you want to format.\nIt will be =
+appended to the end of the document.';var notSavedYet=3D'Unsaved changes =
+will be lost.\nReally continue?';var reallyDel=3D'Really delete selected =
+item(s)?';LANG=3D{"keepopen":"Keep window open on =
+selection","hidedetails":"Hide Details","nosmblinks":"Linking to Windows =
+shares only works in Microsoft Internet Explorer.\nYou still can copy =
+and paste the link.","mu_btn":"Upload multiple files at =
+once","plugins":[]};function isUndefined(prop){return(typeof =
+prop=3D=3D'undefined');}function isFunction(prop){return(typeof =
+prop=3D=3D'function');}function isString(prop){return(typeof =
+prop=3D=3D'string');}function isNumber(prop){return(typeof =
+prop=3D=3D'number');}function isNumeric(prop){return =
+isNumber(prop)&&!isNaN(prop)&&isFinite(prop);}function =
+isArray(prop){return(prop instanceof Array);}function =
+isRegExp(prop){return(prop instanceof RegExp);}function =
+isBoolean(prop){return('boolean'=3D=3Dtypeof prop);}function =
+isScalar(prop){return isNumeric(prop)||isString(prop);}function =
+isEmpty(prop){if(isBoolean(prop))return false;if(isRegExp(prop)&&new =
+RegExp("").toString()=3D=3Dprop.toString())return =
+true;if(isString(prop)||isNumber(prop))return!prop;if(Boolean(prop)&&fals=
+e!=3Dprop){for(var i in prop)if(prop.hasOwnProperty(i))return =
+false}return true;}if('undefined'=3D=3Dtypeof =
+Object.hasOwnProperty){Object.prototype.hasOwnProperty=3Dfunction(prop){r=
+eturn!('undefined'=3D=3Dtypeof =
+this[prop]||this.constructor&&this.constructor.prototype[prop]&&this[prop=
+]=3D=3D=3Dthis.constructor.prototype[prop]);}}function =
+hasFlash(version){var =
+ver=3D0;try{if(navigator.plugins!=3Dnull&&navigator.plugins.length>0){ver=
+=3Dnavigator.plugins["Shockwave Flash"].description.split(' =
+')[2].split('.')[0];}else{var axo=3Dnew =
+ActiveXObject("ShockwaveFlash.ShockwaveFlash");ver=3Daxo.GetVariable("$ve=
+rsion").split(' ')[1].split(',')[0];}}catch(e){}if(ver>=3Dversion)return =
+true;return false;}function =
+addEvent(element,type,handler){if(!handler.$$guid)handler.$$guid=3DaddEve=
+nt.guid++;if(!element.events)element.events=3D{};var =
+handlers=3Delement.events[type];if(!handlers){handlers=3Delement.events[t=
+ype]=3D{};if(element["on"+type]){handlers[0]=3Delement["on"+type];}}handl=
+ers[handler.$$guid]=3Dhandler;element["on"+type]=3DhandleEvent;};addEvent=
+.guid=3D1;function =
+removeEvent(element,type,handler){if(element.events&&element.events[type]=
+){delete element.events[type][handler.$$guid];}};function =
+handleEvent(event){var =
+returnValue=3Dtrue;event=3Devent||fixEvent(window.event);var =
+handlers=3Dthis.events[event.type];for(var i in =
+handlers){if(!handlers.hasOwnProperty(i))continue;this.$$handleEvent=3Dha=
+ndlers[i];if(this.$$handleEvent(event)=3D=3D=3Dfalse){returnValue=3Dfalse=
+;}}return returnValue;};function =
+fixEvent(event){event.preventDefault=3DfixEvent.preventDefault;event.stop=
+Propagation=3DfixEvent.stopPropagation;event.target=3Devent.srcElement;re=
+turn =
+event;};fixEvent.preventDefault=3Dfunction(){this.returnValue=3Dfalse;};f=
+ixEvent.stopPropagation=3Dfunction(){this.cancelBubble=3Dtrue;};window.fi=
+reoninit=3Dfunction(){if(arguments.callee.done)return;arguments.callee.do=
+ne=3Dtrue;if(_timer){clearInterval(_timer);_timer=3Dnull;}if(typeof =
+window.oninit=3D=3D'function'){window.oninit();}};if(document.addEventLis=
+tener){document.addEventListener("DOMContentLoaded",window.fireoninit,nul=
+l);}/*@cc_on @*//*@if(@_win32)document.write("<scr"+"ipt =
+id=3D\"__ie_init\" defer=3D\"true\" src=3D\"//:\"><\/script>");var =
+script=3Ddocument.getElementById("__ie_init");script.onreadystatechange=3D=
+function(){if(this.readyState=3D=3D"complete"){window.fireoninit();}};/*@=
+end @*/if(/WebKit/i.test(navigator.userAgent)){var =
+_timer=3DsetInterval(function(){if(/loaded|complete/.test(document.readyS=
+tate)){window.fireoninit();}},10);}window.onload=3Dwindow.fireoninit;wind=
+ow.oninit=3Dfunction(){};function addInitEvent(func){var =
+oldoninit=3Dwindow.oninit;if(typeof =
+window.oninit!=3D'function'){window.oninit=3Dfunc;}else{window.oninit=3Df=
+unction(){oldoninit();func();};}}DokuCookie=3D{data:Array(),name:'DOKU_PR=
+EFS',setValue:function(key,val){DokuCookie.init();DokuCookie.data[key]=3D=
+val;var now=3Dnew =
+Date();DokuCookie.fixDate(now);now.setTime(now.getTime()+365*24*60*60*100=
+0);var text=3D'';for(var key in =
+DokuCookie.data){if(!DokuCookie.data.hasOwnProperty(key))continue;text+=3D=
+'#'+escape(key)+'#'+DokuCookie.data[key];}DokuCookie.setCookie(DokuCookie=
+.name,text.substr(1),now,DOKU_BASE);},getValue:function(key){DokuCookie.i=
+nit();return =
+DokuCookie.data[key];},init:function(){if(DokuCookie.data.length)return;v=
+ar text=3DDokuCookie.getCookie(DokuCookie.name);if(text){var =
+parts=3Dtext.split('#');for(var =
+i=3D0;i<parts.length;i+=3D2){DokuCookie.data[unescape(parts[i])]=3Dunesca=
+pe(parts[i+1]);}}},setCookie:function(name,value,expires,path,domain,secu=
+re){var curCookie=3Dname+"=3D"+escape(value)+((expires)?"; =
+expires=3D"+expires.toGMTString():"")+((path)?"; =
+path=3D"+path:"")+((domain)?"; domain=3D"+domain:"")+((secure)?"; =
+secure":"");document.cookie=3DcurCookie;},getCookie:function(name){var =
+dc=3Ddocument.cookie;var prefix=3Dname+"=3D";var begin=3Ddc.indexOf("; =
+"+prefix);if(begin=3D=3D-1){begin=3Ddc.indexOf(prefix);if(begin!=3D=3D0){=
+return null;}}else{begin+=3D2;}var =
+end=3Ddocument.cookie.indexOf(";",begin);if(end=3D=3D-1){end=3Ddc.length;=
+}return =
+unescape(dc.substring(begin+prefix.length,end));},fixDate:function(date){=
+var base=3Dnew Date(0);var =
+skew=3Dbase.getTime();if(skew>0){date.setTime(date.getTime()-skew);}}};va=
+r clientPC=3Dnavigator.userAgent.toLowerCase();var =
+is_macos=3Dnavigator.appVersion.indexOf('Mac')!=3D-1;var =
+is_gecko=3D((clientPC.indexOf('gecko')!=3D-1)&&(clientPC.indexOf('spoofer=
+')=3D=3D-1)&&(clientPC.indexOf('khtml')=3D=3D-1)&&(clientPC.indexOf('nets=
+cape/7.0')=3D=3D-1));var =
+is_safari=3D((clientPC.indexOf('AppleWebKit')!=3D-1)&&(clientPC.indexOf('=
+spoofer')=3D=3D-1));var =
+is_khtml=3D(navigator.vendor=3D=3D'KDE'||(document.childNodes&&!document.=
+all&&!navigator.taintEnabled));if(clientPC.indexOf('opera')!=3D-1){var =
+is_opera=3Dtrue;var =
+is_opera_preseven=3D(window.opera&&!document.childNodes);var =
+is_opera_seven=3D(window.opera&&document.childNodes);}var =
+toolbar=3D'';function $(){var elements=3Dnew Array();for(var =
+i=3D0;i<arguments.length;i++){var element=3Darguments[i];if(typeof =
+element=3D=3D'string')element=3Ddocument.getElementById(element);if(argum=
+ents.length=3D=3D1)return element;elements.push(element);}return =
+elements;}function =
+isset(varname){return(typeof(window[varname])!=3D'undefined');}function =
+getElementsByClass(searchClass,node,tag){var classElements=3Dnew =
+Array();if(node=3D=3Dnull)node=3Ddocument;if(tag=3D=3Dnull)tag=3D'*';var =
+els=3Dnode.getElementsByTagName(tag);var elsLen=3Dels.length;var =
+pattern=3Dnew =
+RegExp("(^|\\s)"+searchClass+"(\\s|$)");for(i=3D0,j=3D0;i<elsLen;i++){if(=
+pattern.test(els[i].className)){classElements[j]=3Dels[i];j++;}}return =
+classElements;}function findPosX(object){var curleft=3D0;var =
+obj=3D$(object);if(obj.offsetParent){while(obj.offsetParent){curleft+=3Do=
+bj.offsetLeft;obj=3Dobj.offsetParent;}}else =
+if(obj.x){curleft+=3Dobj.x;}return curleft;}function =
+findPosY(object){var curtop=3D0;var =
+obj=3D$(object);if(obj.offsetParent){while(obj.offsetParent){curtop+=3Dob=
+j.offsetTop;obj=3Dobj.offsetParent;}}else =
+if(obj.y){curtop+=3Dobj.y;}return curtop;}function jsEscape(text){var =
+re=3Dnew RegExp("\\\\","g");text=3Dtext.replace(re,"\\\\");re=3Dnew =
+RegExp("'","g");text=3Dtext.replace(re,"\\'");re=3Dnew =
+RegExp('"',"g");text=3Dtext.replace(re,'&quot;');re=3Dnew =
+RegExp("\\\\\\\\n","g");text=3Dtext.replace(re,"\\n");return =
+text;}function escapeQuotes(text){var re=3Dnew =
+RegExp("'","g");text=3Dtext.replace(re,"\\'");re=3Dnew =
+RegExp('"',"g");text=3Dtext.replace(re,'&quot;');re=3Dnew =
+RegExp("\\n","g");text=3Dtext.replace(re,"\\n");return text;}function =
+prependChild(parent,element){if(!parent.firstChild){parent.appendChild(el=
+ement);}else{parent.insertBefore(element,parent.firstChild);}}function =
+showLoadBar(){document.write('<img =
+src=3D"'+DOKU_BASE+'lib/images/loading.gif" '+'width=3D"150" =
+height=3D"12" alt=3D"..." />');}function =
+hideLoadBar(id){obj=3D$(id);if(obj)obj.style.display=3D"none";}function =
+addTocToggle(){if(!document.getElementById)return;var =
+header=3D$('toc__header');if(!header)return;var =
+obj=3Ddocument.createElement('span');obj.id=3D'toc__toggle';obj.innerHTML=
+=3D'<span>&minus;</span>';obj.className=3D'toc_close';obj.style.cursor=3D=
+'pointer';prependChild(header,obj);obj.parentNode.onclick=3DtoggleToc;try=
+{obj.parentNode.style.cursor=3D'pointer';obj.parentNode.style.cursor=3D'h=
+and';}catch(e){}}function toggleToc(){var toc=3D$('toc__inside');var =
+obj=3D$('toc__toggle');if(toc.style.display=3D=3D'none'){toc.style.displa=
+y=3D'';obj.innerHTML=3D'<span>&minus;</span>';obj.className=3D'toc_close'=
+;}else{toc.style.display=3D'none';obj.innerHTML=3D'<span>+</span>';obj.cl=
+assName=3D'toc_open';}}function =
+checkAclLevel(){if(document.getElementById){var =
+scope=3D$('acl_scope').value;if((scope.indexOf(":*")>0)||(scope=3D=3D"*")=
+){document.getElementsByName('acl_checkbox[4]')[0].disabled=3Dfalse;docum=
+ent.getElementsByName('acl_checkbox[8]')[0].disabled=3Dfalse;}else{docume=
+nt.getElementsByName('acl_checkbox[4]')[0].checked=3Dfalse;document.getEl=
+ementsByName('acl_checkbox[8]')[0].checked=3Dfalse;document.getElementsBy=
+Name('acl_checkbox[4]')[0].disabled=3Dtrue;document.getElementsByName('ac=
+l_checkbox[8]')[0].disabled=3Dtrue;}}}function footnote(e){var =
+obj=3De.target;var id=3Dobj.id.substr(5);var =
+fndiv=3D$('insitu__fn');if(!fndiv){fndiv=3Ddocument.createElement('div');=
+fndiv.id=3D'insitu__fn';fndiv.className=3D'insitu-footnote JSpopup =
+dokuwiki';addEvent(fndiv,'mouseout',function(e){if(e.target!=3Dfndiv){e.s=
+topPropagation();return;}if(e.pageX){var bx1=3DfindPosX(fndiv);var =
+bx2=3Dbx1+fndiv.offsetWidth;var by1=3DfindPosY(fndiv);var =
+by2=3Dby1+fndiv.offsetHeight;var x=3De.pageX;var =
+y=3De.pageY;if(x>bx1&&x<bx2&&y>by1&&y<by2){e.stopPropagation();return;}}e=
+lse{if(e.offsetX>0&&e.offsetX<fndiv.offsetWidth-1&&e.offsetY>0&&e.offsetY=
+<fndiv.offsetHeight-1){e.stopPropagation();return;}}fndiv.style.display=3D=
+'none';});document.body.appendChild(fndiv);}var =
+a=3D$("fn__"+id);if(!a){return;}var content=3Dnew =
+String(a.parentNode.parentNode.innerHTML);content=3Dcontent.replace(/<sup=
+>.*<\/sup>/gi,'');content=3Dcontent.replace(/^\s+(,\s+)+/,'');content=3Dc=
+ontent.replace(/\bid=3D\"(.*?)\"/gi,'id=3D"insitu__$1');fndiv.innerHTML=3D=
+content;var x;var =
+y;if(e.pageX){x=3De.pageX;y=3De.pageY;}else{x=3De.offsetX;y=3De.offsetY;}=
+fndiv.style.position=3D'absolute';fndiv.style.left=3D(x+2)+'px';fndiv.sty=
+le.top=3D(y+2)+'px';fndiv.style.display=3D'';}addInitEvent(function(){var=
+ elems=3DgetElementsByClass('fn_top',null,'a');for(var =
+i=3D0;i<elems.length;i++){addEvent(elems[i],'mouseover',function(e){footn=
+ote(e);});}});function =
+initSizeCtl(ctlid,edid){if(!document.getElementById){return;}var =
+ctl=3D$(ctlid);var textarea=3D$(edid);if(!ctl||!textarea)return;var =
+hgt=3DDokuCookie.getValue('sizeCtl');if(hgt){textarea.style.height=3Dhgt;=
+}else{textarea.style.height=3D'300px';}var =
+wrp=3DDokuCookie.getValue('wrapCtl');if(wrp){setWrap(textarea,wrp);}var =
+l=3Ddocument.createElement('img');var =
+s=3Ddocument.createElement('img');var =
+w=3Ddocument.createElement('img');l.src=3DDOKU_BASE+'lib/images/larger.gi=
+f';s.src=3DDOKU_BASE+'lib/images/smaller.gif';w.src=3DDOKU_BASE+'lib/imag=
+es/wrap.gif';addEvent(l,'click',function(){sizeCtl(edid,100);});addEvent(=
+s,'click',function(){sizeCtl(edid,-100);});addEvent(w,'click',function(){=
+toggleWrap(edid);});ctl.appendChild(l);ctl.appendChild(s);ctl.appendChild=
+(w);}function sizeCtl(edid,val){var textarea=3D$(edid);var =
+height=3DparseInt(textarea.style.height.substr(0,textarea.style.height.le=
+ngth-2));height+=3Dval;textarea.style.height=3Dheight+'px';DokuCookie.set=
+Value('sizeCtl',textarea.style.height);}function toggleWrap(edid){var =
+textarea=3D$(edid);var =
+wrap=3Dtextarea.getAttribute('wrap');if(wrap&&wrap.toLowerCase()=3D=3D'of=
+f'){setWrap(textarea,'soft');}else{setWrap(textarea,'off');}DokuCookie.se=
+tValue('wrapCtl',textarea.getAttribute('wrap'));}function =
+setWrap(textarea,wrapAttrValue){textarea.setAttribute('wrap',wrapAttrValu=
+e);var parNod=3Dtextarea.parentNode;var =
+nxtSib=3Dtextarea.nextSibling;parNod.removeChild(textarea);parNod.insertB=
+efore(textarea,nxtSib);}function =
+closePopups(){if(!document.getElementById){return;}var =
+divs=3Ddocument.getElementsByTagName('div');for(var =
+i=3D0;i<divs.length;i++){if(divs[i].className.indexOf('JSpopup')!=3D-1){d=
+ivs[i].style.display=3D'none';}}}function scrollToMarker(){var =
+obj=3D$('scroll__here');if(obj)obj.scrollIntoView();}function =
+focusMarker(){var obj=3D$('focus__this');if(obj)obj.focus();}function =
+cleanMsgArea(){var =
+elems=3DgetElementsByClass('(success|info|error)',document,'div');if(elem=
+s){for(var =
+i=3D0;i<elems.length;i++){elems[i].style.display=3D'none';}}}addInitEvent=
+(function(){var revForm=3D$('page__revisions');if(!revForm)return;var =
+elems=3DrevForm.elements;var countTicks=3D0;for(var =
+i=3D0;i<elems.length;i++){var =
+input1=3Delems[i];if(input1.type=3D=3D'checkbox'){addEvent(input1,'click'=
+,function(e){if(this.checked)countTicks++;else countTicks--;for(var =
+j=3D0;j<elems.length;j++){var =
+input2=3Delems[j];if(countTicks>=3D2)input2.disabled=3D(input2.type=3D=3D=
+'checkbox'&&!input2.checked);else =
+input2.disabled=3D(input2.type!=3D'checkbox');}});}}});addInitEvent(funct=
+ion(){var =
+selector=3D$('action__selector');if(!selector)return;addEvent(selector,'c=
+hange',function(e){this.form.submit();});$('action__selectorbtn').style.d=
+isplay=3D'none';});function checkWindowsShares(){var =
+elems=3DgetElementsByClass('windows',document,'a');if(elems){for(var =
+i=3D0;i<elems.length;i++){var =
+share=3Delems[i];addEvent(share,'click',function(){if(document.all=3D=3Dn=
+ull){alert(LANG['nosmblinks']);}});}}}addInitEvent(function(){checkWindow=
+sShares();});function sack(file){this.AjaxFailedAlert=3D"Your browser =
+does not support the enhanced functionality of this website, and =
+therefore you will have an experience that differs from the intended =
+one.\n";this.requestFile=3Dfile;this.method=3D"POST";this.URLString=3D"";=
+this.encodeURIString=3Dtrue;this.execute=3Dfalse;this.onLoading=3Dfunctio=
+n(){};this.onLoaded=3Dfunction(){};this.onInteractive=3Dfunction(){};this=
+.onCompletion=3Dfunction(){};this.afterCompletion=3Dfunction(){};this.cre=
+ateAJAX=3Dfunction(){try{this.xmlhttp=3Dnew =
+ActiveXObject("Msxml2.XMLHTTP");}catch(e){try{this.xmlhttp=3Dnew =
+ActiveXObject("Microsoft.XMLHTTP");}catch(err){this.xmlhttp=3Dnull;}}if(!=
+this.xmlhttp&&typeof XMLHttpRequest!=3D"undefined"){this.xmlhttp=3Dnew =
+XMLHttpRequest();}if(!this.xmlhttp){this.failed=3Dtrue;}};this.setVar=3Df=
+unction(name,value){if(this.URLString.length<3){this.URLString=3Dname+"=3D=
+"+value;}else{this.URLString+=3D"&"+name+"=3D"+value;}};this.encVar=3Dfun=
+ction(name,value){var =
+varString=3DencodeURIComponent(name)+"=3D"+encodeURIComponent(value);retu=
+rn =
+varString;};this.encodeURLString=3Dfunction(string){varArray=3Dstring.spl=
+it('&');for(i=3D0;i<varArray.length;i++){urlVars=3DvarArray[i].split('=3D=
+');if(urlVars[0].indexOf('amp;')!=3D-1){urlVars[0]=3DurlVars[0].substring=
+(4);}varArray[i]=3Dthis.encVar(urlVars[0],urlVars[1]);}return =
+varArray.join('&');};this.runResponse=3Dfunction(){eval(this.response);};=
+this.runAJAX=3Dfunction(urlstring){this.responseStatus=3Dnew =
+Array(2);if(this.failed&&this.AjaxFailedAlert){alert(this.AjaxFailedAlert=
+);}else{if(urlstring){if(this.URLString.length){this.URLString=3Dthis.URL=
+String+"&"+urlstring;}else{this.URLString=3Durlstring;}}if(this.encodeURI=
+String){var timeval=3Dnew =
+Date().getTime();this.URLString=3Dthis.encodeURLString(this.URLString);th=
+is.setVar("rndval",timeval);}if(this.element){this.elementObj=3Ddocument.=
+getElementById(this.element);}if(this.xmlhttp){var =
+self=3Dthis;if(this.method=3D=3D"GET"){var =
+totalurlstring=3Dthis.requestFile+"?"+this.URLString;this.xmlhttp.open(th=
+is.method,totalurlstring,true);}else{this.xmlhttp.open(this.method,this.r=
+equestFile,true);}if(this.method=3D=3D"POST"){try{this.xmlhttp.setRequest=
+Header('Content-Type','application/x-www-form-urlencoded; =
+charset=3DUTF-8');}catch(e){}}this.xmlhttp.onreadystatechange=3Dfunction(=
+){switch(self.xmlhttp.readyState){case 1:self.onLoading();break;case =
+2:self.onLoaded();break;case 3:self.onInteractive();break;case =
+4:self.response=3Dself.xmlhttp.responseText;self.responseXML=3Dself.xmlht=
+tp.responseXML;self.responseStatus[0]=3Dself.xmlhttp.status;self.response=
+Status[1]=3Dself.xmlhttp.statusText;self.onCompletion();if(self.execute){=
+self.runResponse();}if(self.elementObj){var =
+elemNodeName=3Dself.elementObj.nodeName;elemNodeName.toLowerCase();if(ele=
+mNodeName=3D=3D"input"||elemNodeName=3D=3D"select"||elemNodeName=3D=3D"op=
+tion"||elemNodeName=3D=3D"textarea"){self.elementObj.value=3Dself.respons=
+e;}else{self.elementObj.innerHTML=3Dself.response;}}self.afterCompletion(=
+);self.URLString=3D"";break;}};this.xmlhttp.send(this.URLString);}}};this=
+.createAJAX();}function =
+ajax_qsearch_class(){this.sack=3Dnull;this.inObj=3Dnull;this.outObj=3Dnul=
+l;this.timer=3Dnull;}var ajax_qsearch=3Dnew =
+ajax_qsearch_class();ajax_qsearch.sack=3Dnew =
+sack(DOKU_BASE+'lib/exe/ajax.php');ajax_qsearch.sack.AjaxFailedAlert=3D''=
+;ajax_qsearch.sack.encodeURIString=3Dfalse;ajax_qsearch.init=3Dfunction(i=
+nID,outID){ajax_qsearch.inObj=3Ddocument.getElementById(inID);ajax_qsearc=
+h.outObj=3Ddocument.getElementById(outID);if(ajax_qsearch.inObj=3D=3D=3Dn=
+ull){return;}if(ajax_qsearch.outObj=3D=3D=3Dnull){return;}addEvent(ajax_q=
+search.inObj,'keyup',ajax_qsearch.call);addEvent(ajax_qsearch.outObj,'cli=
+ck',function(){ajax_qsearch.outObj.style.display=3D'none';});};ajax_qsear=
+ch.clear=3Dfunction(){ajax_qsearch.outObj.style.display=3D'none';ajax_qse=
+arch.outObj.innerHTML=3D'';if(ajax_qsearch.timer!=3D=3Dnull){window.clear=
+Timeout(ajax_qsearch.timer);ajax_qsearch.timer=3Dnull;}};ajax_qsearch.exe=
+c=3Dfunction(){ajax_qsearch.clear();var =
+value=3Dajax_qsearch.inObj.value;if(value=3D=3D=3D''){return;}ajax_qsearc=
+h.sack.runAJAX('call=3Dqsearch&q=3D'+encodeURI(value));};ajax_qsearch.sac=
+k.onCompletion=3Dfunction(){var =
+data=3Dajax_qsearch.sack.response;if(data=3D=3D=3D''){return;}ajax_qsearc=
+h.outObj.innerHTML=3Ddata;ajax_qsearch.outObj.style.display=3D'block';};a=
+jax_qsearch.call=3Dfunction(){ajax_qsearch.clear();ajax_qsearch.timer=3Dw=
+indow.setTimeout("ajax_qsearch.exec()",500);};index=3D{throbber_delay:500=
+,treeattach:function(obj){if(!obj)return;var =
+items=3DgetElementsByClass('idx_dir',obj,'a');for(var =
+i=3D0;i<items.length;i++){var =
+elem=3Ditems[i];addEvent(elem,'click',function(e){return =
+index.toggle(e,this);});var =
+listitem=3Delem.parentNode;while(listitem.tagName!=3D'LI'){listitem=3Dlis=
+titem.parentNode;}if(listitem.getElementsByTagName('ul').length){listitem=
+.open=3Dtrue;}}},toggle:function(e,clicky){var =
+listitem=3Dclicky.parentNode.parentNode;listitem.open=3D!listitem.open;va=
+r =
+sublists=3Dlistitem.getElementsByTagName('ul');if(!listitem.open){if(subl=
+ists.length){sublists[0].style.display=3D'none';}listitem.className=3D'cl=
+osed';e.preventDefault();return =
+false;}if(sublists.length&&listitem.open){sublists[0].style.display=3D'';=
+listitem.className=3D'open';e.preventDefault();return false;}var =
+ajax=3Dnew =
+sack(DOKU_BASE+'lib/exe/ajax.php');ajax.AjaxFailedAlert=3D'';ajax.encodeU=
+RIString=3Dfalse;if(ajax.failed)return true;var =
+ul=3Ddocument.createElement('ul');ul.className=3D'idx';timeout=3Dwindow.s=
+etTimeout(function(){if(listitem.open){ul.innerHTML=3D'<li><img =
+src=3D"'+DOKU_BASE+'lib/images/throbber.gif" alt=3D"loading..." =
+title=3D"loading..." =
+/></li>';listitem.appendChild(ul);listitem.className=3D'open';}},this.thr=
+obber_delay);ajax.elementObj=3Dul;ajax.afterCompletion=3Dfunction(){windo=
+w.clearTimeout(timeout);index.treeattach(ul);if(listitem.className!=3D'op=
+en'){if(!listitem.open){ul.style.display=3D'none';}listitem.appendChild(u=
+l);if(listitem.open){listitem.className=3D'open';}}};ajax.runAJAX(clicky.=
+search.substr(1)+'&call=3Dindex');e.preventDefault();return =
+false;}};addInitEvent(function(){index.treeattach($('index__tree'));});ad=
+dInitEvent(function(){ajax_qsearch.init('qsearch__in','qsearch__out');});=
+addInitEvent(function(){addEvent(document,'click',closePopups);});addInit=
+Event(function(){addTocToggle();});addInitEvent(function(){var =
+code=3D$('plugin__captcha_code');if(!code)return;var =
+box=3D$('plugin__captcha');box.value=3Dcode.innerHTML;$('plugin__captcha_=
+wrapper').style.display=3D'none';});var =
+ASCIIsvgURL=3D'/lib/plugins/asciisvg/main/ASCIIsvg127.js';document.write(=
+'<script type=3D"text/javascript" =
+src=3D"'+ASCIIsvgURL+'"></script>');function =
+installASCIIsvg(){ASCIIsvg.Process(document);}addInitEvent(installASCIIsv=
+g);function =
+usrmgr_delconfirm(){if($('usrmgr__del')){addEvent($('usrmgr__del'),'click=
+',function(){return =
+confirm(reallyDel);});}};addInitEvent(usrmgr_delconfirm);function =
+setName(){document.getElementById("editform").setAttribute("action","?id=3D=
+"+document.getElementById('np_cat').value+':'+document.getElementById('ad=
+dnewpage_title').value);}acl=3D{init:function(){this.ctl=3D$('acl_manager=
+');if(!this.ctl)return;var =
+sel=3D$('acl__user').getElementsByTagName('select')[0];addEvent(sel,'chan=
+ge',acl.userselhandler);addEvent($('acl__tree'),'click',acl.treehandler);=
+addEvent($('acl__user').getElementsByTagName('input')[1],'click',acl.load=
+info);},userselhandler:function(e){if(this.value=3D=3D'__g__'||this.value=
+=3D=3D'__u__'){$('acl__user').getElementsByTagName('input')[0].style.disp=
+lay=3D'';$('acl__user').getElementsByTagName('input')[1].style.display=3D=
+'';}else{$('acl__user').getElementsByTagName('input')[0].style.display=3D=
+'none';$('acl__user').getElementsByTagName('input')[1].style.display=3D'n=
+one';}acl.loadinfo();},loadinfo:function(){var =
+frm=3D$('acl__detail').getElementsByTagName('form')[0];var ajax=3Dnew =
+sack(DOKU_BASE+'lib/plugins/acl/ajax.php');ajax.AjaxFailedAlert=3D'';ajax=
+.encodeURIString=3Dfalse;if(ajax.failed)return true;var =
+data=3DArray();data[0]=3Dajax.encVar('ns',frm.elements['ns'].value);data[=
+1]=3Dajax.encVar('id',frm.elements['id'].value);data[2]=3Dajax.encVar('ac=
+l_t',frm.elements['acl_t'].value);data[3]=3Dajax.encVar('acl_w',frm.eleme=
+nts['acl_w'].value);data[4]=3Dajax.encVar('ajax','info');ajax.elementObj=3D=
+$('acl__info');ajax.runAJAX(data.join('&'));return =
+false;},parseatt:function(str){if(str[0]=3D=3D'?')str=3Dstr.substr(1);var=
+ attributes=3D{};var all=3Dstr.split('&');for(var =
+i=3D0;i<all.length;i++){var =
+att=3Dall[i].split('=3D');attributes[att[0]]=3DdecodeURIComponent(att[1])=
+;}return =
+attributes;},hsc:function(str){str=3Dstr.replace(/&/g,"&amp;");str=3Dstr.=
+replace(/\"/g,"&quot;");str=3Dstr.replace(/\'/g,"&#039;");str=3Dstr.repla=
+ce(/</g,"&lt;");str=3Dstr.replace(/>/g,"&gt;");return =
+str;},treetoggle:function(clicky){var =
+listitem=3Dclicky.parentNode.parentNode;var =
+sublists=3Dlistitem.getElementsByTagName('ul');if(sublists.length){listit=
+em.removeChild(sublists[0]);clicky.src=3DDOKU_BASE+'lib/images/plus.gif';=
+clicky.alt=3D'+';return false;}var =
+link=3Dlistitem.getElementsByTagName('a')[0];var ajax=3Dnew =
+sack(DOKU_BASE+'lib/plugins/acl/ajax.php');ajax.AjaxFailedAlert=3D'';ajax=
+.encodeURIString=3Dfalse;if(ajax.failed)return true;var =
+ul=3Ddocument.createElement('ul');listitem.appendChild(ul);ajax.elementOb=
+j=3Dul;ajax.runAJAX(link.search.substr(1)+'&ajax=3Dtree');clicky.src=3DDO=
+KU_BASE+'lib/images/minus.gif';return =
+false;},treehandler:function(e){if(e.target.src){acl.treetoggle(e.target)=
+;}else if(e.target.href){var =
+obj=3DgetElementsByClass('cur',$('acl__tree'),'a');for(var =
+i=3D0;i<obj.length;i++){obj[i].className=3Dobj[i].className.replace(/ =
+cur/,'');}e.target.className+=3D' cur';var =
+frm=3D$('acl__detail').getElementsByTagName('form')[0];if(e.target.classN=
+ame.search(/wikilink1/)>-1){frm.elements['ns'].value=3D'';frm.elements['i=
+d'].value=3Dacl.hsc(acl.parseatt(e.target.search)['id']);}else =
+if(e.target.className.search(/idx_dir/)>-1){frm.elements['ns'].value=3Dac=
+l.hsc(acl.parseatt(e.target.search)['ns']);frm.elements['id'].value=3D'';=
+}acl.loadinfo();}e.stopPropagation();e.preventDefault();return =
+false;}};addInitEvent(acl.init);var stIsIE=3D/*@cc_on!@*/false;var =
+tableid=3D0;sorttable=3D{reinit:function(){arguments.callee.done=3Dtrue;i=
+f(_timer){clearInterval(_timer);}if(!document.createElement||!document.ge=
+tElementsByTagName){return;}sorttable.DATE_RE=3D/^(\d\d?)[\/\.\-](\d\d?)[=
+\/\.\-]((\d\d)?\d\d)( =
+(\d\d?)[:\.]?(\d\d?))?$/;forEach(document.getElementsByTagName('table'),f=
+unction(table){if(table.className.search(/\bsortable\b/)!=3D-1){sorttable=
+.makeSortable(table);}});forEach(document.getElementsByTagName('div'),fun=
+ction(div){if(div.className.search(/\bsortable\b/)!=3D-1){sorttable.makeS=
+ortablediv(div);}});},init:function(){if(arguments.callee.done){return;}a=
+rguments.callee.done=3Dtrue;if(_timer){clearInterval(_timer);}if(!documen=
+t.createElement||!document.getElementsByTagName){return;}sorttable.DATE_R=
+E=3D/^(\d\d?)[\/\.\-](\d\d?)[\/\.\-]((\d\d)?\d\d)( =
+(\d\d?):?(\d\d?))?$/;forEach(document.getElementsByTagName('table'),funct=
+ion(table){if(table.className.search(/\bsortable\b/)!=3D-1){sorttable.mak=
+eSortable(table);}});forEach(document.getElementsByTagName('div'),functio=
+n(div){if(div.className.search(/\bsortable\b/)!=3D-1){sorttable.makeSorta=
+blediv(div);}});},makeSortablediv:function(div){if(div.getElementsByTagNa=
+me('table').length=3D=3D=3D0){}else{forEach(div.getElementsByTagName('tab=
+le'),function(table){sorttable.makeSortable(table);if(div.className.searc=
+h(/\bsort/)!=3D-1){colid=3Ddiv.className.replace('sortable','');colid=3Dc=
+olid.replace(' =
+sort','');revs=3Dfalse;if(colid.search(/\br/)!=3D-1){revs=3Dtrue;colid=3D=
+colid.replace('r','');}sorttable.defaultSort(table,colid,revs);}});}},def=
+aultSort:function(table,colid,revs){theadrow=3Dtable.tHead.rows[0].cells;=
+colid--;colname=3D"col"+colid;var =
+thiscell=3Dfalse;forEach(theadrow,function(cell){if(cell.className=3D=3Dc=
+olname){thiscell=3Dcell;}});if(thiscell=3D=3D=3Dfalse){return;}sortfwdind=
+=3Ddocument.getElementById('sorttable_sortfwdind');if(sortfwdind){sortfwd=
+ind.parentNode.removeChild(sortfwdind);}sortrevind=3Ddocument.getElementB=
+yId('sorttable_sortrevind');if(sortrevind){sortrevind.parentNode.removeCh=
+ild(sortrevind);}thiscell.className+=3D' =
+sorttable_sorted';sortfwdind=3Ddocument.createElement('span');sortfwdind.=
+id=3D"sorttable_sortfwdind";sortfwdind.innerHTML=3DstIsIE?'&nbsp<font =
+face=3D"webdings">6</font>':'&nbsp;&#x25BE;';thiscell.appendChild(sortfwd=
+ind);row_array=3D[];col=3Dthiscell.sorttable_columnindex;rows=3Dthiscell.=
+sorttable_tbody.rows;for(var =
+j=3D0;j<rows.length;j++){row_array[row_array.length]=3D[sorttable.getInne=
+rText(rows[j].cells[col]),rows[j]];}row_array.sort(thiscell.sorttable_sor=
+tfunction);tb=3Dthiscell.sorttable_tbody;for(var =
+jj=3D0;jj<row_array.length;jj++){tb.appendChild(row_array[jj][1]);}delete=
+ =
+row_array;if(revs){sorttable.reverse(thiscell.sorttable_tbody);thiscell.c=
+lassName=3Dthiscell.className.replace('sorttable_sorted','sorttable_sorte=
+d_reverse');thiscell.removeChild(document.getElementById('sorttable_sortf=
+wdind'));sortrevind=3Ddocument.createElement('span');sortrevind.id=3D"sor=
+ttable_sortrevind";sortrevind.innerHTML=3DstIsIE?'&nbsp<font =
+face=3D"webdings">5</font>':'&nbsp;&#x25B4;';thiscell.appendChild(sortrev=
+ind);}},makeSortable:function(table){if(table.getElementsByTagName('thead=
+').length=3D=3D=3D0){the=3Ddocument.createElement('thead');the.appendChil=
+d(table.rows[0]);table.insertBefore(the,table.firstChild);}if(table.tHead=
+=3D=3D=3Dnull){table.tHead=3Dtable.getElementsByTagName('thead')[0];}if(t=
+able.tHead.rows.length!=3D1){return;}sortbottomrows=3D[];for(var =
+i=3D0;i<table.rows.length;i++){if(table.rows[i].className.search(/\bsortb=
+ottom\b/)!=3D-1){sortbottomrows[sortbottomrows.length]=3Dtable.rows[i];}}=
+if(sortbottomrows){if(table.tFoot=3D=3D=3Dnull){tfo=3Ddocument.createElem=
+ent('tfoot');table.appendChild(tfo);}for(var =
+ii=3D0;ii<sortbottomrows.length;ii++){tfo.appendChild(sortbottomrows[ii])=
+;}delete =
+sortbottomrows;}headrow=3Dtable.tHead.rows[0].cells;for(i=3D0;i<headrow.l=
+ength;i++){if(!headrow[i].className.match(/\bsorttable_nosort\b/)){mtch=3D=
+headrow[i].className.match(/\bsorttable_([a-z0-9]+)\b/);if(mtch){override=
+=3Dmtch[1];}if(mtch&&typeof =
+sorttable["sort_"+override]=3D=3D'function'){headrow[i].sorttable_sortfun=
+ction=3Dsorttable["sort_"+override];}else{headrow[i].sorttable_sortfuncti=
+on=3Dsorttable.guessType(table,i);}headrow[i].sorttable_columnindex=3Di;h=
+eadrow[i].sorttable_tbody=3Dtable.tBodies[0];addEvent(headrow[i],"click",=
+function(e){theadrow=3Dthis.parentNode;if(this.className.search(/\bsortta=
+ble_sorted\b/)!=3D-1){sorttable.reverse(this.sorttable_tbody);this.classN=
+ame=3Dthis.className.replace('sorttable_sorted','sorttable_sorted_reverse=
+');sortfwdind=3Ddocument.getElementById('sorttable_sortfwdind');if(sortfw=
+dind){sortfwdind.parentNode.removeChild(sortfwdind);}sortrevind=3Ddocumen=
+t.getElementById('sorttable_sortrevind');if(sortrevind){sortrevind.parent=
+Node.removeChild(sortrevind);}sortrevind=3Ddocument.createElement('span')=
+;sortrevind.id=3D"sorttable_sortrevind";sortrevind.innerHTML=3DstIsIE?'&n=
+bsp<font =
+face=3D"webdings">5</font>':'&nbsp;&#x25B4;';this.appendChild(sortrevind)=
+;return;}if(this.className.search(/\bsorttable_sorted_reverse\b/)!=3D-1){=
+sorttable.reverse(this.sorttable_tbody);this.className=3Dthis.className.r=
+eplace('sorttable_sorted_reverse','sorttable_sorted');sortrevind=3Ddocume=
+nt.getElementById('sorttable_sortrevind');if(sortrevind){sortrevind.paren=
+tNode.removeChild(sortrevind);}sortfwdind=3Ddocument.getElementById('sort=
+table_sortfwdind');if(sortfwdind){sortfwdind.parentNode.removeChild(sortf=
+wdind);}sortfwdind=3Ddocument.createElement('span');sortfwdind.id=3D"sort=
+table_sortfwdind";sortfwdind.innerHTML=3DstIsIE?'&nbsp<font =
+face=3D"webdings">6</font>':'&nbsp;&#x25BE;';this.appendChild(sortfwdind)=
+;return;}forEach(theadrow.childNodes,function(cell){if(cell.nodeType=3D=3D=
+1){cell.className=3Dcell.className.replace('sorttable_sorted_reverse','')=
+;cell.className=3Dcell.className.replace('sorttable_sorted','');}});sortf=
+wdind=3Ddocument.getElementById('sorttable_sortfwdind');if(sortfwdind){so=
+rtfwdind.parentNode.removeChild(sortfwdind);}sortrevind=3Ddocument.getEle=
+mentById('sorttable_sortrevind');if(sortrevind){sortrevind.parentNode.rem=
+oveChild(sortrevind);}this.className+=3D' =
+sorttable_sorted';sortfwdind=3Ddocument.createElement('span');sortfwdind.=
+id=3D"sorttable_sortfwdind";sortfwdind.innerHTML=3DstIsIE?'&nbsp<font =
+face=3D"webdings">6</font>':'&nbsp;&#x25BE;';this.appendChild(sortfwdind)=
+;row_array=3D[];col=3Dthis.sorttable_columnindex;rows=3Dthis.sorttable_tb=
+ody.rows;for(var =
+j=3D0;j<rows.length;j++){row_array[row_array.length]=3D[sorttable.getInne=
+rText(rows[j].cells[col]),rows[j]];}row_array.sort(this.sorttable_sortfun=
+ction);tb=3Dthis.sorttable_tbody;for(var =
+j3=3D0;j3<row_array.length;j3++){tb.appendChild(row_array[j3][1]);}delete=
+ =
+row_array;});}}},guessType:function(table,column){sortfn=3Dsorttable.sort=
+_alpha;for(var =
+i=3D0;i<table.tBodies[0].rows.length;i++){text=3Dsorttable.getInnerText(t=
+able.tBodies[0].rows[i].cells[column]);if(text!=3D=3D''){if(text.match(/^=
+-?[=A3$=A4]?[\d,.]+%?$/)){return =
+sorttable.sort_numeric;}possdate=3Dtext.match(sorttable.DATE_RE);if(possd=
+ate){first=3DparseInt(possdate[1]);second=3DparseInt(possdate[2]);if(firs=
+t>12){return sorttable.sort_ddmm;}else if(second>12){return =
+sorttable.sort_mmdd;}else{sortfn=3Dsorttable.sort_ddmm;}}}}return =
+sortfn;},getInnerText:function(node){hasInputs=3D(typeof =
+node.getElementsByTagName=3D=3D'function')&&node.getElementsByTagName('in=
+put').length;if(node.getAttribute("sorttable_customkey")!=3D=3Dnull){retu=
+rn node.getAttribute("sorttable_customkey");}else if(typeof =
+node.textContent!=3D'undefined'&&!hasInputs){return =
+node.textContent.replace(/^\s+|\s+$/g,'');}else if(typeof =
+node.innerText!=3D'undefined'&&!hasInputs){return =
+node.innerText.replace(/^\s+|\s+$/g,'');}else if(typeof =
+node.text!=3D'undefined'&&!hasInputs){return =
+node.text.replace(/^\s+|\s+$/g,'');}else{switch(node.nodeType){case =
+3:if(node.nodeName.toLowerCase()=3D=3D'input'){return =
+node.value.replace(/^\s+|\s+$/g,'');}case 4:return =
+node.nodeValue.replace(/^\s+|\s+$/g,'');break;case 1:case 11:var =
+innerText=3D'';for(var =
+i=3D0;i<node.childNodes.length;i++){innerText+=3Dsorttable.getInnerText(n=
+ode.childNodes[i]);}return =
+innerText.replace(/^\s+|\s+$/g,'');break;default:return'';}}},reverse:fun=
+ction(tbody){newrows=3D[];for(var =
+i=3D0;i<tbody.rows.length;i++){newrows[newrows.length]=3Dtbody.rows[i];}f=
+or(var =
+i=3Dnewrows.length-1;i>=3D0;i--){tbody.appendChild(newrows[i]);}delete =
+newrows;},sort_numeric:function(a,b){aa=3DparseFloat(a[0].replace(/[^0-9.=
+\-]/g,''));if(isNaN(aa)){aa=3D0;}bb=3DparseFloat(b[0].replace(/[^0-9.\-]/=
+g,''));if(isNaN(bb)){bb=3D0;}return =
+aa-bb;},sort_alpha:function(a,b){if(a[0]=3D=3Db[0]){return =
+0;}if(a[0]<b[0]){return-1;}return =
+1;},sort_ddmm:function(a,b){mtch=3Da[0].match(sorttable.DATE_RE);y=3Dmtch=
+[3];m=3Dmtch[2];d=3Dmtch[1];t=3Dmtch[5]+'';if(t.length<1){t=3D'';}if(m.le=
+ngth=3D=3D1){m=3D'0'+m;}if(d.length=3D=3D1){d=3D'0'+d;}dt1=3Dy+m+d+t;mtch=
+=3Db[0].match(sorttable.DATE_RE);y=3Dmtch[3];m=3Dmtch[2];d=3Dmtch[1];t=3D=
+mtch[5]+'';if(t.length<1){t=3D'';}if(m.length=3D=3D1){m=3D'0'+m;}if(d.len=
+gth=3D=3D1){d=3D'0'+d;}dt2=3Dy+m+d+t;if(dt1=3D=3Ddt2){return =
+0;}if(dt1<dt2){return-1;}return =
+1;},sort_mmdd:function(a,b){mtch=3Da[0].match(sorttable.DATE_RE);y=3Dmtch=
+[3];d=3Dmtch[2];m=3Dmtch[1];t=3Dmtch[5]+'';if(m.length=3D=3D1){m=3D'0'+m;=
+}if(d.length=3D=3D1){d=3D'0'+d;}dt1=3Dy+m+d+t;mtch=3Db[0].match(sorttable=
+.DATE_RE);y=3Dmtch[3];d=3Dmtch[2];m=3Dmtch[1];t=3Dmtch[5]+'';if(t.length<=
+1){t=3D'';}if(m.length=3D=3D1){m=3D'0'+m;}if(d.length=3D=3D1){d=3D'0'+d;}=
+dt2=3Dy+m+d+t;if(dt1=3D=3Ddt2){return 0;}if(dt1<dt2){return-1;}return =
+1;},shaker_sort:function(list,comp_func){var b=3D0;var =
+t=3Dlist.length-1;var swap=3Dtrue;while(swap){swap=3Dfalse;for(var =
+i=3Db;i<t;++i){if(comp_func(list[i],list[i+1])>0){var =
+q=3Dlist[i];list[i]=3Dlist[i+1];list[i+1]=3Dq;swap=3Dtrue;}}t--;if(!swap)=
+{break;}for(var i=3Dt;i>b;--i){if(comp_func(list[i],list[i-1])<0){var =
+q=3Dlist[i];list[i]=3Dlist[i-1];list[i-1]=3Dq;swap=3Dtrue;}}b++;}}};if(!A=
+rray.forEach){Array.forEach=3Dfunction(array,block,context){for(var =
+i=3D0;i<array.length;i++){block.call(context,array[i],i,array);}};}Functi=
+on.prototype.forEach=3Dfunction(object,block,context){for(var key in =
+object){if(typeof =
+this.prototype[key]=3D=3D"undefined"){block.call(context,object[key],key,=
+object);}}};String.forEach=3Dfunction(string,block,context){Array.forEach=
+(string.split(""),function(chr,index){block.call(context,chr,index,string=
+);});};var forEach=3Dfunction(object,block,context){if(object){var =
+resolve=3DObject;if(object instanceof Function){resolve=3DFunction;}else =
+if(object.forEach instanceof =
+Function){object.forEach(block,context);return;}else if(typeof =
+object=3D=3D"string"){resolve=3DString;}else if(typeof =
+object.length=3D=3D"number"){resolve=3DArray;}resolve.forEach(object,bloc=
+k,context);}};if('undefined'!=3Dtypeof(window.addEvent)){window.addEvent(=
+window,'load',sorttable.init);}function =
+reinitsort(){sorttable.reinit();}function =
+plugin_tagindex_class(){this.pages=3Dnull;this.page=3Dnull;this.sack=3Dnu=
+ll;this.done=3D1;this.count=3D0;}var pl_si=3Dnew =
+plugin_tagindex_class();pl_si.sack=3Dnew =
+sack(DOKU_BASE+'lib/plugins/tag/ajax.php');pl_si.sack.AjaxFailedAlert=3D'=
+';pl_si.sack.encodeURIString=3Dfalse;function =
+plugin_tagindex_throbber(on){obj=3Ddocument.getElementById('pl_si_throbbe=
+r');if(on){obj.style.visibility=3D'visible';}else{obj.style.visibility=3D=
+'hidden';}}function =
+plugin_tagindex_status(text){obj=3Ddocument.getElementById('pl_si_out');o=
+bj.innerHTML=3Dtext;}function =
+plugin_tagindex_cb_clear(){ok=3Dthis.response;if(ok=3D=3D1){window.setTim=
+eout("plugin_tagindex_index()",1000);}else{plugin_tagindex_status(ok);win=
+dow.setTimeout("plugin_tagindex_clear()",5000);}}function =
+plugin_tagindex_cb_pages(){data=3Dthis.response;pl_si.pages=3Ddata.split(=
+"\n");pl_si.count=3Dpl_si.pages.length;plugin_tagindex_status(pl_si.pages=
+.length+" pages =
+found");pl_si.page=3Dpl_si.pages.shift();window.setTimeout("plugin_tagind=
+ex_clear()",1000);}function =
+plugin_tagindex_cb_index(){ok=3Dthis.response;if(ok=3D=3D1){pl_si.page=3D=
+pl_si.pages.shift();pl_si.done++;window.setTimeout("plugin_tagindex_index=
+()",1000);}else{plugin_tagindex_status(ok);window.setTimeout("plugin_tagi=
+ndex_index()",5000);}}function =
+plugin_tagindex_index(){if(pl_si.page){plugin_tagindex_status('indexing<b=
+r />'+pl_si.page+'<br />('+pl_si.done+'/'+pl_si.count+')<br =
+/>');pl_si.sack.onCompletion=3Dplugin_tagindex_cb_index;pl_si.sack.URLStr=
+ing=3D'';pl_si.sack.runAJAX('call=3Dindexpage&page=3D'+encodeURI(pl_si.pa=
+ge));}else{plugin_tagindex_status('finished');plugin_tagindex_throbber(fa=
+lse);}}function plugin_tagindex_clear(){plugin_tagindex_status('clearing =
+index...');pl_si.sack.onCompletion=3Dplugin_tagindex_cb_clear;pl_si.sack.=
+URLString=3D'';pl_si.sack.runAJAX('call=3Dclearindex');}function =
+plugin_tagindex_go(){document.getElementById('pl_si_gobtn').style.display=
+=3D'none';plugin_tagindex_throbber(true);plugin_tagindex_status('Finding =
+all =
+pages');pl_si.sack.onCompletion=3Dplugin_tagindex_cb_pages;pl_si.sack.URL=
+String=3D'';pl_si.sack.runAJAX('call=3Dpagelist');}function =
+isBlank(s){if((s=3D=3D=3Dnull)||(s.length=3D=3D=3D0)){return =
+true;}for(var i=3D0;i<s.length;i++){var c=3Ds.charAt(i);if((c!=3D' =
+')&&(c!=3D'\n')&&(c!=3D'\t')){return false;}}return true;}function =
+validate(form){if(!form)return;if(isBlank(form.name.value)){form.name.foc=
+us();form.name.style.backgroundColor=3D'#fcc';return =
+false;}else{form.name.style.backgroundColor=3D'#fff';}if(isBlank(form.mai=
+l.value)||form.mail.value.indexOf("@")=3D=3D-1){form.mail.focus();form.ma=
+il.style.backgroundColor=3D'#fcc';return =
+false;}else{form.mail.style.backgroundColor=3D'#fff';}if(isBlank(form.tex=
+t.value)){form.text.focus();form.text.style.borderColor=3D'#fcc';return =
+false;}}function =
+discussion_ajax_preview(){if(!document.getElementById)return;var =
+textarea=3D$('discussion__comment_text');var =
+comment=3Dtextarea.value;if(!comment)return;var =
+preview=3D$('discussion__comment_preview');var =
+wikisyntaxok=3D$('discussion__comment_wikisyntaxok');var ajax=3Dnew =
+sack(DOKU_BASE+'lib/plugins/discussion/ajax.php');ajax_qsearch.sack.AjaxF=
+ailedAlert=3D'';ajax_qsearch.sack.encodeURIString=3Dfalse;ajax.onCompleti=
+on=3Dfunction(){var =
+data=3Dthis.response;if(data=3D=3D=3D''){return;}preview.style.visibility=
+=3D'hidden';preview.innerHTML=3Ddata;preview.style.visibility=3D'visible'=
+;};ajax.runAJAX('comment=3D'+comment+'&wikisyntaxok=3D'+wikisyntaxok.valu=
+e);}addInitEvent(function(){if(typeof =
+window.initToolbar=3D=3D'function'){initToolbar("discussion__comment_tool=
+bar","discussion__comment_text",toolbar)}});addInitEvent(function(){var =
+btn=3D$('discussion__btn_preview');if(!btn)return;addEvent(btn,'click',di=
+scussion_ajax_preview);});addInitEvent(function(){var =
+form=3D$('discussion__comment_form');if(!form)return;addEvent(form,'submi=
+t',function(){return =
+validate(form);});});addInitEvent(function(){scrollToMarker();});addInitE=
+vent(function(){focusMarker();});=0A=
+
+------=_NextPart_000_0007_01CD038F.AAB75280--

@@ -94,11 +94,24 @@ define Package/dropbear/install
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/dropbear.init $(1)/etc/init.d/dropbear
 	$(INSTALL_DIR) $(1)/usr/lib/opkg/info
+	########### ctc 20110516 modified ###########
+#	$(INSTALL_DIR) $(1)/etc/dropbear
+#	touch $(1)/etc/dropbear/dropbear_rsa_host_key
+#	touch $(1)/etc/dropbear/dropbear_dss_host_key
 	echo /etc/dropbear/dropbear_rsa_host_key > $(1)/usr/lib/opkg/info/dropbear.conffiles
 	echo /etc/dropbear/dropbear_dss_host_key >> $(1)/usr/lib/opkg/info/dropbear.conffiles
+	# to use /tmp/etc/config/dropbear_key to save keys
+	ln -sf /tmp/etc/config/dropbear_key $(1)/etc/dropbear
 	$(INSTALL_DIR) $(1)/usr/sbin
+	$(INSTALL_BIN) ./files/usr/sbin/dropbear.sh $(1)/usr/sbin
 	$(INSTALL_DIR) $(1)/etc/config/cert
 	$(INSTALL_DIR) $(1)/etc/config/dropbear_key
+	$(INSTALL_DATA) ./files/authorized_keys $(1)/etc/config/cert/
+	$(INSTALL_DATA) ./files/dropbear_dss_host_key $(1)/etc/config/cert/
+	$(INSTALL_DATA) ./files/dropbear_rsa_host_key $(1)/etc/config/cert/
+	#$(INSTALL_DATA) ./files/authorized_keys $(1)/etc/config/dropbear_key/
+	#chmod 600 $(1)/etc/config/dropbear_key/authorized_keys
+	#############################################
 endef
 
 define Package/dropbearconvert/install

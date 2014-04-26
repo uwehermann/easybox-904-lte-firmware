@@ -1,0 +1,1869 @@
+From: <¥Ñ Windows Internet Explorer 7 Àx¦s>
+Subject: OpenWrt / dropbear and authorized_keys
+Date: Fri, 16 Mar 2012 16:15:28 +0800
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----=_NextPart_000_0023_01CD0390.00AB1B40"
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6109
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0023_01CD0390.00AB1B40
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: https://forum.openwrt.org/viewtopic.php?pid=91671
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" =
+"http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML dir=3Dltr =
+xmlns=3D"http://www.w3.org/1999/xhtml"><HEAD><TITLE>OpenWrt / dropbear =
+and authorized_keys</TITLE>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Diso-8859-1"><LINK=20
+href=3D"https://forum.openwrt.org/style/OpenWrt.css" type=3Dtext/css =
+rel=3Dstylesheet>
+<SCRIPT src=3D"https://forum.openwrt.org/style/imports/minmax.js"=20
+type=3Dtext/javascript></SCRIPT>
+
+<META content=3D"MSHTML 6.00.6000.17102" name=3DGENERATOR></HEAD>
+<BODY>
+<DIV id=3Dpunwrap>
+<DIV class=3Dpun id=3Dpunviewtopic>
+<DIV class=3Dblock id=3Dbrdheader>
+<DIV class=3Dbox>
+<DIV class=3Dinbox id=3Dbrdtitle>
+<H1><SPAN>OpenWrt</SPAN></H1>
+<P><SPAN>Wireless Freedom</SPAN></P></DIV>
+<DIV class=3Dinbox id=3Dbrdmenu>
+<UL>
+  <LI id=3Dnavindex><A =
+href=3D"https://forum.openwrt.org/index.php">Index</A>=20
+  <LI id=3Dnavuserlist><A =
+href=3D"https://forum.openwrt.org/userlist.php">User=20
+  list</A>=20
+  <LI id=3Dnavsearch><A =
+href=3D"https://forum.openwrt.org/search.php">Search</A>=20
+  <LI id=3Dnavregister><A=20
+  href=3D"https://forum.openwrt.org/register.php">Register</A>=20
+  <LI id=3Dnavlogin><A =
+href=3D"https://forum.openwrt.org/login.php">Login</A>=20
+</LI></UL></DIV>
+<DIV class=3Dinbox id=3Dbrdwelcome>
+<P>You are not logged in.</P></DIV></DIV></DIV>
+<DIV class=3Dblock id=3Dannounce>
+<H2><SPAN>Announcement</SPAN></H2>
+<DIV class=3Dbox>
+<DIV class=3Dinbox>
+<DIV>Latest: <A =
+href=3D"http://backfire.openwrt.org/10.03.1">10.03.1</A>. Please=20
+read before posting - <BR><A =
+href=3D"http://openwrt.org/support.html">Forum=20
+Rules</A> | <B><A =
+href=3D"http://forum.openwrt.org/viewtopic.php?id=3D3474">Common=20
+mistakes</A></B> | <A =
+href=3D"http://wiki.openwrt.org/">Documentation</A> | <B><A=20
+href=3D"http://wiki.openwrt.org/doc/faq">Faq</A></B> | <A=20
+href=3D"https://dev.openwrt.org/report/11">Bug =
+reports</A></DIV></DIV></DIV></DIV>
+<DIV class=3Dlinkst>
+<DIV class=3Dinbox>
+<P class=3D"pagelink conl">Pages: <STRONG>1</STRONG></P>
+<P class=3D"postlink conr"></P>
+<UL>
+  <LI><A href=3D"https://forum.openwrt.org/index.php">Index</A>
+  <LI>&nbsp;=BB&nbsp;<A=20
+  =
+href=3D"https://forum.openwrt.org/viewforum.php?id=3D1">WhiteRussian</A>
+  <LI>&nbsp;=BB&nbsp;dropbear and authorized_keys</LI></UL>
+<DIV class=3Dclearer></DIV></DIV></DIV>
+<DIV class=3D"blockpost rowodd firstpost" id=3Dp840>
+<H2><SPAN><SPAN class=3Dconr><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D840#p840">#1</A>&nb=
+sp;</SPAN><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D840#p840">2004-06-2=
+5=20
+08:42:01</A></SPAN></H2>
+<DIV class=3Dbox>
+<DIV class=3Dinbox>
+<DIV class=3Dpostleft>
+<DL>
+  <DT><STRONG><A=20
+  =
+href=3D"https://forum.openwrt.org/profile.php?id=3D147">Shining</A></STRO=
+NG>=20
+  <DD class=3Dusertitle><STRONG>Member</STRONG>=20
+  <DD class=3Dpostavatar>
+  <DD>From: Germany=20
+  <DD>Registered: 2004-06-05=20
+  <DD>Posts: 49=20
+  <DD class=3Dusercontacts><A href=3D"http://syneticon.net/">Website</A> =
+
+</DD></DL></DIV>
+<DIV class=3Dpostright>
+<H3>dropbear and authorized_keys</H3>
+<DIV class=3Dpostmsg>
+<P>Hello folks, <BR><BR>after some tries I decided to ask here: <BR>does =
+the=20
+dropbear build found on <A=20
+href=3D"http://openwrt.ksilebo.net/ipkg">http://openwrt.ksilebo.net/ipkg<=
+/A>=20
+support pulic key authentication? If so, where to put authorized_keys =
+and what=20
+type should the keys be of? I tried rsa and dsa in several directories,=20
+including ~/.ssh, to no avail.</P></DIV>
+<DIV class=3Dpostsignature>
+<HR>
+dj</DIV></DIV>
+<DIV class=3Dclearer></DIV>
+<DIV class=3Dpostfootleft>
+<P>Offline</P></DIV>
+<DIV class=3Dpostfootright>
+<DIV>&nbsp;</DIV></DIV></DIV></DIV></DIV>
+<DIV class=3D"blockpost roweven" id=3Dp845>
+<H2><SPAN><SPAN class=3Dconr><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D845#p845">#2</A>&nb=
+sp;</SPAN><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D845#p845">2004-06-2=
+5=20
+13:42:41</A></SPAN></H2>
+<DIV class=3Dbox>
+<DIV class=3Dinbox>
+<DIV class=3Dpostleft>
+<DL>
+  <DT><STRONG><A=20
+  =
+href=3D"https://forum.openwrt.org/profile.php?id=3D209">Fabe</A></STRONG>=
+=20
+  <DD class=3Dusertitle><STRONG>Member</STRONG>=20
+  <DD class=3Dpostavatar>
+  <DD>Registered: 2004-06-25=20
+  <DD>Posts: 23=20
+  <DD class=3Dusercontacts><A =
+href=3D"http://www.wh-netz.de/">Website</A>=20
+</DD></DL></DIV>
+<DIV class=3Dpostright>
+<H3>Re: dropbear and authorized_keys</H3>
+<DIV class=3Dpostmsg>
+<P>Hi, <BR><BR>Dropbear does support it. <BR>Check yor home directory of =
+root in=20
+/etc/passwd in standrd openwrt it is /tmp/ <BR><BR>Then put your =
+authorized_keys=20
+file in /tmp/.ssh/ as usual. <BR><BR>Mine start with ssh-rsa and is =
+working.=20
+<BR><BR>Greetings, <BR>Fabe</P></DIV></DIV>
+<DIV class=3Dclearer></DIV>
+<DIV class=3Dpostfootleft>
+<P>Offline</P></DIV>
+<DIV class=3Dpostfootright>
+<DIV>&nbsp;</DIV></DIV></DIV></DIV></DIV>
+<DIV class=3D"blockpost rowodd" id=3Dp931>
+<H2><SPAN><SPAN class=3Dconr><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D931#p931">#3</A>&nb=
+sp;</SPAN><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D931#p931">2004-06-3=
+0=20
+18:08:16</A></SPAN></H2>
+<DIV class=3Dbox>
+<DIV class=3Dinbox>
+<DIV class=3Dpostleft>
+<DL>
+  <DT><STRONG><A=20
+  =
+href=3D"https://forum.openwrt.org/profile.php?id=3D147">Shining</A></STRO=
+NG>=20
+  <DD class=3Dusertitle><STRONG>Member</STRONG>=20
+  <DD class=3Dpostavatar>
+  <DD>From: Germany=20
+  <DD>Registered: 2004-06-05=20
+  <DD>Posts: 49=20
+  <DD class=3Dusercontacts><A href=3D"http://syneticon.net/">Website</A> =
+
+</DD></DL></DIV>
+<DIV class=3Dpostright>
+<H3>Re: dropbear and authorized_keys</H3>
+<DIV class=3Dpostmsg>
+<BLOCKQUOTE>
+  <DIV class=3Dincqbox>
+  <P>Then put your authorized_keys file in /tmp/.ssh/ as usual.=20
+<BR></P></DIV></BLOCKQUOTE>
+<P>That's exactly what I tried first. Well, for some reason, it does not =
+work=20
+for me - dropbear does not accept PK authentication. <BR><BR>Any ideas =
+on how to=20
+troubleshoot this situation? Dropbear seems to be compiled without =
+logging=20
+support, at least it does not write any messages to the log or anywhere=20
+else.</P></DIV>
+<DIV class=3Dpostsignature>
+<HR>
+dj</DIV></DIV>
+<DIV class=3Dclearer></DIV>
+<DIV class=3Dpostfootleft>
+<P>Offline</P></DIV>
+<DIV class=3Dpostfootright>
+<DIV>&nbsp;</DIV></DIV></DIV></DIV></DIV>
+<DIV class=3D"blockpost roweven" id=3Dp987>
+<H2><SPAN><SPAN class=3Dconr><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D987#p987">#4</A>&nb=
+sp;</SPAN><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D987#p987">2004-07-0=
+5=20
+16:18:59</A></SPAN></H2>
+<DIV class=3Dbox>
+<DIV class=3Dinbox>
+<DIV class=3Dpostleft>
+<DL>
+  <DT><STRONG><A=20
+  =
+href=3D"https://forum.openwrt.org/profile.php?id=3D228">stargo</A></STRON=
+G>=20
+  <DD class=3Dusertitle><STRONG>Member</STRONG>=20
+  <DD class=3Dpostavatar>
+  <DD>Registered: 2004-07-04=20
+  <DD>Posts: 4 </DD></DL></DIV>
+<DIV class=3Dpostright>
+<H3>Re: dropbear and authorized_keys</H3>
+<DIV class=3Dpostmsg>
+<P>See if roots home and all directories above (including /) are owned =
+by root.=20
+Some packages change the owner of /, which prevents dropbear from =
+working.=20
+<BR><BR>Simply try a "chown root:root /" and see if it =
+helps.</P></DIV></DIV>
+<DIV class=3Dclearer></DIV>
+<DIV class=3Dpostfootleft>
+<P>Offline</P></DIV>
+<DIV class=3Dpostfootright>
+<DIV>&nbsp;</DIV></DIV></DIV></DIV></DIV>
+<DIV class=3D"blockpost rowodd" id=3Dp1010>
+<H2><SPAN><SPAN class=3Dconr><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D1010#p1010">#5</A>&=
+nbsp;</SPAN><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D1010#p1010">2004-07=
+-07=20
+13:57:37</A></SPAN></H2>
+<DIV class=3Dbox>
+<DIV class=3Dinbox>
+<DIV class=3Dpostleft>
+<DL>
+  <DT><STRONG><A=20
+  =
+href=3D"https://forum.openwrt.org/profile.php?id=3D147">Shining</A></STRO=
+NG>=20
+  <DD class=3Dusertitle><STRONG>Member</STRONG>=20
+  <DD class=3Dpostavatar>
+  <DD>From: Germany=20
+  <DD>Registered: 2004-06-05=20
+  <DD>Posts: 49=20
+  <DD class=3Dusercontacts><A href=3D"http://syneticon.net/">Website</A> =
+
+</DD></DL></DIV>
+<DIV class=3Dpostright>
+<H3>Re: dropbear and authorized_keys</H3>
+<DIV class=3Dpostmsg>
+<P>Well, to close the discussion, I found a way how to get it to work: =
+<BR><BR>-=20
+keys must be DSA <BR>- the ~/.ssh directory has to be chmod 700 <BR>-=20
+authorized_keys and authorized_keys2 must be present <BR>- the key files =
+must be=20
+chmod 600 <BR><BR>the ~/.ssh directory may be a symlink, as well as the =
+key=20
+files, so what I did was <BR><BR>[precreate id_dsa and id_dsa.pub by =
+ssh-keygen=20
+-t dsa and copy id_dsa.pub to the OpenWRT box] <BR><BR>mkdir /etc/.ssh =
+<BR>chmod=20
+700 /etc/.ssh <BR>cp id_dsa.pub /etc/.ssh/authorized_keys <BR>chmod 600=20
+/etc/.ssh/authorized_keys <BR><BR>ln -s /etc/.ssh/authorized_keys=20
+/etc/.ssh/authorized_keys2 <BR><BR>echo -e "#!/bin/sh\n\nln -s /etc/.ssh =
+
+/tmp/.ssh"&gt;/etc/init.d/S55sshpubkeyfix <BR><BR>chmod 755=20
+/etc/init.d/S55sshpubkeyfix</P></DIV>
+<DIV class=3Dpostsignature>
+<HR>
+dj</DIV></DIV>
+<DIV class=3Dclearer></DIV>
+<DIV class=3Dpostfootleft>
+<P>Offline</P></DIV>
+<DIV class=3Dpostfootright>
+<DIV>&nbsp;</DIV></DIV></DIV></DIV></DIV>
+<DIV class=3D"blockpost roweven" id=3Dp1013>
+<H2><SPAN><SPAN class=3Dconr><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D1013#p1013">#6</A>&=
+nbsp;</SPAN><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D1013#p1013">2004-07=
+-07=20
+17:43:55</A></SPAN></H2>
+<DIV class=3Dbox>
+<DIV class=3Dinbox>
+<DIV class=3Dpostleft>
+<DL>
+  <DT><STRONG><A=20
+  =
+href=3D"https://forum.openwrt.org/profile.php?id=3D228">stargo</A></STRON=
+G>=20
+  <DD class=3Dusertitle><STRONG>Member</STRONG>=20
+  <DD class=3Dpostavatar>
+  <DD>Registered: 2004-07-04=20
+  <DD>Posts: 4 </DD></DL></DIV>
+<DIV class=3Dpostright>
+<H3>Re: dropbear and authorized_keys</H3>
+<DIV class=3Dpostmsg>
+<P>I have the following permissions, and it works fine (using DSA-keys): =
+
+<BR></P>
+<DIV class=3Dcodebox>
+<DIV class=3Dincqbox>
+<H4>Code:</H4>
+<DIV class=3Dscrollbox style=3D"HEIGHT: 13.5em"><PRE>wrt45g [~]# ls -ald =
+/ /root /root/.ssh /root/.ssh/*
+drwxr-xr-x    1 root     root            0 Jul  4 12:13 /
+drwxr-xr-x    1 root     root            0 Jul  2 18:31 /root
+drwxr-xr-x    1 root     root            0 Jul  2 18:14 /root/.ssh
+-rw-r--r--    1 root     root          607 Jan  1  2000 =
+/root/.ssh/authorized_keys
+lrwxrwxrwx    1 root     root           17 Jul  2 18:14 =
+/root/.ssh/known_hosts -&gt; /tmp/.known_hosts
+</PRE></DIV></DIV></DIV></DIV></DIV>
+<DIV class=3Dclearer></DIV>
+<DIV class=3Dpostfootleft>
+<P>Offline</P></DIV>
+<DIV class=3Dpostfootright>
+<DIV>&nbsp;</DIV></DIV></DIV></DIV></DIV>
+<DIV class=3D"blockpost rowodd" id=3Dp1054>
+<H2><SPAN><SPAN class=3Dconr><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D1054#p1054">#7</A>&=
+nbsp;</SPAN><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D1054#p1054">2004-07=
+-08=20
+18:26:59</A></SPAN></H2>
+<DIV class=3Dbox>
+<DIV class=3Dinbox>
+<DIV class=3Dpostleft>
+<DL>
+  <DT><STRONG><A=20
+  =
+href=3D"https://forum.openwrt.org/profile.php?id=3D130">devnull</A></STRO=
+NG>=20
+  <DD class=3Dusertitle><STRONG>Member</STRONG>=20
+  <DD class=3Dpostavatar>
+  <DD>From: Germany=20
+  <DD>Registered: 2004-05-29=20
+  <DD>Posts: 8 </DD></DL></DIV>
+<DIV class=3Dpostright>
+<H3>Re: dropbear and authorized_keys</H3>
+<DIV class=3Dpostmsg>
+<BLOCKQUOTE>
+  <DIV class=3Dincqbox>
+  <BLOCKQUOTE>
+    <DIV class=3Dincqbox>
+    <P>Then put your authorized_keys file in /tmp/.ssh/ as usual.=20
+  <BR></P></DIV></BLOCKQUOTE>
+  <P>[...] <BR><BR>Any ideas on how to troubleshoot this situation? =
+Dropbear=20
+  seems to be compiled without logging support, at least it does not =
+write any=20
+  messages to the log or anywhere else.</P></DIV></BLOCKQUOTE>
+<P>If you use OpenSSH to log into your WRT, it's very simple. Log in to =
+your box=20
+with the following command: <BR><BR>ssh -v &lt;OpenWRT Box&gt; =
+<BR><BR>and your=20
+OpenSSH client should tell you, what dropbear doesn't like. The dropbear =
+binary=20
+is complied (at least mine is) with logging so stderr. If you modify the =
+
+S50services like this: <BR><BR>/usr/bin/dropbear 2&gt;/tmp/dropbear.log=20
+<BR><BR>you will get dropbear logging in /tmp/dropbear.</P></DIV></DIV>
+<DIV class=3Dclearer></DIV>
+<DIV class=3Dpostfootleft>
+<P>Offline</P></DIV>
+<DIV class=3Dpostfootright>
+<DIV>&nbsp;</DIV></DIV></DIV></DIV></DIV>
+<DIV class=3D"blockpost roweven" id=3Dp1062>
+<H2><SPAN><SPAN class=3Dconr><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D1062#p1062">#8</A>&=
+nbsp;</SPAN><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D1062#p1062">2004-07=
+-08=20
+21:11:52</A></SPAN></H2>
+<DIV class=3Dbox>
+<DIV class=3Dinbox>
+<DIV class=3Dpostleft>
+<DL>
+  <DT><STRONG><A=20
+  =
+href=3D"https://forum.openwrt.org/profile.php?id=3D209">Fabe</A></STRONG>=
+=20
+  <DD class=3Dusertitle><STRONG>Member</STRONG>=20
+  <DD class=3Dpostavatar>
+  <DD>Registered: 2004-06-25=20
+  <DD>Posts: 23=20
+  <DD class=3Dusercontacts><A =
+href=3D"http://www.wh-netz.de/">Website</A>=20
+</DD></DL></DIV>
+<DIV class=3Dpostright>
+<H3>Re: dropbear and authorized_keys</H3>
+<DIV class=3Dpostmsg>
+<P>Just in case someone wants a new host-key already inside the bin =
+images, for=20
+example when building multiple images: <BR><BR>my customize.mk:=20
+<BR><BR>CUST_DIR:=3D$(SOURCE_DIR)/customize =
+<BR>ROOT_DIR:=3D$(BUILD_DIR)/root=20
+<BR><BR>customize: <BR>&nbsp; &nbsp; &nbsp; &nbsp; cp -af $(CUST_DIR)/*=20
+$(ROOT_DIR)/ <BR>&nbsp; &nbsp; &nbsp; &nbsp; rm -f=20
+$(CUST_DIR)/etc/dropbear/dropbear_dss_host_key <BR>&nbsp; &nbsp; &nbsp; =
+&nbsp;=20
+dropbearkey -t dss -f=20
+$(CUST_DIR)/etc/dropbear/dropbear_dss_host_key</P></DIV></DIV>
+<DIV class=3Dclearer></DIV>
+<DIV class=3Dpostfootleft>
+<P>Offline</P></DIV>
+<DIV class=3Dpostfootright>
+<DIV>&nbsp;</DIV></DIV></DIV></DIV></DIV>
+<DIV class=3D"blockpost rowodd" id=3Dp27323>
+<H2><SPAN><SPAN class=3Dconr><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D27323#p27323">#9</A=
+>&nbsp;</SPAN><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D27323#p27323">2006-=
+05-16=20
+18:06:00</A></SPAN></H2>
+<DIV class=3Dbox>
+<DIV class=3Dinbox>
+<DIV class=3Dpostleft>
+<DL>
+  <DT><STRONG><A=20
+  =
+href=3D"https://forum.openwrt.org/profile.php?id=3D5886">Msquared</A></ST=
+RONG>=20
+  <DD class=3Dusertitle><STRONG>Member</STRONG>=20
+  <DD class=3Dpostavatar>
+  <DD>Registered: 2006-05-16=20
+  <DD>Posts: 1 </DD></DL></DIV>
+<DIV class=3Dpostright>
+<H3>Re: dropbear and authorized_keys</H3>
+<DIV class=3Dpostmsg>
+<P>Note that the current OpenWRT now expects the authorized_keys file in =
+
+<EM>/etc/dropbear</EM>.&nbsp; I'm putting this here because when I =
+searched=20
+Google for "authorized_keys openwrt", this page came up first.&nbsp; =
+Hopefully=20
+the next person to do this will find this updated information.&nbsp; =
+<IMG=20
+height=3D15 alt=3Dbig_smile=20
+src=3D"https://forum.openwrt.org/img/smilies/big_smile.png" =
+width=3D15><BR><BR>Of=20
+course the current docs also give this information.&nbsp; Oops.&nbsp; =
+<IMG=20
+height=3D15 alt=3Droll =
+src=3D"https://forum.openwrt.org/img/smilies/roll.png"=20
+width=3D15><BR><BR>&nbsp; <A=20
+href=3D"http://wiki.openwrt.org/OpenWrtDocs/Configuration">http://wiki.op=
+enwrt.org/OpenWrtDocs/Configuration</A></P></DIV></DIV>
+<DIV class=3Dclearer></DIV>
+<DIV class=3Dpostfootleft>
+<P>Offline</P></DIV>
+<DIV class=3Dpostfootright>
+<DIV>&nbsp;</DIV></DIV></DIV></DIV></DIV>
+<DIV class=3D"blockpost roweven" id=3Dp91641>
+<H2><SPAN><SPAN class=3Dconr><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D91641#p91641">#10</=
+A>&nbsp;</SPAN><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D91641#p91641">2009-=
+07-21=20
+01:25:16</A></SPAN></H2>
+<DIV class=3Dbox>
+<DIV class=3Dinbox>
+<DIV class=3Dpostleft>
+<DL>
+  <DT><STRONG><A=20
+  =
+href=3D"https://forum.openwrt.org/profile.php?id=3D9856">bishopolis</A></=
+STRONG>=20
+  <DD class=3Dusertitle><STRONG>Member</STRONG>=20
+  <DD class=3Dpostavatar>
+  <DD>Registered: 2007-02-21=20
+  <DD>Posts: 41=20
+  <DD class=3Dusercontacts><A href=3D"http://vtun.info/">Website</A> =
+</DD></DL></DIV>
+<DIV class=3Dpostright>
+<H3>Re: dropbear and authorized_keys</H3>
+<DIV class=3Dpostmsg>
+<BLOCKQUOTE>
+  <DIV class=3Dincqbox>
+  <H4>Msquared wrote:</H4>
+  <P>I'm putting this here because when I searched Google for =
+"authorized_keys=20
+  openwrt", this page came up first.&nbsp; Hopefully the next person to =
+do this=20
+  will find this updated information.</P></DIV></BLOCKQUOTE>
+<P>Yeah.&nbsp; Me too.&nbsp; The documentation mentioned above is now a =
+broken=20
+link.&nbsp; If anyone has a copy or reference to the equivalent =
+documentation=20
+anywhere else, I'd appreciate it.&nbsp; Sadly, Kamikaze has no hope of=20
+supporting remote flashing, so it's of no use to me, and I still need to =
+
+maintain a bunch of WRTs.</P></DIV></DIV>
+<DIV class=3Dclearer></DIV>
+<DIV class=3Dpostfootleft>
+<P>Offline</P></DIV>
+<DIV class=3Dpostfootright>
+<DIV>&nbsp;</DIV></DIV></DIV></DIV></DIV>
+<DIV class=3D"blockpost rowodd" id=3Dp91671>
+<H2><SPAN><SPAN class=3Dconr><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D91671#p91671">#11</=
+A>&nbsp;</SPAN><A=20
+href=3D"https://forum.openwrt.org/viewtopic.php?pid=3D91671#p91671">2009-=
+07-21=20
+12:30:12</A></SPAN></H2>
+<DIV class=3Dbox>
+<DIV class=3Dinbox>
+<DIV class=3Dpostleft>
+<DL>
+  <DT><STRONG><A=20
+  =
+href=3D"https://forum.openwrt.org/profile.php?id=3D6830">bmork</A></STRON=
+G>=20
+  <DD class=3Dusertitle><STRONG>Member</STRONG>=20
+  <DD class=3Dpostavatar>
+  <DD>Registered: 2006-07-31=20
+  <DD>Posts: 9 </DD></DL></DIV>
+<DIV class=3Dpostright>
+<H3>Re: dropbear and authorized_keys</H3>
+<DIV class=3Dpostmsg>
+<BLOCKQUOTE>
+  <DIV class=3Dincqbox>
+  <H4>bishopolis wrote:</H4>
+  <BLOCKQUOTE>
+    <DIV class=3Dincqbox>
+    <H4>Msquared wrote:</H4>
+    <P>I'm putting this here because when I searched Google for =
+"authorized_keys=20
+    openwrt", this page came up first.&nbsp; Hopefully the next person =
+to do=20
+    this will find this updated information.</P></DIV></BLOCKQUOTE>
+  <P>Yeah.&nbsp; Me too.&nbsp; The documentation mentioned above is now =
+a broken=20
+  link.&nbsp; If anyone has a copy or reference to the equivalent =
+documentation=20
+  anywhere else, I'd appreciate it.&nbsp; Sadly, Kamikaze has no hope of =
+
+  supporting remote flashing, so it's of no use to me, and I still need =
+to=20
+  maintain a bunch of WRTs.</P></DIV></BLOCKQUOTE>
+<P>The page is now found at <A=20
+href=3D"http://oldwiki.openwrt.org/OpenWrtDocs(2f)WhiteRussian(2f)Configu=
+ration.html">http://oldwiki.openwrt.org/OpenWrtDocs(2f)WhiteRussian(2f)Co=
+nfiguration.html</A><BR>linking=20
+to <A=20
+href=3D"http://oldwiki.openwrt.org/DropbearPublicKeyAuthenticationHowto.h=
+tml">http://oldwiki.openwrt.org/DropbearPublicKeyAuthenticationHowto.html=
+</A>=20
+for the dropbear config<BR><BR>I don't understand what's so difficult =
+about=20
+maintaining stable URIs, but it's obviously not important to this=20
+project....<BR><BR><BR>Bj=F8rn</P></DIV></DIV>
+<DIV class=3Dclearer></DIV>
+<DIV class=3Dpostfootleft>
+<P>Offline</P></DIV>
+<DIV class=3Dpostfootright>
+<DIV>&nbsp;</DIV></DIV></DIV></DIV></DIV>
+<DIV class=3Dpostlinksb>
+<DIV class=3Dinbox>
+<P class=3D"postlink conr"></P>
+<P class=3D"pagelink conl">Pages: <STRONG>1</STRONG></P>
+<UL>
+  <LI><A href=3D"https://forum.openwrt.org/index.php">Index</A>
+  <LI>&nbsp;=BB&nbsp;<A=20
+  =
+href=3D"https://forum.openwrt.org/viewforum.php?id=3D1">WhiteRussian</A>
+  <LI>&nbsp;=BB&nbsp;dropbear and authorized_keys</LI></UL>
+<DIV class=3Dclearer></DIV></DIV></DIV>
+<DIV class=3Dblock id=3Dbrdfooter>
+<H2><SPAN>Board footer</SPAN></H2>
+<DIV class=3Dbox>
+<DIV class=3Dinbox>
+<DIV class=3Dconl>
+<FORM id=3Dqjump action=3Dviewforum.php method=3Dget>
+<DIV><LABEL>Jump to <BR><SELECT=20
+onchange=3D"window.location=3D('viewforum.php?id=3D'+this.options[this.se=
+lectedIndex].value)"=20
+name=3Did> <OPTGROUP label=3DNews> <OPTION value=3D11>News</OPTION> =
+</OPTGROUP>=20
+  <OPTGROUP label=3DGeneral> <OPTION value=3D10>General =
+Discussion</OPTION>=20
+  </OPTGROUP> <OPTGROUP label=3DCommunity> <OPTION value=3D17>Howtos and =
+
+    Documentation</OPTION> <OPTION value=3D16>Community Releases /=20
+    Announcements</OPTION> <OPTION value=3D15>Hardware Hacking</OPTION> =
+<OPTION=20
+    value=3D14>(un)wanted hardware</OPTION> </OPTGROUP> <OPTGROUP=20
+    label=3DWhiteRussian> <OPTION value=3D1 =
+selected>WhiteRussian</OPTION> <OPTION=20
+    value=3D2>Developers Only</OPTION> </OPTGROUP> <OPTGROUP=20
+  label=3D"(Archived forums - read only)"> <OPTION value=3D8>* =
+Moderated</OPTION>=20
+    <OPTION value=3D3>NetGear DG834G</OPTION> <OPTION =
+value=3D4>GIGABYTE</OPTION>=20
+  </OPTGROUP></SELECT> <INPUT accessKey=3Dg type=3Dsubmit value=3D" Go =
+">=20
+</LABEL></DIV></FORM></DIV>
+<P class=3Dconr>Powered by <A =
+href=3D"http://www.punbb.org/">PunBB</A><BR>=A9=20
+Copyright 2002=962005 Rickard Andersson</P>
+<DIV class=3Dclearer></DIV></DIV></DIV></DIV></DIV></DIV></BODY></HTML>
+
+------=_NextPart_000_0023_01CD0390.00AB1B40
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: https://forum.openwrt.org/img/smilies/big_smile.png
+
+iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAMAAAAMCGV4AAAABGdBTUEAAK/INwWK6QAAABl0RVh0
+U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAADAUExURfz7Kv34Kv3zKv71Rv7tKv7xRv7x
+Yv7rO/7vYv/gAP/jDv/jGf/lKuXNJ+fQOTo2F//tZ//ve//dAP/hPv/te//XAP/bKv/jVv/qe0M9
+If/MAP/aRv/gY//VVv/YYv/ge+CoAP/FKv+5AOCeAP/JRuSbAOGaAMaHAOOgDuSkGTAmEP/RZ/mk
+APGfAOicACYZANWeLt2jMfW5Rf7MYjovGPixKv///93d3bGxsXt7ezs7Ozg4OBEREQsLCwAAAP//
+/337pOQAAABAdFJOU///////////////////////////////////////////////////////////
+/////////////////////////wDCe7FEAAAAmklEQVR42lTPxxaCMBAF0ICg2MXesSA2NPZAIpP/
+/ysziR4Pb5U7WcwbIjGA0S+CGnUG01n4AOOs0fL97jA4XjM01L0i5x7n8/sFlJsltyCEK8QkvB0k
+gapjW8SynVp/+dwDgcr7n51yGdjLhEGk3IY00UxS7V7+X9LfQJHi/sVYDxhstrhfwnql+yNNfxrH
+p3NEv/1z930EGABjgit3byyZNAAAAABJRU5ErkJggg==
+
+------=_NextPart_000_0023_01CD0390.00AB1B40
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: https://forum.openwrt.org/img/smilies/roll.png
+
+iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAMAAAAMCGV4AAAABGdBTUEAAK/INwWK6QAAABl0RVh0
+U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAADAUExURf/WAMaFAP/hAP/uezUrFP7pAPKg
+AP+6AMu8AN/UYiQaAAAAAP/dAMrCAOmcAP///yoqKuGaAJCQkGZmZmJiYkZGRhEREf7lAP6sAP/f
+APeiAOSbAP7jGf7sANjIO//VVv/qe8u3AP/EAP/uZTo2F9KiRdnPRv/jDv/FPvikAOXNJ+fQOUM9
+IeDQYv/RZ9+2Yv/he9qhMP/gY+CpAMyQAP+0AP/YAOOgDuSkGf/hPuCdAP/jVv+/AP/MAAkJCQAA
+ACpSbvcAAABAdFJOU///////////////////////////////////////////////////////////
+/////////////////////////wDCe7FEAAAAqUlEQVR42lSP1xKDMAwETTNFgCkmlIQ00jvpFf7/
+r2JBXnKj2dE+6URqDGCajaBtHq/jYKFC69W6UBRleNiVFTqsTM7NYsv5vgThk34QRcEMMVVrAj2P
+eWIa3IHAvMNEWtyEy0bIWOggJF+4HRsATj4COFP0axpruRan5J24wmuL2LIs22QM1Lfw/ulDmr5Z
+V8L7NTx1Xb8kFLXtby0z6vrWr//ff18BBgCo+RmWmKtUOAAAAABJRU5ErkJggg==
+
+------=_NextPart_000_0023_01CD0390.00AB1B40
+Content-Type: text/css;
+	charset="big5"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: https://forum.openwrt.org/imports/base.css
+
+.pun TABLE {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.pun DIV {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.pun FORM {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.pun P {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.pun H1 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.pun H2 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.pun H3 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.pun H4 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.pun PRE {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.pun BLOCKQUOTE {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.pun UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.pun OL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.pun LI {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.pun DL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.pun DT {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.pun DD {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.pun TH {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.pun TD {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.pun FIELDSET {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.pun IMG {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.pun IMG {
+	BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: =
+none; BORDER-BOTTOM-STYLE: none
+}
+.pun INPUT {
+	MARGIN: 0px
+}
+.pun SELECT {
+	MARGIN: 0px
+}
+.pun TEXTAREA {
+	MARGIN: 0px
+}
+.pun OPTGROUP {
+	MARGIN: 0px
+}
+.pun .clearer {
+	FONT-SIZE: 0px; OVERFLOW: hidden; WIDTH: 0px; LINE-HEIGHT: 0; HEIGHT: =
+0px
+}
+.pun .nosize {
+	FONT-SIZE: 0px; OVERFLOW: hidden; WIDTH: 0px; LINE-HEIGHT: 0; HEIGHT: =
+0px
+}
+.pun .clearer {
+	CLEAR: both
+}
+.pun .clearb {
+	CLEAR: both
+}
+.pun .nosize {
+	LEFT: -10000px; POSITION: absolute
+}
+DIV.blockpost DIV.box {
+	OVERFLOW: hidden
+}
+DIV.postleft {
+	OVERFLOW: hidden
+}
+DIV.postsignature {
+	OVERFLOW: hidden
+}
+DIV.postmsg {
+	OVERFLOW: hidden
+}
+DIV > DIV > DIV.postfootleft {
+	MARGIN-TOP: -1px; PADDING-TOP: 1px
+}
+DIV > DIV > DIV.postfootright {
+	MARGIN-TOP: -1px; PADDING-TOP: 1px
+}
+* HTML .inbox {
+	HEIGHT: 1px
+}
+* HTML .inform {
+	HEIGHT: 1px
+}
+* HTML .pun {
+	HEIGHT: 1px
+}
+* HTML .intd {
+	HEIGHT: 1px
+}
+* HTML .tclcon {
+	HEIGHT: 1px
+}
+* HTML .inbox DIV.postmsg {
+	WIDTH: 98%
+}
+.pun {
+	MIN-HEIGHT: 1px
+}
+.pun .inbox {
+	MIN-HEIGHT: 1px
+}
+.pun .inform {
+	MIN-HEIGHT: 1px
+}
+.pun .intd {
+	MIN-HEIGHT: 1px
+}
+.pun .tclcon {
+	MIN-HEIGHT: 1px
+}
+#brdfooter H2 {
+	DISPLAY: block; LEFT: -999em; OVERFLOW: hidden; WIDTH: 1em; POSITION: =
+absolute
+}
+#brdstats H2 {
+	DISPLAY: block; LEFT: -999em; OVERFLOW: hidden; WIDTH: 1em; POSITION: =
+absolute
+}
+#brdstats .conl DT {
+	DISPLAY: block; LEFT: -999em; OVERFLOW: hidden; WIDTH: 1em; POSITION: =
+absolute
+}
+#brdstats .conr DT {
+	DISPLAY: block; LEFT: -999em; OVERFLOW: hidden; WIDTH: 1em; POSITION: =
+absolute
+}
+#modcontrols DT {
+	DISPLAY: block; LEFT: -999em; OVERFLOW: hidden; WIDTH: 1em; POSITION: =
+absolute
+}
+#searchlinks DT {
+	DISPLAY: block; LEFT: -999em; OVERFLOW: hidden; WIDTH: 1em; POSITION: =
+absolute
+}
+DIV.postright H3 {
+	DISPLAY: block; LEFT: -999em; OVERFLOW: hidden; WIDTH: 1em; POSITION: =
+absolute
+}
+.conr {
+	CLEAR: right; FLOAT: right; WIDTH: 40%; TEXT-ALIGN: right
+}
+.conl {
+	FLOAT: left; OVERFLOW: hidden; WIDTH: 55%; WHITE-SPACE: nowrap
+}
+LABEL.conl {
+	OVERFLOW: visible; WIDTH: auto; MARGIN-RIGHT: 10px
+}
+DIV.linkst .conl {
+	WIDTH: 18em
+}
+DIV.linksb .conl {
+	WIDTH: 18em
+}
+DIV.postlinksb .conl {
+	WIDTH: 18em
+}
+DIV.linkst .conr {
+	WIDTH: 16em
+}
+DIV.linksb .conr {
+	WIDTH: 16em
+}
+DIV.postlinksb .conr {
+	WIDTH: 16em
+}
+FORM DIV.linksb .conr {
+	WIDTH: 32em
+}
+.linkst UL {
+	MARGIN-LEFT: 18em
+}
+linksb UL {
+	MARGIN-LEFT: 18em
+}
+.postlinksb UL {
+	MARGIN-LEFT: 18em
+}
+DIV.block2col {
+	PADDING-BOTTOM: 1px
+}
+DIV.block2col DIV.blockform {
+	MARGIN-LEFT: 14em
+}
+DIV.block2col DIV.block {
+	MARGIN-LEFT: 14em
+}
+#viewprofile DD {
+	MARGIN-LEFT: 14em
+}
+DIV.blockmenu {
+	FLOAT: left; WIDTH: 13em
+}
+#viewprofile DT {
+	FLOAT: left; WIDTH: 13em
+}
+#profileavatar IMG {
+	FLOAT: right; MARGIN-LEFT: 1em
+}
+#viewprofile DL {
+	FLOAT: left; OVERFLOW: hidden; WIDTH: 100%
+}
+.pun TABLE {
+	WIDTH: 100%
+}
+#punindex TABLE {
+	TABLE-LAYOUT: fixed
+}
+#vf TABLE {
+	TABLE-LAYOUT: fixed
+}
+.tcl {
+	WIDTH: 50%; TEXT-ALIGN: left
+}
+.tc2 {
+	WIDTH: 9%; TEXT-ALIGN: center
+}
+.tc3 {
+	WIDTH: 9%; TEXT-ALIGN: center
+}
+.tcmod {
+	WIDTH: 9%; TEXT-ALIGN: center
+}
+.tcr {
+	WIDTH: 32%; TEXT-ALIGN: left
+}
+#punsearch #vf .tcl {
+	WIDTH: 41%
+}
+#punmoderate #vf .tcl {
+	WIDTH: 41%
+}
+#punsearch #vf .tc2 {
+	WIDTH: 18%; TEXT-ALIGN: left
+}
+.tcl {
+	OVERFLOW: hidden
+}
+.tcr {
+	OVERFLOW: hidden
+}
+#users1 .tcl {
+	WIDTH: 40%
+}
+#users1 .tcr {
+	WIDTH: 25%
+}
+#users1 .tc2 {
+	WIDTH: 25%; TEXT-ALIGN: left
+}
+#users1 .tc3 {
+	WIDTH: 10%; TEXT-ALIGN: center
+}
+#debug .tcr {
+	WIDTH: 85%; WHITE-SPACE: normal
+}
+#punindex TD.tcr SPAN.byuser {
+	DISPLAY: block
+}
+DIV.postleft {
+	FLOAT: left; OVERFLOW: hidden; WIDTH: 18em; POSITION: relative
+}
+DIV.postfootleft {
+	FLOAT: left; OVERFLOW: hidden; WIDTH: 18em; POSITION: relative
+}
+DIV.postright {
+	BORDER-LEFT: 18em solid
+}
+DIV.postfootright {
+	BORDER-LEFT: 18em solid
+}
+DIV.postfootright {
+	TEXT-ALIGN: right
+}
+P.multidelete {
+	TEXT-ALIGN: right
+}
+DIV.blockpost > DIV > DIV.inbox {
+	PADDING-BOTTOM: 1px
+}
+DIV.postmsg {
+	WIDTH: 100%
+}
+DIV.incqbox {
+	OVERFLOW: hidden; WIDTH: 100%
+}
+DIV.scrollbox {
+	OVERFLOW: auto; WIDTH: 100%
+}
+IMG.postimg {
+	MAX-WIDTH: 100%
+}
+A .postimg {
+	MAX-WIDTH: 100%
+}
+#postpreview DIV.postright {
+	BORDER-LEFT-STYLE: none
+}
+DIV.postsignature HR {
+	MARGIN-LEFT: 0px; WIDTH: 200px; BORDER-TOP-STYLE: none; =
+BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; HEIGHT: 1px; =
+TEXT-ALIGN: left; BORDER-BOTTOM-STYLE: none
+}
+DIV.searchposts DIV.postmsg {
+	HEIGHT: 8em
+}
+DIV.searchposts DD P {
+	PADDING-TOP: 3em
+}
+SPAN.bbu {
+	TEXT-DECORATION: underline
+}
+SPAN.bbs {
+	TEXT-DECORATION: line-through
+}
+#onlinelist DD {
+	DISPLAY: inline; HEIGHT: 0px
+}
+#onlinelist DT {
+	DISPLAY: inline; HEIGHT: 0px
+}
+#brdmenu LI {
+	DISPLAY: inline; HEIGHT: 0px
+}
+DIV.linkst LI {
+	DISPLAY: inline; HEIGHT: 0px
+}
+DIV.linksb LI {
+	DISPLAY: inline; HEIGHT: 0px
+}
+DIV.postlinksb LI {
+	DISPLAY: inline; HEIGHT: 0px
+}
+DIV.postfootright LI {
+	DISPLAY: inline; HEIGHT: 0px
+}
+UL.bblinks LI {
+	DISPLAY: inline; HEIGHT: 0px
+}
+#posterror UL LI {
+	LIST-STYLE-POSITION: inside; LIST-STYLE-TYPE: square
+}
+#viewprofile DT {
+	TEXT-ALIGN: right
+}
+DIV.txtarea {
+	WIDTH: 75%
+}
+DIV.txtarea TEXTAREA {
+	WIDTH: 100%
+}
+INPUT.longinput {
+	WIDTH: 100%
+}
+.pun LABEL {
+	DISPLAY: block
+}
+#qjump SELECT {
+	WIDTH: 50%
+}
+#helpfile H2 {
+	MARGIN-TOP: 12px
+}
+#helpfile DIV.box {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; =
+PADDING-TOP: 10px
+}
+#punredirect DIV.block {
+	MARGIN: 50px 20% 12px
+}
+#punmaint DIV.block {
+	MARGIN: 50px 20% 12px
+}
+
+------=_NextPart_000_0023_01CD0390.00AB1B40
+Content-Type: text/css;
+	charset="big5"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: https://forum.openwrt.org/imports/OpenWrt_cs.css
+
+BODY {
+	BACKGROUND-COLOR: #fff
+}
+.pun {
+	COLOR: #333
+}
+DIV.box {
+	BACKGROUND-COLOR: #f1f1f1
+}
+.pun BLOCKQUOTE {
+	BACKGROUND-COLOR: #f1f1f1
+}
+DIV.codebox {
+	BACKGROUND-COLOR: #f1f1f1
+}
+#adminconsole FIELDSET TH {
+	BACKGROUND-COLOR: #f1f1f1
+}
+.rowodd {
+	BACKGROUND-COLOR: #f1f1f1
+}
+.roweven {
+	BACKGROUND-COLOR: #f1f1f1
+}
+#adminconsole TD {
+	BORDER-LEFT-COLOR: #f1f1f1; BORDER-BOTTOM-COLOR: #f1f1f1; =
+BORDER-TOP-COLOR: #f1f1f1; BORDER-RIGHT-COLOR: #f1f1f1
+}
+#adminconsole TH {
+	BORDER-LEFT-COLOR: #f1f1f1; BORDER-BOTTOM-COLOR: #f1f1f1; =
+BORDER-TOP-COLOR: #f1f1f1; BORDER-RIGHT-COLOR: #f1f1f1
+}
+TD.tc2 {
+	BACKGROUND-COLOR: #dedfdf
+}
+TD.tc3 {
+	BACKGROUND-COLOR: #dedfdf
+}
+TD.tcmod {
+	BACKGROUND-COLOR: #dedfdf
+}
+#postpreview {
+	BACKGROUND-COLOR: #dedfdf
+}
+#viewprofile DD {
+	BACKGROUND-COLOR: #dedfdf
+}
+DIV.forminfo {
+	BACKGROUND-COLOR: #dedfdf
+}
+#adminconsole FIELDSET TD {
+	BACKGROUND-COLOR: #dedfdf
+}
+DIV.blockmenu DIV.box {
+	BACKGROUND-COLOR: #dedfdf
+}
+#adstats DD {
+	BACKGROUND-COLOR: #dedfdf
+}
+.pun H2 {
+	COLOR: #fff; BACKGROUND-COLOR: #777
+}
+#brdmenu {
+	COLOR: #fff; BACKGROUND-COLOR: #777
+}
+.pun TH {
+	BACKGROUND-COLOR: #d1d1d1
+}
+.pun LEGEND {
+	COLOR: #005cb1
+}
+.pun DIV.blockmenu LI.isactive A {
+	COLOR: #333
+}
+#posterror LI STRONG {
+	COLOR: #333
+}
+DIV.blockpost DIV.box {
+	BACKGROUND-COLOR: #dedfdf
+}
+DIV.postright {
+	BACKGROUND-COLOR: #dedfdf
+}
+DIV.postfootright {
+	BACKGROUND-COLOR: #dedfdf
+}
+DIV.postright {
+	BORDER-LEFT-COLOR: #f1f1f1
+}
+DIV.postfootright {
+	BORDER-LEFT-COLOR: #f1f1f1
+}
+DIV.postleft {
+	BACKGROUND-COLOR: #f1f1f1
+}
+DIV.postfootleft {
+	BACKGROUND-COLOR: #f1f1f1
+}
+DIV.blockpost LABEL {
+	BACKGROUND-COLOR: #f1f1f1
+}
+DIV.blockpost H2 {
+	BACKGROUND-COLOR: #777
+}
+DIV.blockpost H2 SPAN.conr {
+	COLOR: #fff
+}
+.pun HR {
+	COLOR: #333; BACKGROUND-COLOR: #333
+}
+DIV.box {
+	BORDER-LEFT-COLOR: #888; BORDER-BOTTOM-COLOR: #888; BORDER-TOP-COLOR: =
+#888; BORDER-RIGHT-COLOR: #888
+}
+DIV.blockpost DIV.box {
+	BORDER-LEFT-COLOR: #888; BORDER-BOTTOM-COLOR: #888; BORDER-TOP-COLOR: =
+#888; BORDER-RIGHT-COLOR: #888
+}
+.pun TD {
+	BORDER-LEFT-COLOR: #bbcede; BORDER-BOTTOM-COLOR: #bbcede; =
+BORDER-TOP-COLOR: #bbcede; BORDER-RIGHT-COLOR: #bbcede
+}
+.pun TH {
+	BORDER-LEFT-COLOR: #d1d1d1; BORDER-BOTTOM-COLOR: #d1d1d1; =
+BORDER-TOP-COLOR: #d1d1d1; BORDER-RIGHT-COLOR: #d1d1d1
+}
+.pun BLOCKQUOTE {
+	BORDER-LEFT-COLOR: #aca899; BORDER-BOTTOM-COLOR: #fff; =
+BORDER-TOP-COLOR: #aca899; BORDER-RIGHT-COLOR: #fff
+}
+DIV.codebox {
+	BORDER-LEFT-COLOR: #aca899; BORDER-BOTTOM-COLOR: #fff; =
+BORDER-TOP-COLOR: #aca899; BORDER-RIGHT-COLOR: #fff
+}
+DIV.forminfo {
+	BORDER-LEFT-COLOR: #aca899; BORDER-BOTTOM-COLOR: #fff; =
+BORDER-TOP-COLOR: #aca899; BORDER-RIGHT-COLOR: #fff
+}
+DIV.blockpost LABEL {
+	BORDER-LEFT-COLOR: #aca899; BORDER-BOTTOM-COLOR: #fff; =
+BORDER-TOP-COLOR: #aca899; BORDER-RIGHT-COLOR: #fff
+}
+.pun DIV > FIELDSET {
+	BORDER-LEFT-COLOR: #aca899; BORDER-BOTTOM-COLOR: #aca899; =
+BORDER-TOP-COLOR: #aca899; BORDER-RIGHT-COLOR: #aca899
+}
+.pun A:link {
+	COLOR: #005cb1
+}
+.pun A:visited {
+	COLOR: #005cb1
+}
+.pun A:hover {
+	COLOR: #b42000
+}
+.pun H2 A:link {
+	COLOR: #fff
+}
+.pun H2 A:visited {
+	COLOR: #fff
+}
+#brdmenu A:link {
+	COLOR: #fff
+}
+#brdmenu A:visited {
+	COLOR: #fff
+}
+.pun H2 A:hover {
+	COLOR: #fff
+}
+#brdmenu A:hover {
+	COLOR: #fff
+}
+LI.postreport A:link {
+	COLOR: #888
+}
+LI.postreport A:visited {
+	COLOR: #888
+}
+TR.iclosed TD.tcl A:link {
+	COLOR: #888
+}
+TR.iclosed TD.tcl A:visited {
+	COLOR: #888
+}
+LI.postreport A:hover {
+	COLOR: #aaa
+}
+TR.iclosed TD.tcl A:hover {
+	COLOR: #aaa
+}
+LI.maintenancelink A:link {
+	COLOR: #b42000
+}
+LI.maintenancelink A:visited {
+	COLOR: #b42000
+}
+LI.maintenancelink A:hover {
+	COLOR: #b42000
+}
+DIV.icon {
+	BORDER-LEFT-COLOR: #e2e2e2; BORDER-BOTTOM-COLOR: #dadada; =
+BORDER-TOP-COLOR: #e6e6e6; BORDER-RIGHT-COLOR: #dedede
+}
+TR.iredirect DIV.icon {
+	BORDER-LEFT-COLOR: #f1f1f1; BORDER-BOTTOM-COLOR: #f1f1f1; =
+BORDER-TOP-COLOR: #f1f1f1; BORDER-RIGHT-COLOR: #f1f1f1
+}
+DIV.inew {
+	BORDER-LEFT-COLOR: #0072ca; BORDER-BOTTOM-COLOR: #0058b3; =
+BORDER-TOP-COLOR: #0080d7; BORDER-RIGHT-COLOR: #0065c0
+}
+TR.isticky {
+	BACKGROUND: #ddddff
+}
+
+------=_NextPart_000_0023_01CD0390.00AB1B40
+Content-Type: text/css;
+	charset="big5"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: https://forum.openwrt.org/style/OpenWrt.css
+
+@import url( imports/base.css );
+@import url( imports/OpenWrt_cs.css );
+.pun {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.pun INPUT {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.pun SELECT {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.pun TEXTAREA {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.pun OPTGROUP {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.pun {
+	FONT-SIZE: 11px; LINE-HEIGHT: normal
+}
+* HTML .pun {
+	FONT-SIZE: 68.75%
+}
+.pun TABLE {
+	FONT-SIZE: 1em
+}
+.pun INPUT {
+	FONT-SIZE: 1em
+}
+.pun SELECT {
+	FONT-SIZE: 1em
+}
+.pun OPTGROUP {
+	FONT-SIZE: 1em
+}
+.pun TEXTAREA {
+	FONT-SIZE: 1em
+}
+DIV.postmsg P.postedit {
+	FONT-SIZE: 1em
+}
+.pun PRE {
+	FONT-FAMILY: monaco, "Bitstream Vera Sans Mono", "Courier New", =
+courier, monospace
+}
+.pun H2 {
+	FONT-SIZE: 1em
+}
+.pun H4 {
+	FONT-SIZE: 1em
+}
+.pun H3 {
+	FONT-SIZE: 1.1em
+}
+#brdtitle H1 {
+	FONT-SIZE: 1.4em
+}
+DIV.postmsg P {
+	LINE-HEIGHT: 1.4
+}
+DIV.postleft DT {
+	FONT-SIZE: 1.1em
+}
+.pun PRE {
+	FONT-SIZE: 1.2em
+}
+DIV.postleft DT {
+	FONT-WEIGHT: bold
+}
+DIV.postmsg H4 {
+	FONT-WEIGHT: bold
+}
+TD.tcl H3 {
+	FONT-WEIGHT: bold
+}
+DIV.forminfo H3 {
+	FONT-WEIGHT: bold
+}
+P.postlink {
+	FONT-WEIGHT: bold
+}
+DIV.linkst LI {
+	FONT-WEIGHT: bold
+}
+DIV.linksb LI {
+	FONT-WEIGHT: bold
+}
+DIV.postlinksb LI {
+	FONT-WEIGHT: bold
+}
+.blockmenu LI {
+	FONT-WEIGHT: bold
+}
+#brdtitle H1 {
+	FONT-WEIGHT: bold
+}
+.pun SPAN.warntext {
+	FONT-WEIGHT: bold
+}
+.pun P.warntext {
+	FONT-WEIGHT: bold
+}
+#brdmenu A:link {
+	TEXT-DECORATION: none
+}
+#brdmenu A:visited {
+	TEXT-DECORATION: none
+}
+.blockpost DT A:link {
+	TEXT-DECORATION: none
+}
+.blockpost DT A:visited {
+	TEXT-DECORATION: none
+}
+.blockpost H2 A:link {
+	TEXT-DECORATION: none
+}
+.blockpost H2 A:visited {
+	TEXT-DECORATION: none
+}
+.postlink A:link {
+	TEXT-DECORATION: none
+}
+.postlink A:visited {
+	TEXT-DECORATION: none
+}
+.postfootright A:link {
+	TEXT-DECORATION: none
+}
+.postfootright A:visited {
+	TEXT-DECORATION: none
+}
+.blockmenu A:link {
+	TEXT-DECORATION: none
+}
+.blockmenu A:visited {
+	TEXT-DECORATION: none
+}
+#brdmenu A:hover {
+	TEXT-DECORATION: underline
+}
+.blockpost H2 A:hover {
+	TEXT-DECORATION: underline
+}
+DIV.box {
+	BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; BORDER-LEFT: 1px solid; =
+BORDER-BOTTOM: 1px solid
+}
+.pun TD {
+	BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; BORDER-LEFT: 1px solid; =
+BORDER-BOTTOM: 1px solid
+}
+.pun TH {
+	BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; BORDER-LEFT: 1px solid; =
+BORDER-BOTTOM: 1px solid
+}
+.pun BLOCKQUOTE {
+	BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; BORDER-LEFT: 1px solid; =
+BORDER-BOTTOM: 1px solid
+}
+DIV.codebox {
+	BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; BORDER-LEFT: 1px solid; =
+BORDER-BOTTOM: 1px solid
+}
+DIV.forminfo {
+	BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; BORDER-LEFT: 1px solid; =
+BORDER-BOTTOM: 1px solid
+}
+DIV.blockpost LABEL {
+	BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; BORDER-LEFT: 1px solid; =
+BORDER-BOTTOM: 1px solid
+}
+#brdheader DIV.box {
+	BORDER-TOP-WIDTH: 4px
+}
+.pun TD {
+	BORDER-RIGHT-STYLE: none; BORDER-BOTTOM-STYLE: none
+}
+.pun TH {
+	BORDER-RIGHT-STYLE: none; BORDER-BOTTOM-STYLE: none
+}
+.pun .tcl {
+	BORDER-LEFT-STYLE: none
+}
+DIV > FIELDSET {
+	BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; BORDER-LEFT: 1px solid; =
+BORDER-BOTTOM: 1px solid
+}
+HTML {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+BODY {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+#punwrap {
+	MARGIN: 12px 20px
+}
+DIV.blocktable {
+	MARGIN-BOTTOM: 12px
+}
+DIV.block {
+	MARGIN-BOTTOM: 12px
+}
+DIV.blockform {
+	MARGIN-BOTTOM: 12px
+}
+DIV.block2col {
+	MARGIN-BOTTOM: 12px
+}
+#postreview {
+	MARGIN-BOTTOM: 12px
+}
+#punindex DIV.blocktable {
+	MARGIN-BOTTOM: 6px
+}
+DIV.blockpost {
+	MARGIN-BOTTOM: 6px
+}
+DIV.block2col DIV.blockform {
+	MARGIN-BOTTOM: 0px
+}
+DIV.block2col DIV.block {
+	MARGIN-BOTTOM: 0px
+}
+DIV.linkst {
+	MARGIN-TOP: -12px
+}
+DIV.linksb {
+	MARGIN-TOP: -12px
+}
+DIV.postlinksb {
+	MARGIN-TOP: -6px
+}
+#brdstats {
+	MARGIN-TOP: 12px
+}
+DIV.block DIV.inbox {
+	PADDING-RIGHT: 6px; PADDING-LEFT: 6px; PADDING-BOTTOM: 3px; =
+PADDING-TOP: 3px
+}
+DIV.blockmenu DIV.inbox {
+	PADDING-RIGHT: 6px; PADDING-LEFT: 6px; PADDING-BOTTOM: 3px; =
+PADDING-TOP: 3px
+}
+.pun P {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 3px; =
+PADDING-TOP: 3px
+}
+.pun UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 3px; =
+PADDING-TOP: 3px
+}
+.pun DL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 3px; =
+PADDING-TOP: 3px
+}
+DIV.blockmenu LI {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 3px; =
+PADDING-TOP: 3px
+}
+.pun LABEL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 3px; =
+PADDING-TOP: 3px
+}
+#announce DIV.inbox DIV {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 3px; =
+PADDING-TOP: 3px
+}
+.pun H2 {
+	PADDING-RIGHT: 6px; PADDING-LEFT: 6px; PADDING-BOTTOM: 4px; =
+PADDING-TOP: 4px
+}
+.pun H1 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 3px
+}
+#brdtitle P {
+	PADDING-TOP: 0px
+}
+DIV.linkst {
+	PADDING-RIGHT: 6px; PADDING-LEFT: 6px; PADDING-BOTTOM: 3px; =
+PADDING-TOP: 8px
+}
+DIV.linksb {
+	PADDING-RIGHT: 6px; PADDING-LEFT: 6px; PADDING-BOTTOM: 8px; =
+PADDING-TOP: 3px
+}
+DIV.postlinksb {
+	PADDING-RIGHT: 6px; PADDING-LEFT: 6px; PADDING-BOTTOM: 8px; =
+PADDING-TOP: 3px
+}
+#brdwelcome {
+	LINE-HEIGHT: 1.4em
+}
+#brdfooter DL A {
+	LINE-HEIGHT: 1.4em
+}
+DIV.blockmenu LI {
+	LINE-HEIGHT: 1.4em
+}
+DIV.rbox INPUT {
+	LINE-HEIGHT: 1.4em
+}
+#viewprofile DT {
+	PADDING-RIGHT: 3px; PADDING-LEFT: 3px; PADDING-BOTTOM: 0px; =
+LINE-HEIGHT: 2em; PADDING-TOP: 0px
+}
+#viewprofile DD {
+	PADDING-RIGHT: 3px; PADDING-LEFT: 3px; PADDING-BOTTOM: 0px; =
+LINE-HEIGHT: 2em; PADDING-TOP: 0px
+}
+#brdmenu LI {
+	MARGIN-RIGHT: 12px
+}
+DIV.rbox INPUT {
+	MARGIN-RIGHT: 12px
+}
+DIV.blockform P INPUT {
+	MARGIN-RIGHT: 12px
+}
+.pun TH {
+	PADDING-RIGHT: 6px; PADDING-LEFT: 6px; PADDING-BOTTOM: 4px; =
+PADDING-TOP: 4px
+}
+.pun TD {
+	PADDING-RIGHT: 6px; PADDING-LEFT: 6px; PADDING-BOTTOM: 4px; =
+PADDING-TOP: 4px
+}
+.pun TD P {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 5px
+}
+DIV.postleft DL {
+	PADDING-RIGHT: 6px; PADDING-LEFT: 6px; PADDING-BOTTOM: 6px; =
+PADDING-TOP: 6px
+}
+DIV.postright {
+	PADDING-RIGHT: 6px; PADDING-LEFT: 6px; PADDING-BOTTOM: 6px; =
+PADDING-TOP: 6px
+}
+DD.usercontacts {
+	MARGIN-TOP: 5px
+}
+DD.postavatar {
+	MARGIN-TOP: 5px
+}
+DD.postavatar {
+	MARGIN-BOTTOM: 5px
+}
+DIV.postsignature {
+	PADDING-TOP: 15px
+}
+DIV.postmsg P.postedit {
+	PADDING-TOP: 15px
+}
+DIV.postmsg H4 {
+	MARGIN-BOTTOM: 10px
+}
+.pun BLOCKQUOTE {
+	PADDING-RIGHT: 8px; PADDING-LEFT: 8px; PADDING-BOTTOM: 8px; MARGIN: 5px =
+15px 15px; PADDING-TOP: 8px
+}
+DIV.codebox {
+	PADDING-RIGHT: 8px; PADDING-LEFT: 8px; PADDING-BOTTOM: 8px; MARGIN: 5px =
+15px 15px; PADDING-TOP: 8px
+}
+DIV.postfootleft P {
+	PADDING-RIGHT: 6px; PADDING-LEFT: 6px; PADDING-BOTTOM: 5px; =
+PADDING-TOP: 10px
+}
+DIV.postfootright UL {
+	PADDING-RIGHT: 6px; PADDING-LEFT: 6px; PADDING-BOTTOM: 5px; =
+PADDING-TOP: 10px
+}
+DIV.postfootright DIV {
+	PADDING-RIGHT: 6px; PADDING-LEFT: 6px; PADDING-BOTTOM: 5px; =
+PADDING-TOP: 10px
+}
+DIV.blockpost INPUT {
+	PADDING-RIGHT: 3px; DISPLAY: inline; PADDING-LEFT: 3px; PADDING-BOTTOM: =
+3px; PADDING-TOP: 3px
+}
+DIV.blockpost LABEL {
+	PADDING-RIGHT: 3px; DISPLAY: inline; PADDING-LEFT: 3px; PADDING-BOTTOM: =
+3px; PADDING-TOP: 3px
+}
+P.multidelete {
+	PADDING-BOTTOM: 5px; PADDING-TOP: 15px
+}
+DIV.postmsg P {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 0px
+}
+DIV.blockform FORM {
+	PADDING-RIGHT: 20px; PADDING-LEFT: 20px; PADDING-BOTTOM: 15px; =
+PADDING-TOP: 20px
+}
+DIV.fakeform {
+	PADDING-RIGHT: 20px; PADDING-LEFT: 20px; PADDING-BOTTOM: 15px; =
+PADDING-TOP: 20px
+}
+DIV.inform {
+	PADDING-BOTTOM: 12px
+}
+.pun FIELDSET {
+	PADDING-RIGHT: 12px; PADDING-LEFT: 12px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 0px
+}
+DIV.infldset {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 12px; =
+PADDING-TOP: 9px
+}
+.pun LEGEND {
+	PADDING-RIGHT: 6px; PADDING-LEFT: 6px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 0px
+}
+DIV.forminfo {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; MARGIN-BOTTOM: 12px; =
+PADDING-BOTTOM: 9px; PADDING-TOP: 9px
+}
+UL.bblinks LI {
+	PADDING-RIGHT: 20px
+}
+UL.bblinks {
+	PADDING-LEFT: 4px; PADDING-BOTTOM: 10px
+}
+DIV.blockform P INPUT {
+	MARGIN-LEFT: 12px
+}
+DIV.icon {
+	BORDER-RIGHT: 0.6em solid; BORDER-TOP: 0.6em solid; MARGIN-TOP: 0.1em; =
+DISPLAY: block; FLOAT: left; MARGIN-LEFT: 0.2em; BORDER-LEFT: 0.6em =
+solid; BORDER-BOTTOM: 0.6em solid
+}
+DIV.searchposts DIV.icon {
+	MARGIN-LEFT: 0px
+}
+TD DIV.tclcon {
+	MARGIN-LEFT: 2.3em
+}
+#navrules {
+	FONT-WEIGHT: bold
+}
+
+------=_NextPart_000_0023_01CD0390.00AB1B40
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: quoted-printable
+Content-Location: https://forum.openwrt.org/style/imports/minmax.js
+
+// minmax.js - written by Andrew Clover <and@doxdesk.com>=0A=
+// Adapted for PunBB by Rickard Andersson and Paul Sullivan=0A=
+=0A=
+/*@cc_on=0A=
+@if (@_win32 && @_jscript_version>4)=0A=
+=0A=
+var minmax_elements;=0A=
+=0A=
+function minmax_bind(el) {=0A=
+	var em, ms;=0A=
+	var st=3D el.style, cs=3D el.currentStyle;=0A=
+=0A=
+	if (minmax_elements=3D=3Dwindow.undefined) {=0A=
+		if (!document.body || !document.body.currentStyle) return;=0A=
+		minmax_elements=3D new Array();=0A=
+		window.attachEvent('onresize', minmax_delayout);=0A=
+	}=0A=
+=0A=
+	if (cs['max-width'])=0A=
+		st['maxWidth']=3D cs['max-width'];=0A=
+=0A=
+	ms=3D cs['maxWidth'];=0A=
+	if (ms && ms!=3D'auto' && ms!=3D'none' && ms!=3D'0' && ms!=3D'') {=0A=
+		st.minmaxWidth=3D cs.width;=0A=
+		minmax_elements[minmax_elements.length]=3D el;=0A=
+		minmax_delayout();=0A=
+	}=0A=
+}=0A=
+=0A=
+var minmax_delaying=3D false;=0A=
+function minmax_delayout() {=0A=
+	if (minmax_delaying) return;=0A=
+	minmax_delaying=3D true;=0A=
+	window.setTimeout(minmax_layout, 0);=0A=
+}=0A=
+=0A=
+function minmax_stopdelaying() {=0A=
+	minmax_delaying=3D false;=0A=
+}=0A=
+=0A=
+function minmax_layout() {=0A=
+	window.setTimeout(minmax_stopdelaying, 100);=0A=
+	var i, el, st, cs, optimal, inrange;=0A=
+	for (i=3D minmax_elements.length; i-->0;) {=0A=
+		el=3D minmax_elements[i]; st=3D el.style; cs=3D el.currentStyle;=0A=
+=0A=
+		st.width=3D st.minmaxWidth; optimal=3D el.offsetWidth;=0A=
+		inrange=3D true;=0A=
+		if (inrange && cs.minWidth && cs.minWidth!=3D'0' && =
+cs.minWidth!=3D'auto' && cs.minWidth!=3D'') {=0A=
+			st.width=3D cs.minWidth;=0A=
+			inrange=3D (el.offsetWidth<optimal);=0A=
+		}=0A=
+		if (inrange && cs.maxWidth && cs.maxWidth!=3D'none' && =
+cs.maxWidth!=3D'auto' && cs.maxWidth!=3D'') {=0A=
+			st.width=3D cs.maxWidth;=0A=
+			inrange=3D (el.offsetWidth>optimal);=0A=
+		}=0A=
+		if (inrange) st.width=3D st.minmaxWidth;=0A=
+	}=0A=
+}=0A=
+=0A=
+var minmax_SCANDELAY=3D 500;=0A=
+=0A=
+function minmax_scan() {=0A=
+	var el;=0A=
+	for (var i=3D 0; i<document.all.length; i++) {=0A=
+		el=3D document.all[i];=0A=
+		if (!el.minmax_bound) {=0A=
+			el.minmax_bound=3D true;=0A=
+			minmax_bind(el);=0A=
+		}=0A=
+	}=0A=
+}=0A=
+=0A=
+var minmax_scanner;=0A=
+function minmax_stop() {=0A=
+	window.clearInterval(minmax_scanner);=0A=
+	minmax_scan();=0A=
+}=0A=
+=0A=
+minmax_scan();=0A=
+minmax_scanner=3D window.setInterval(minmax_scan, minmax_SCANDELAY);=0A=
+window.attachEvent('onload', minmax_stop);=0A=
+=0A=
+@end @*/=0A=
+
+------=_NextPart_000_0023_01CD0390.00AB1B40--

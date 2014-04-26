@@ -1,0 +1,982 @@
+From: <¥Ñ Windows Internet Explorer 7 Àx¦s>
+Subject: Linux etc. ? Blog Archive ? Get dropbear on OpenWRT to listen on alternate port
+Date: Fri, 16 Mar 2012 16:16:25 +0800
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----=_NextPart_000_0072_01CD0390.227C0720"
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6109
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0072_01CD0390.227C0720
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://promberger.info/linux/2007/12/06/get-dropbear-on-openwrt-to-listen-on-alternate-port/
+
+=EF=BB=BF<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" =
+"http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML xmlns=3D"http://www.w3.org/1999/xhtml"><HEAD=20
+profile=3Dhttp://gmpg.org/xfn/11><TITLE>Linux etc. =C2=BB Blog Archive =
+=C2=BB Get dropbear on OpenWRT to listen on alternate port</TITLE>
+<META http-equiv=3DContent-Type content=3D"text/html; charset=3DUTF-8">
+<META content=3D"MSHTML 6.00.6000.17102" name=3DGENERATOR><!-- leave =
+this for stats --><LINK media=3Dscreen=20
+href=3D"http://promberger.info/linux/wp-content/themes/london/style.css" =
+
+type=3Dtext/css rel=3Dstylesheet><LINK title=3D"RSS 2.0"=20
+href=3D"http://promberger.info/linux/feed/" type=3Dapplication/rss+xml=20
+rel=3Dalternate><LINK title=3D"RSS .92"=20
+href=3D"http://promberger.info/linux/feed/rss/" type=3Dtext/xml =
+rel=3Dalternate><LINK=20
+title=3D"Atom 0.3" href=3D"http://promberger.info/linux/feed/atom/"=20
+type=3Dapplication/atom+xml rel=3Dalternate><LINK=20
+href=3D"http://promberger.info/linux/xmlrpc.php" rel=3Dpingback><LINK=20
+title=3D"September 2011" href=3D"http://promberger.info/linux/2011/09/"=20
+rel=3Darchives><LINK title=3D"August 2011"=20
+href=3D"http://promberger.info/linux/2011/08/" rel=3Darchives><LINK=20
+title=3D"December 2010" href=3D"http://promberger.info/linux/2010/12/"=20
+rel=3Darchives><LINK title=3D"August 2010"=20
+href=3D"http://promberger.info/linux/2010/08/" rel=3Darchives><LINK=20
+title=3D"February 2010" href=3D"http://promberger.info/linux/2010/02/"=20
+rel=3Darchives><LINK title=3D"January 2010"=20
+href=3D"http://promberger.info/linux/2010/01/" rel=3Darchives><LINK=20
+title=3D"November 2009" href=3D"http://promberger.info/linux/2009/11/"=20
+rel=3Darchives><LINK title=3D"October 2009"=20
+href=3D"http://promberger.info/linux/2009/10/" rel=3Darchives><LINK=20
+title=3D"September 2009" href=3D"http://promberger.info/linux/2009/09/"=20
+rel=3Darchives><LINK title=3D"August 2009"=20
+href=3D"http://promberger.info/linux/2009/08/" rel=3Darchives><LINK=20
+title=3D"July 2009" href=3D"http://promberger.info/linux/2009/07/"=20
+rel=3Darchives><LINK title=3D"June 2009"=20
+href=3D"http://promberger.info/linux/2009/06/" rel=3Darchives><LINK =
+title=3D"May 2009"=20
+href=3D"http://promberger.info/linux/2009/05/" rel=3Darchives><LINK=20
+title=3D"March 2009" href=3D"http://promberger.info/linux/2009/03/"=20
+rel=3Darchives><LINK title=3D"February 2009"=20
+href=3D"http://promberger.info/linux/2009/02/" rel=3Darchives><LINK=20
+title=3D"January 2009" href=3D"http://promberger.info/linux/2009/01/"=20
+rel=3Darchives><LINK title=3D"December 2008"=20
+href=3D"http://promberger.info/linux/2008/12/" rel=3Darchives><LINK=20
+title=3D"November 2008" href=3D"http://promberger.info/linux/2008/11/"=20
+rel=3Darchives><LINK title=3D"September 2008"=20
+href=3D"http://promberger.info/linux/2008/09/" rel=3Darchives><LINK=20
+title=3D"August 2008" href=3D"http://promberger.info/linux/2008/08/"=20
+rel=3Darchives><LINK title=3D"June 2008"=20
+href=3D"http://promberger.info/linux/2008/06/" rel=3Darchives><LINK =
+title=3D"May 2008"=20
+href=3D"http://promberger.info/linux/2008/05/" rel=3Darchives><LINK=20
+title=3D"April 2008" href=3D"http://promberger.info/linux/2008/04/"=20
+rel=3Darchives><LINK title=3D"March 2008"=20
+href=3D"http://promberger.info/linux/2008/03/" rel=3Darchives><LINK=20
+title=3D"January 2008" href=3D"http://promberger.info/linux/2008/01/"=20
+rel=3Darchives><LINK title=3D"December 2007"=20
+href=3D"http://promberger.info/linux/2007/12/" rel=3Darchives><LINK=20
+title=3D"November 2007" href=3D"http://promberger.info/linux/2007/11/"=20
+rel=3Darchives><LINK title=3D"October 2007"=20
+href=3D"http://promberger.info/linux/2007/10/" rel=3Darchives><LINK=20
+title=3D"September 2007" href=3D"http://promberger.info/linux/2007/09/"=20
+rel=3Darchives><LINK title=3D"August 2007"=20
+href=3D"http://promberger.info/linux/2007/08/" rel=3Darchives><LINK=20
+title=3D"July 2007" href=3D"http://promberger.info/linux/2007/07/"=20
+rel=3Darchives><LINK title=3D"June 2007"=20
+href=3D"http://promberger.info/linux/2007/06/" rel=3Darchives><LINK =
+title=3D"May 2007"=20
+href=3D"http://promberger.info/linux/2007/05/" rel=3Darchives><LINK=20
+title=3D"April 2007" href=3D"http://promberger.info/linux/2007/04/"=20
+rel=3Darchives><LINK title=3D"March 2007"=20
+href=3D"http://promberger.info/linux/2007/03/" rel=3Darchives><LINK=20
+title=3D"Linux etc. =C2=BB Get dropbear on OpenWRT to listen on =
+alternate port Comments Feed"=20
+href=3D"http://promberger.info/linux/2007/12/06/get-dropbear-on-openwrt-t=
+o-listen-on-alternate-port/feed/"=20
+type=3Dapplication/rss+xml rel=3Dalternate><LINK title=3DRSD=20
+href=3D"http://promberger.info/linux/xmlrpc.php?rsd" =
+type=3Dapplication/rsd+xml=20
+rel=3DEditURI><LINK=20
+href=3D"http://promberger.info/linux/wp-includes/wlwmanifest.xml"=20
+type=3Dapplication/wlwmanifest+xml rel=3Dwlwmanifest><LINK=20
+title=3D"How to make permanent changes to Slax on a usb drive"=20
+href=3D"http://promberger.info/linux/2007/11/19/how-to-make-permanent-cha=
+nges-to-slax-on-usb-drive/"=20
+rel=3Dprev><LINK title=3D"Compiz on Xubuntu 7.10 (Gutsy)"=20
+href=3D"http://promberger.info/linux/2007/12/18/compiz-on-xubuntu-710-gut=
+sy/"=20
+rel=3Dnext>
+<META content=3D"WordPress 3.3.1" name=3Dgenerator><LINK=20
+href=3D"http://promberger.info/linux/2007/12/06/get-dropbear-on-openwrt-t=
+o-listen-on-alternate-port/"=20
+rel=3Dcanonical><LINK href=3D"http://promberger.info/linux/?p=3D73"=20
+rel=3Dshortlink></HEAD>
+<BODY>
+<DIV id=3Dpage><A style=3D"DISPLAY: none"=20
+href=3D"http://promberger.info/linux/2007/12/06/get-dropbear-on-openwrt-t=
+o-listen-on-alternate-port/#sidebar">Skip=20
+to navigation</A>=20
+<DIV id=3Dheader>
+<DIV><B class=3Dspiffy><B class=3Dspiffy1><B></B></B><B =
+class=3Dspiffy2><B></B></B><B=20
+class=3Dspiffy3></B><B class=3Dspiffy4></B><B class=3Dspiffy5></B></B>
+<DIV id=3Dheaderimg>
+<H1><A href=3D"http://promberger.info/linux">Linux etc.</A></H1>
+<DIV class=3Ddescription>my outsourced memory for your =
+perusal</DIV></DIV><B=20
+class=3Dspiffy><B class=3Dspiffy5></B><B class=3Dspiffy4></B><B =
+class=3Dspiffy3></B><B=20
+class=3Dspiffy2><B></B></B><B =
+class=3Dspiffy1><B></B></B></B></DIV></DIV>
+<HR>
+
+<DIV id=3Dwrapper>
+<DIV id=3Dcontent>
+<DIV class=3Dnavigation>
+<DIV class=3Dalignleft>=C2=AB <A=20
+href=3D"http://promberger.info/linux/2007/11/19/how-to-make-permanent-cha=
+nges-to-slax-on-usb-drive/"=20
+rel=3Dprev>How to make permanent changes to Slax on a usb =
+drive</A></DIV>
+<DIV class=3Dalignright><A=20
+href=3D"http://promberger.info/linux/2007/12/18/compiz-on-xubuntu-710-gut=
+sy/"=20
+rel=3Dnext>Compiz on Xubuntu 7.10 (Gutsy)</A> =C2=BB</DIV></DIV>
+<DIV class=3Dpost id=3Dpost-73>
+<H2><A=20
+title=3D"Permanent Link: Get dropbear on OpenWRT to listen on alternate =
+port"=20
+href=3D"http://promberger.info/linux/2007/12/06/get-dropbear-on-openwrt-t=
+o-listen-on-alternate-port/"=20
+rel=3Dbookmark>Get dropbear on OpenWRT to listen on alternate =
+port</A></H2>
+<DIV class=3Dentrytext>
+<P>I was looking for a way to get dropbear, the SSH server on the =
+Linksys=20
+(running OpenWRT), to listen on an alternate port, but wasn=E2=80=99t =
+able to find a=20
+configuration file.</P>
+<P><A=20
+href=3D"http://joesbitbucket.blogspot.com/2006/10/disabling-password-auth=
+entication-on.html">This=20
+tip</A> solved the problem, and another one I didn=E2=80=99t know I had =
+(how to disable=20
+password authentication for remote access, but allow it for local =
+access). </P>
+<P>The short version, just edit</P><PRE>/etc/init.d/S50dropbear</PRE>
+<P>to start dropbear with the desired options (<CODE>dropbear =
+--help</CODE>),=20
+and for the remote vs local access, start two instances on different =
+ports, then=20
+set your firewall to only allow outside access to the dropbear instance =
+that=20
+disallows password access.</P>
+<P>And since this is my outsourced memory and I have to edit files on =
+OpenWRT=20
+using <CODE>vi</CODE>, here=E2=80=99s a quick list of commands:</P>
+<UL>
+  <LI><CODE>i</CODE> before you insert anything=20
+  <LI><CODE>esc</CODE> to get back into command mode.=20
+  <LI><CODE>yy</CODE> from command mode, to copy the current line,=20
+  <LI><CODE>p</CODE> to insert the copied line after the cursor.=20
+  <LI><CODE>:wq</CODE> to write changes and quit=20
+  <LI><CODE>:q!</CODE> to quit without writing changes, if =
+you=E2=80=99ve screwed up.=20
+  </LI></UL>
+<P class=3D"postmetadata alt"><SMALL>This entry was posted on Thursday, =
+December=20
+6th, 2007 at 23:11 and is filed under <A title=3D"View all posts in =
+OpenWRT"=20
+href=3D"http://promberger.info/linux/category/openwrt/"=20
+rel=3D"category tag">OpenWRT</A>. You can follow any responses to this =
+entry=20
+through the <A=20
+href=3D"http://promberger.info/linux/2007/12/06/get-dropbear-on-openwrt-t=
+o-listen-on-alternate-port/feed/">RSS=20
+2.0</A> feed. You can <A=20
+href=3D"http://promberger.info/linux/2007/12/06/get-dropbear-on-openwrt-t=
+o-listen-on-alternate-port/#respond">leave=20
+a response</A>, or <A=20
+href=3D"http://promberger.info/linux/2007/12/06/get-dropbear-on-openwrt-t=
+o-listen-on-alternate-port/trackback/"=20
+rel=3Dtrackback>trackback</A> from your own site. </SMALL></P><!-- <p>=0A=
+				<script type=3D"text/javascript" =
+src=3D"http://static.citeulike.org/button.js"></script>=0A=
+				</p> --></DIV></DIV><!-- You can start editing here. --><!-- If =
+comments are open, but there are no comments. -->
+<H3 id=3Drespond>Leave a Reply</H3>
+<FORM id=3Dcommentform =
+action=3Dhttp://promberger.info/linux/wp-comments-post.php=20
+method=3Dpost>
+<P><INPUT id=3Dauthor tabIndex=3D1 size=3D22 name=3Dauthor> <LABEL=20
+for=3Dauthor><SMALL>Name </SMALL></LABEL></P>
+<P><INPUT id=3Demail tabIndex=3D2 size=3D22 name=3Demail> <LABEL =
+for=3Demail><SMALL>Mail=20
+(will not be published) </SMALL></LABEL></P>
+<P><INPUT id=3Durl tabIndex=3D3 size=3D22 name=3Durl> <LABEL=20
+for=3Durl><SMALL>Website</SMALL></LABEL></P><!--<p><small><strong>XHTML:<=
+/strong> You can use these tags: &lt;a href=3D&quot;&quot; =
+title=3D&quot;&quot;&gt; &lt;abbr title=3D&quot;&quot;&gt; &lt;acronym =
+title=3D&quot;&quot;&gt; &lt;b&gt; &lt;blockquote =
+cite=3D&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del =
+datetime=3D&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q =
+cite=3D&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </small></p>-->
+<P><TEXTAREA id=3Dcomment tabIndex=3D4 name=3Dcomment rows=3D10 =
+cols=3D100></TEXTAREA></P>
+<P><INPUT id=3Dsubmit tabIndex=3D5 type=3Dsubmit value=3D"Submit =
+Comment" name=3Dsubmit>=20
+<INPUT type=3Dhidden value=3D73 name=3Dcomment_post_ID> </P>
+<P style=3D"DISPLAY: none"><INPUT id=3Dakismet_comment_nonce =
+type=3Dhidden=20
+value=3Debfa13d6c1 name=3Dakismet_comment_nonce></P></FORM></DIV>
+<DIV id=3Dsidebar>
+<UL>
+  <LI>
+  <FORM id=3Dsearchform action=3D/linux/index.php method=3Dget>
+  <DIV><INPUT id=3Ds =
+onblur=3D"if(this.value=3D=3D'')this.value=3Dthis.defaultValue;"=20
+  onfocus=3D"if(this.value=3D=3Dthis.defaultValue)this.value=3D'';" =
+accessKey=3Ds=20
+  value=3D"Accesskey + s" name=3Ds> <INPUT id=3Dsearchsubmit =
+type=3Dsubmit value=3DSearch>=20
+  </DIV></FORM>
+  <LI>
+  <LI class=3Dpagenav>
+  <H2>Pages</H2>
+  <UL>
+    <LI class=3D"page_item page-item-2"><A=20
+    href=3D"http://promberger.info/linux/about/">About</A> </LI></UL>
+  <LI>
+  <H2>Etc.</H2>
+  <UL>
+    <LI><A href=3D"http://promberger.info/firefox.html">Pimp your =
+Firefox</A>=20
+  </LI></UL>
+  <LI>
+  <H2>Archives</H2>
+  <UL>
+    <LI><A title=3D"September 2011"=20
+    href=3D"http://promberger.info/linux/2011/09/">September 2011</A>=20
+    <LI><A title=3D"August 2011"=20
+    href=3D"http://promberger.info/linux/2011/08/">August 2011</A>=20
+    <LI><A title=3D"December 2010"=20
+    href=3D"http://promberger.info/linux/2010/12/">December 2010</A>=20
+    <LI><A title=3D"August 2010"=20
+    href=3D"http://promberger.info/linux/2010/08/">August 2010</A>=20
+    <LI><A title=3D"February 2010"=20
+    href=3D"http://promberger.info/linux/2010/02/">February 2010</A>=20
+    <LI><A title=3D"January 2010"=20
+    href=3D"http://promberger.info/linux/2010/01/">January 2010</A>=20
+    <LI><A title=3D"November 2009"=20
+    href=3D"http://promberger.info/linux/2009/11/">November 2009</A>=20
+    <LI><A title=3D"October 2009"=20
+    href=3D"http://promberger.info/linux/2009/10/">October 2009</A>=20
+    <LI><A title=3D"September 2009"=20
+    href=3D"http://promberger.info/linux/2009/09/">September 2009</A>=20
+    <LI><A title=3D"August 2009"=20
+    href=3D"http://promberger.info/linux/2009/08/">August 2009</A>=20
+    <LI><A title=3D"July 2009" =
+href=3D"http://promberger.info/linux/2009/07/">July=20
+    2009</A>=20
+    <LI><A title=3D"June 2009" =
+href=3D"http://promberger.info/linux/2009/06/">June=20
+    2009</A>=20
+    <LI><A title=3D"May 2009" =
+href=3D"http://promberger.info/linux/2009/05/">May=20
+    2009</A>=20
+    <LI><A title=3D"March 2009" =
+href=3D"http://promberger.info/linux/2009/03/">March=20
+    2009</A>=20
+    <LI><A title=3D"February 2009"=20
+    href=3D"http://promberger.info/linux/2009/02/">February 2009</A>=20
+    <LI><A title=3D"January 2009"=20
+    href=3D"http://promberger.info/linux/2009/01/">January 2009</A>=20
+    <LI><A title=3D"December 2008"=20
+    href=3D"http://promberger.info/linux/2008/12/">December 2008</A>=20
+    <LI><A title=3D"November 2008"=20
+    href=3D"http://promberger.info/linux/2008/11/">November 2008</A>=20
+    <LI><A title=3D"September 2008"=20
+    href=3D"http://promberger.info/linux/2008/09/">September 2008</A>=20
+    <LI><A title=3D"August 2008"=20
+    href=3D"http://promberger.info/linux/2008/08/">August 2008</A>=20
+    <LI><A title=3D"June 2008" =
+href=3D"http://promberger.info/linux/2008/06/">June=20
+    2008</A>=20
+    <LI><A title=3D"May 2008" =
+href=3D"http://promberger.info/linux/2008/05/">May=20
+    2008</A>=20
+    <LI><A title=3D"April 2008" =
+href=3D"http://promberger.info/linux/2008/04/">April=20
+    2008</A>=20
+    <LI><A title=3D"March 2008" =
+href=3D"http://promberger.info/linux/2008/03/">March=20
+    2008</A>=20
+    <LI><A title=3D"January 2008"=20
+    href=3D"http://promberger.info/linux/2008/01/">January 2008</A>=20
+    <LI><A title=3D"December 2007"=20
+    href=3D"http://promberger.info/linux/2007/12/">December 2007</A>=20
+    <LI><A title=3D"November 2007"=20
+    href=3D"http://promberger.info/linux/2007/11/">November 2007</A>=20
+    <LI><A title=3D"October 2007"=20
+    href=3D"http://promberger.info/linux/2007/10/">October 2007</A>=20
+    <LI><A title=3D"September 2007"=20
+    href=3D"http://promberger.info/linux/2007/09/">September 2007</A>=20
+    <LI><A title=3D"August 2007"=20
+    href=3D"http://promberger.info/linux/2007/08/">August 2007</A>=20
+    <LI><A title=3D"July 2007" =
+href=3D"http://promberger.info/linux/2007/07/">July=20
+    2007</A>=20
+    <LI><A title=3D"June 2007" =
+href=3D"http://promberger.info/linux/2007/06/">June=20
+    2007</A>=20
+    <LI><A title=3D"May 2007" =
+href=3D"http://promberger.info/linux/2007/05/">May=20
+    2007</A>=20
+    <LI><A title=3D"April 2007" =
+href=3D"http://promberger.info/linux/2007/04/">April=20
+    2007</A>=20
+    <LI><A title=3D"March 2007" =
+href=3D"http://promberger.info/linux/2007/03/">March=20
+    2007</A> </LI></UL>
+  <LI>
+  <H2>Categories</H2>
+  <UL>
+    <LI class=3D"cat-item cat-item-41"><A=20
+    title=3D"View all posts filed under Apache"=20
+    href=3D"http://promberger.info/linux/category/apache/">Apache</A> =
+(2)=20
+    <LI class=3D"cat-item cat-item-47"><A title=3D"View all posts filed =
+under awk"=20
+    href=3D"http://promberger.info/linux/category/awk/">awk</A> (1)=20
+    <LI class=3D"cat-item cat-item-42"><A=20
+    title=3D"View all posts filed under Bash shell"=20
+    href=3D"http://promberger.info/linux/category/bash-shell/">Bash =
+shell</A> (7)=20
+    <LI class=3D"cat-item cat-item-15"><A=20
+    title=3D"View all posts filed under CiteULike"=20
+    =
+href=3D"http://promberger.info/linux/category/citeulike/">CiteULike</A> =
+(4)=20
+    <LI class=3D"cat-item cat-item-48"><A=20
+    title=3D"View all posts filed under Code snippets"=20
+    href=3D"http://promberger.info/linux/category/code-snippets/">Code=20
+    snippets</A> (1)=20
+    <LI class=3D"cat-item cat-item-33"><A=20
+    title=3D"View all posts filed under Cool stuff"=20
+    href=3D"http://promberger.info/linux/category/cool-stuff/">Cool =
+stuff</A> (1)=20
+    <LI class=3D"cat-item cat-item-17"><A title=3D"View all posts filed =
+under CSS"=20
+    href=3D"http://promberger.info/linux/category/css/">CSS</A> (2)=20
+    <LI class=3D"cat-item cat-item-26"><A title=3D"View all posts filed =
+under Dia"=20
+    href=3D"http://promberger.info/linux/category/dia/">Dia</A> (1)=20
+    <LI class=3D"cat-item cat-item-46"><A=20
+    title=3D"View all posts filed under DigiKam"=20
+    href=3D"http://promberger.info/linux/category/digikam/">DigiKam</A> =
+(2)=20
+    <LI class=3D"cat-item cat-item-25"><A=20
+    title=3D"View all posts filed under Drupal"=20
+    href=3D"http://promberger.info/linux/category/drupal/">Drupal</A> =
+(5)=20
+    <LI class=3D"cat-item cat-item-44"><A title=3D"View all posts filed =
+under Emacs"=20
+    href=3D"http://promberger.info/linux/category/emacs/">Emacs</A> (8)=20
+    <LI class=3D"cat-item cat-item-19"><A=20
+    title=3D"View all posts filed under Firefox"=20
+    href=3D"http://promberger.info/linux/category/firefox/">Firefox</A> =
+(10)=20
+    <LI class=3D"cat-item cat-item-27"><A title=3D"View all posts filed =
+under Fonts"=20
+    href=3D"http://promberger.info/linux/category/fonts/">Fonts</A> (1)=20
+    <LI class=3D"cat-item cat-item-43"><A title=3D"View all posts filed =
+under Gmail"=20
+    href=3D"http://promberger.info/linux/category/gmail/">Gmail</A> (4)=20
+    <LI class=3D"cat-item cat-item-24"><A title=3D"View all posts filed =
+under GnuPG"=20
+    href=3D"http://promberger.info/linux/category/gnupg/">GnuPG</A> (1)=20
+    <LI class=3D"cat-item cat-item-38"><A title=3D"View all posts filed =
+under grip"=20
+    href=3D"http://promberger.info/linux/category/grip/">grip</A> (1)=20
+    <LI class=3D"cat-item cat-item-37"><A title=3D"View all posts filed =
+under Gutsy"=20
+    href=3D"http://promberger.info/linux/category/gutsy/">Gutsy</A> (14) =
+
+    <LI class=3D"cat-item cat-item-49"><A=20
+    title=3D"View all posts filed under Intrepid"=20
+    =
+href=3D"http://promberger.info/linux/category/intrepid/">Intrepid</A> =
+(2)=20
+    <LI class=3D"cat-item cat-item-16"><A=20
+    title=3D"View all posts filed under JavaScript"=20
+    =
+href=3D"http://promberger.info/linux/category/javascript/">JavaScript</A>=
+ (2)=20
+    <LI class=3D"cat-item cat-item-28"><A=20
+    title=3D"View all posts filed under Keyboard"=20
+    =
+href=3D"http://promberger.info/linux/category/keyboard/">Keyboard</A> =
+(2)=20
+    <LI class=3D"cat-item cat-item-9"><A title=3D"View all posts filed =
+under LaTeX"=20
+    href=3D"http://promberger.info/linux/category/latex/">LaTeX</A> (10) =
+
+    <LI class=3D"cat-item cat-item-29"><A=20
+    title=3D"View all posts filed under Less mouse"=20
+    href=3D"http://promberger.info/linux/category/less-mouse/">Less =
+mouse</A> (2)=20
+    <LI class=3D"cat-item cat-item-3"><A title=3D"View all posts filed =
+under Linux"=20
+    href=3D"http://promberger.info/linux/category/linux/">Linux</A> (39) =
+
+    <LI class=3D"cat-item cat-item-51"><A=20
+    title=3D"View all posts filed under Mail setup"=20
+    href=3D"http://promberger.info/linux/category/mail-setup/">Mail =
+setup</A> (2)=20
+    <LI class=3D"cat-item cat-item-4"><A title=3D"View all posts filed =
+under misc."=20
+    href=3D"http://promberger.info/linux/category/misc/">misc.</A> (7)=20
+    <LI class=3D"cat-item cat-item-52"><A=20
+    title=3D"View all posts filed under MS Windows"=20
+    href=3D"http://promberger.info/linux/category/ms-windows/">MS =
+Windows</A> (1)=20
+    <LI class=3D"cat-item cat-item-40"><A=20
+    title=3D"View all posts filed under Multimedia"=20
+    =
+href=3D"http://promberger.info/linux/category/multimedia/">Multimedia</A>=
+ (2)=20
+    <LI class=3D"cat-item cat-item-12"><A title=3D"View all posts filed =
+under mutt"=20
+    href=3D"http://promberger.info/linux/category/mutt/">mutt</A> (17)=20
+    <LI class=3D"cat-item cat-item-13"><A title=3D"View all posts filed =
+under mysql"=20
+    href=3D"http://promberger.info/linux/category/mysql/">mysql</A> (5)=20
+    <LI class=3D"cat-item cat-item-21"><A=20
+    title=3D"View all posts filed under Networking"=20
+    =
+href=3D"http://promberger.info/linux/category/networking/">Networking</A>=
+ (1)=20
+    <LI class=3D"cat-item cat-item-11"><A title=3D"View all posts filed =
+under Noobs"=20
+    href=3D"http://promberger.info/linux/category/noobs/">Noobs</A> (24) =
+
+    <LI class=3D"cat-item cat-item-36"><A=20
+    title=3D"View all posts filed under OpenWRT"=20
+    href=3D"http://promberger.info/linux/category/openwrt/">OpenWRT</A> =
+(1)=20
+    <LI class=3D"cat-item cat-item-45"><A=20
+    title=3D"View all posts filed under procmail"=20
+    =
+href=3D"http://promberger.info/linux/category/procmail/">procmail</A> =
+(2)=20
+    <LI class=3D"cat-item cat-item-30"><A=20
+    title=3D"View all posts filed under Quod Libet"=20
+    href=3D"http://promberger.info/linux/category/quod-libet/">Quod =
+Libet</A> (2)=20
+    <LI class=3D"cat-item cat-item-14"><A title=3D"View all posts filed =
+under R"=20
+    href=3D"http://promberger.info/linux/category/r/">R</A> (22)=20
+    <LI class=3D"cat-item cat-item-31"><A=20
+    title=3D"View all posts filed under Regular expressions"=20
+    =
+href=3D"http://promberger.info/linux/category/regular-expressions/">Regul=
+ar=20
+    expressions</A> (6)=20
+    <LI class=3D"cat-item cat-item-50"><A title=3D"View all posts filed =
+under rsync"=20
+    href=3D"http://promberger.info/linux/category/rsync/">rsync</A> (2)=20
+    <LI class=3D"cat-item cat-item-5"><A title=3D"View all posts filed =
+under Sed"=20
+    href=3D"http://promberger.info/linux/category/sed/">Sed</A> (4)=20
+    <LI class=3D"cat-item cat-item-35"><A title=3D"View all posts filed =
+under Slax"=20
+    href=3D"http://promberger.info/linux/category/slax/">Slax</A> (3)=20
+    <LI class=3D"cat-item cat-item-22"><A=20
+    title=3D"View all posts filed under The Gimp"=20
+    href=3D"http://promberger.info/linux/category/gimp/">The Gimp</A> =
+(2)=20
+    <LI class=3D"cat-item cat-item-1"><A=20
+    title=3D"View all posts filed under Uncategorized"=20
+    =
+href=3D"http://promberger.info/linux/category/uncategorized/">Uncategoriz=
+ed</A>=20
+    (3)=20
+    <LI class=3D"cat-item cat-item-32"><A=20
+    title=3D"View all posts filed under Usability"=20
+    =
+href=3D"http://promberger.info/linux/category/usability/">Usability</A> =
+(6)=20
+    <LI class=3D"cat-item cat-item-18"><A=20
+    title=3D"View all posts filed under Web design"=20
+    href=3D"http://promberger.info/linux/category/web-design/">Web =
+design</A> (3)=20
+    <LI class=3D"cat-item cat-item-10"><A=20
+    title=3D"View all posts filed under WordPress"=20
+    =
+href=3D"http://promberger.info/linux/category/wordpress/">WordPress</A> =
+(5)=20
+    <LI class=3D"cat-item cat-item-8"><A title=3D"View all posts filed =
+under XEmacs"=20
+    href=3D"http://promberger.info/linux/category/xemacs/">XEmacs</A> =
+(4)=20
+    <LI class=3D"cat-item cat-item-20"><A title=3D"View all posts filed =
+under Xfce"=20
+    href=3D"http://promberger.info/linux/category/xfce/">Xfce</A> (5)=20
+</LI></UL></LI></UL></DIV></DIV>
+<HR>
+
+<DIV id=3Dfooter>
+<P>Linux etc. is powered by <A =
+href=3D"http://wordpress.org/">WordPress</A> | <A=20
+href=3D"feed:http://promberger.info/linux/feed/">Entries (RSS)</A> and =
+<A=20
+href=3D"feed:http://promberger.info/linux/comments/feed/">Comments =
+(RSS)</A>=20
+<BR><A href=3D"http://www.mozilla.org/firefox/">Get a decent =
+browser</A>. <!-- 14 queries. 0.854 seconds. =
+--></P></DIV></DIV></BODY></HTML>
+
+------=_NextPart_000_0072_01CD0390.227C0720
+Content-Type: text/css;
+	charset="big5"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://promberger.info/linux/wp-content/themes/london/style.css
+
+* {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+*:focus {
+	BACKGROUND: #a2e88b; COLOR: black
+}
+BODY {
+	FONT-FAMILY: verdana, 'bitstream vera sans',  sans-serif
+}
+HR {
+	DISPLAY: none
+}
+#page {
+=09
+}
+#header {
+	MARGIN: 1em 1.5% 20px 1%
+}
+#headerimg {
+	PADDING-LEFT: 7.5%; FONT-SIZE: 1em; BACKGROUND: #4a8bc3; COLOR: white; =
+HEIGHT: 6.5em
+}
+.description {
+=09
+}
+#wrapper {
+	MARGIN: 0px auto; WIDTH: 750px; ; WIDTH: =
+expression(document.body.clientWidth < 605 ? "600px" : "95%" )
+}
+DIV > #wrapper {
+	MIN-WIDTH: 450px; MARGIN: 0px auto; WIDTH: 95%
+}
+#content {
+	FONT-SIZE: 1em; FLOAT: left; MARGIN: 0px; WIDTH: 77%; BACKGROUND-COLOR: =
+white
+}
+DIV > #content {
+	MAX-WIDTH: 37em
+}
+#sidebar {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; MARGIN: =
+10% 0px 0px 86%; WIDTH: 14%; PADDING-TOP: 5px; BACKGROUND-COLOR: white
+}
+#footer {
+	CLEAR: both; PADDING-RIGHT: 20px; PADDING-LEFT: 7.5%; PADDING-BOTTOM: =
+0.5em; MARGIN: 0px auto; COLOR: white; PADDING-TOP: 0.5em; HEIGHT: auto; =
+BACKGROUND-COLOR: #4a8bc3; TEXT-ALIGN: right
+}
+H1 {
+	FONT-WEIGHT: bold
+}
+H2 {
+	FONT-WEIGHT: bold
+}
+H3 {
+	FONT-WEIGHT: bold
+}
+H1 {
+	FONT-SIZE: 2em; TEXT-ALIGN: center
+}
+H2 {
+	FONT-SIZE: 1.6em; MARGIN: 0px 0px 30px
+}
+H2.pagetitle {
+	FONT-SIZE: 1.6em
+}
+H3 {
+	MARGIN: 1em 0px
+}
+H4 {
+=09
+}
+H5 {
+=09
+}
+#header A {
+	COLOR: white; TEXT-DECORATION: none
+}
+#header H1 {
+	FONT-SIZE: 3em; TEXT-ALIGN: left
+}
+#header H1:focus {
+	BORDER-RIGHT: #66cc00 2px solid; BORDER-TOP: #66cc00 2px solid; =
+BACKGROUND: #4a8bc3; BORDER-LEFT: #66cc00 2px solid; COLOR: white; =
+BORDER-BOTTOM: #66cc00 2px solid
+}
+#header A:focus {
+	BORDER-RIGHT: #66cc00 2px solid; BORDER-TOP: #66cc00 2px solid; =
+BACKGROUND: #4a8bc3; BORDER-LEFT: #66cc00 2px solid; COLOR: white; =
+BORDER-BOTTOM: #66cc00 2px solid
+}
+PRE {
+	PADDING-RIGHT: 10px; OVERFLOW-Y: auto; PADDING-LEFT: 10px; FONT-SIZE: =
+1em; OVERFLOW-X: auto; PADDING-BOTTOM: 10px; MARGIN: 1em 0px; COLOR: =
+#99ff99; PADDING-TOP: 10px; FONT-FAMILY: 'Bitstream Vera Sans Mono', =
+'monospace', 'Courier New', Courier, Fixed; BACKGROUND-COLOR: black
+}
+PRE:focus {
+	PADDING-RIGHT: 10px; OVERFLOW-Y: auto; PADDING-LEFT: 10px; FONT-SIZE: =
+1em; OVERFLOW-X: auto; PADDING-BOTTOM: 10px; MARGIN: 1em 0px; COLOR: =
+#99ff99; PADDING-TOP: 10px; FONT-FAMILY: 'Bitstream Vera Sans Mono', =
+'monospace', 'Courier New', Courier, Fixed; BACKGROUND-COLOR: black
+}
+.blackonwhite {
+	BORDER-RIGHT: #dcdcdc 1px solid; BORDER-TOP: #dcdcdc 1px solid; =
+BORDER-LEFT: #dcdcdc 1px solid; COLOR: black; BORDER-BOTTOM: #dcdcdc 1px =
+solid; BACKGROUND-COLOR: #eeeeee
+}
+CODE {
+	BORDER-RIGHT: gainsboro 1px solid; PADDING-RIGHT: 0.3em; BORDER-TOP: =
+gainsboro 1px solid; PADDING-LEFT: 0.3em; PADDING-BOTTOM: 0px; =
+BORDER-LEFT: gainsboro 1px solid; PADDING-TOP: 0px; BORDER-BOTTOM: =
+gainsboro 1px solid; FONT-FAMILY: 'Bitstream Vera Sans Mono', monospace, =
+'Courier New', Courier, Fixed; BACKGROUND-COLOR: #ffffcc; =
+-moz-border-radius: 5px
+}
+H2 A:hover {
+	COLOR: black; TEXT-DECORATION: none
+}
+H2 A:visited {
+	COLOR: black; TEXT-DECORATION: none
+}
+H2 A {
+	COLOR: black; TEXT-DECORATION: none
+}
+A {
+	COLOR: #4a8bc3; TEXT-DECORATION: none
+}
+H2 A:hover {
+	COLOR: #4a8bc3; TEXT-DECORATION: none
+}
+H3 A:hover {
+	COLOR: #4a8bc3; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #147; TEXT-DECORATION: underline
+}
+.post {
+	MARGIN: 0px 0px 40px; TEXT-ALIGN: justify
+}
+.post HR {
+	DISPLAY: block
+}
+.post P {
+	MARGIN: 0.5em 0px 0px
+}
+.post A {
+=09
+}
+.post UL {
+	MARGIN-LEFT: 2em
+}
+.post OL {
+	MARGIN-LEFT: 2em
+}
+.post LI {
+=09
+}
+.entry {
+=09
+}
+.entrytext .postmetadata {
+=09
+}
+.postmetadata {
+	CLEAR: left; FONT-SIZE: 0.8em; MARGIN: 10px 0px 7em; COLOR: gray
+}
+.postmetadata alt {
+=09
+}
+.postmetadata A {
+=09
+}
+.navigation {
+	MARGIN-TOP: 10px; DISPLAY: block; MARGIN-BOTTOM: 70px
+}
+.alignleft {
+	FLOAT: left
+}
+.alignright {
+	FLOAT: right
+}
+.center {
+=09
+}
+.pagetitle {
+=09
+}
+BLOCKQUOTE {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 1em; FONT-SIZE: 90%; PADDING-BOTTOM: =
+0.2em; MARGIN: 1.5em 1em; BORDER-LEFT: #a5c5e1 0.3em solid; PADDING-TOP: =
+0.2em
+}
+CITE {
+=09
+}
+A IMG {
+=09
+}
+ACRONYM {
+=09
+}
+ABBR {
+=09
+}
+#sidebar UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+#sidebar UL OL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+#sidebar UL LI {
+	LIST-STYLE-IMAGE: none; MARGIN-BOTTOM: 15px; LIST-STYLE-TYPE: none
+}
+#sidebar LI EM {
+	TEXT-DECORATION: underline
+}
+#sidebar UL H2 {
+=09
+}
+#sidebar UL LI {
+=09
+}
+#sidebar UL UL {
+=09
+}
+#sidebar UL UL LI {
+=09
+}
+#sidebar UL UL UL {
+=09
+}
+#sidebar P {
+=09
+}
+#sidebar A {
+=09
+}
+#sidebar A:hover {
+=09
+}
+#sidebar A:visited {
+=09
+}
+#sidebar H2 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 1.2em; =
+PADDING-BOTTOM: 0px; MARGIN: 5px 0px 0px; PADDING-TOP: 0px; FONT-FAMILY: =
+'Lucida Grande', Verdana, Sans-Serif
+}
+#footer A {
+	COLOR: white
+}
+#footer A:hover {
+	COLOR: white
+}
+#footer A:visited {
+	COLOR: white
+}
+.firefox {
+	TEXT-ALIGN: right
+}
+#commentform INPUT {
+	PADDING-RIGHT: 2px; PADDING-LEFT: 2px; FONT-SIZE: 0.8em; =
+PADDING-BOTTOM: 2px; MARGIN: 5px 5px 1em 0px; WIDTH: auto; PADDING-TOP: =
+2px
+}
+#commentform TEXTAREA {
+	PADDING-RIGHT: 2px; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; MARGIN: =
+10px 0px 0px; WIDTH: 100%; PADDING-TOP: 2px; BACKGROUND-COLOR: white
+}
+#commentform #submit {
+	FLOAT: right; MARGIN: 10px 0px 3em
+}
+OL.commentlist {
+	MARGIN: 1em 0px 2em 1.5em
+}
+OL.commentlist LI {
+	MARGIN: 1em 0px 0px
+}
+OL.commentlist LI.alt {
+=09
+}
+OL.commentlist A {
+=09
+}
+SMALL.commentmetadata {
+=09
+}
+#searchform #s {
+	BORDER-RIGHT: black 1px inset; BORDER-TOP: black 1px inset; =
+BORDER-LEFT: black 1px inset; BORDER-BOTTOM: black 1px inset; =
+BACKGROUND-COLOR: #f7f7f7
+}
+#searchform #s:focus {
+	BORDER-RIGHT: #85be72 1px solid; BORDER-TOP: #85be72 1px solid; =
+BACKGROUND: #a2e88b; BORDER-LEFT: #85be72 1px solid; COLOR: black; =
+BORDER-BOTTOM: #85be72 1px solid
+}
+#searchform #s {
+	WIDTH: 85%
+}
+#searchform INPUT {
+	PADDING-RIGHT: 2px; PADDING-LEFT: 2px; FONT-SIZE: 0.8em; =
+PADDING-BOTTOM: 2px; MARGIN: 2px 0px 0px; WIDTH: auto; PADDING-TOP: 2px
+}
+#wp-calendar {
+=09
+}
+#wp-calendar TH {
+=09
+}
+#wp-calendar A {
+=09
+}
+#prev A {
+=09
+}
+#next A {
+=09
+}
+#wp-calendar CAPTION {
+=09
+}
+P IMG {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; MAX-WIDTH: 100%; PADDING-BOTTOM: =
+0px; PADDING-TOP: 0px
+}
+IMG.centered {
+	DISPLAY: block; MARGIN-LEFT: auto; MARGIN-RIGHT: auto
+}
+IMG.alignright {
+	PADDING-RIGHT: 4px; DISPLAY: inline; PADDING-LEFT: 4px; PADDING-BOTTOM: =
+4px; MARGIN: 0px 0px 2px 7px; PADDING-TOP: 4px
+}
+IMG.alignleft {
+	PADDING-RIGHT: 4px; DISPLAY: inline; PADDING-LEFT: 4px; PADDING-BOTTOM: =
+4px; MARGIN: 0px 7px 2px 0px; PADDING-TOP: 4px
+}
+.entry OL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 35px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+.entry OL LI {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+.postmetadata UL {
+	DISPLAY: inline; LIST-STYLE-IMAGE: none; LIST-STYLE-TYPE: none
+}
+.postmetadata LI {
+	DISPLAY: inline; LIST-STYLE-IMAGE: none; LIST-STYLE-TYPE: none
+}
+#sidebar UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+#sidebar UL OL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+#sidebar UL LI {
+	LIST-STYLE-IMAGE: none; MARGIN-BOTTOM: 15px; LIST-STYLE-TYPE: none
+}
+#sidebar UL P {
+	MARGIN: 5px 0px 8px
+}
+#sidebar UL SELECT {
+	MARGIN: 5px 0px 8px
+}
+#sidebar UL UL {
+	MARGIN: 5px 0px 0px 10px
+}
+#sidebar UL OL {
+	MARGIN: 5px 0px 0px 10px
+}
+#sidebar UL UL UL {
+	MARGIN: 0px 0px 0px 10px
+}
+#sidebar UL OL {
+	MARGIN: 0px 0px 0px 10px
+}
+OL LI {
+	LIST-STYLE-POSITION: outside; LIST-STYLE-TYPE: decimal
+}
+#sidebar UL OL LI {
+	LIST-STYLE-POSITION: outside; LIST-STYLE-TYPE: decimal
+}
+#sidebar UL UL LI {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 3px =
+0px 0px; PADDING-TOP: 0px
+}
+#sidebar UL OL LI {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 3px =
+0px 0px; PADDING-TOP: 0px
+}
+TABLE {
+	PADDING-RIGHT: 2px; PADDING-LEFT: 2px; BACKGROUND: #f5f5f5; =
+PADDING-BOTTOM: 3px; MARGIN: 30px 10px 30px 0px; PADDING-TOP: 3px; =
+TEXT-ALIGN: left; border-spacing: 3px 2px
+}
+TD {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; BACKGROUND: #e6eccd; =
+PADDING-BOTTOM: 6px; VERTICAL-ALIGN: top; PADDING-TOP: 8px
+}
+TH {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; BACKGROUND: #b4c568; =
+PADDING-BOTTOM: 6px; PADDING-TOP: 6px
+}
+spiffy {
+	DISPLAY: block
+}
+.spiffy * {
+	DISPLAY: block; FONT-SIZE: 0.01em; BACKGROUND: #4a8bc3; OVERFLOW: =
+hidden; HEIGHT: 1px
+}
+.spiffy1 {
+	BORDER-RIGHT: #b1cde5 1px solid; PADDING-RIGHT: 1px; PADDING-LEFT: 1px; =
+BACKGROUND: #77a8d2; MARGIN-LEFT: 3px; BORDER-LEFT: #b1cde5 1px solid; =
+MARGIN-RIGHT: 3px
+}
+.spiffy2 {
+	BORDER-RIGHT: #ecf3f9 1px solid; PADDING-RIGHT: 1px; PADDING-LEFT: 1px; =
+BACKGROUND: #6ca1ce; MARGIN-LEFT: 1px; BORDER-LEFT: #ecf3f9 1px solid; =
+MARGIN-RIGHT: 1px
+}
+.spiffy3 {
+	BORDER-RIGHT: #6ca1ce 1px solid; MARGIN-LEFT: 1px; BORDER-LEFT: #6ca1ce =
+1px solid; MARGIN-RIGHT: 1px
+}
+.spiffy4 {
+	BORDER-RIGHT: #b1cde5 1px solid; BORDER-LEFT: #b1cde5 1px solid
+}
+.spiffy5 {
+	BORDER-RIGHT: #77a8d2 1px solid; BORDER-LEFT: #77a8d2 1px solid
+}
+
+------=_NextPart_000_0072_01CD0390.227C0720--
