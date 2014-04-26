@@ -1,0 +1,14 @@
+#!/bin/sh
+
+gw=$5
+dev=$1
+cfg=$6
+
+#echo "[ipv6-down] /usr/sbin/arc-ipv6-linkdown.sh $cfg $dev $gw"
+#. /usr/sbin/arc-ipv6-linkdown.sh $cfg $dev $gw
+
+ip6_proto=`umngcli get ip6_proto@$cfg`
+if [ "$ip6_proto" == "dhcp" ] ; then
+	echo "[ipv6-down] $gw $dev $cfg $ip6_proto" >> /tmp/ipv6.txt
+	/usr/sbin/dhcp6c_release
+fi

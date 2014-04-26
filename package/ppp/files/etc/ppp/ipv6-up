@@ -1,0 +1,28 @@
+#!/bin/sh
+
+gw=$5
+dev=$1
+cfg=$6
+
+#unit=${dev:3:3}
+#if [ ${#unit} -eq 1 ] ; then
+#	echo -n
+#elif [ ${#unit} -eq 2 ] ; then
+#	unit=$(( 1${unit} - 100 ))
+#elif [ ${#unit} -eq 3 ] ; then
+#	unit=$(( 1${unit} - 1000 ))
+#else
+#	echo"[ipv6-up] WRONG dev name $dev"
+#	return
+#fi
+#arc_config_section="wan$unit"
+
+#echo "[ipv6-up] /usr/sbin/arc-ipv6-linkup.sh $cfg $dev $gw"
+#. /usr/sbin/arc-ipv6-linkup.sh $cfg $dev $gw
+
+ip6_proto=`umngcli get ip6_proto@$cfg`
+if [ "$ip6_proto" == "dhcp" ] ; then
+	echo "[ipv6-up] $gw $dev $cfg $ip6_proto" >> /tmp/ipv6.txt
+	/usr/sbin/dhcp6c_release
+	/usr/sbin/dhcp6c_start
+fi
